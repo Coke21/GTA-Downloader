@@ -9,7 +9,7 @@ I would like to mention that I've just started my journey with C# and so not eve
 Due to the fact that I have to use a private API key to access the Google drive API, I've removed the key from FileData -> service. To acquire such key follow the steps below.
 
 Steps to get API key:
-1. Go here -> https://www.daimto.com/google-drive-authentication-c/ -> https://gyazo.com/722acbd29ff1adcc6f9956f666486d9d
+1. General info: https://www.daimto.com/google-drive-authentication-c/ -> the part that interests you is: https://gyazo.com/722acbd29ff1adcc6f9956f666486d9d
 2. visit  https://console.developers.google.com
 3. Create new project, name it w/e you want, go to "Credentials" -> "Create Credentials" -> choose API key -> you will get a key, copy and paste it into FileData -> service in "ApiKey", then in ApplicationName, name it w/e you want.
 4. Start debugging, everything should be working.

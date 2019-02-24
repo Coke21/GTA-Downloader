@@ -73,12 +73,12 @@
                 <CheckBox Content="Notification" x:Name="NotificationCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="311,110,0,0" Height="19" Width="121" FontWeight="Bold" FontSize="16" Checked="NotificationCheckBox_Checked" Unchecked="NotificationCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439" Visibility="Visible"/>
                 <CheckBox Content="Automatic update" x:Name="AutomaticUpdateCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="293,130,0,0" Height="19" Width="174" FontWeight="Bold" FontSize="16" Checked="AutomaticUpdate_Checked" Unchecked="AutomaticUpdateCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439" Visibility="Visible"/>
 
-                <Button Content="Delete changes to registry" HorizontalAlignment="Left" VerticalAlignment="Top" Width="189" Margin="276,150,0,0" Height="47" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" Click="DeleteChangesToRegistry" RenderTransformOrigin="0.494,0.574"/>
+                <Button Content="Delete changes to registry" HorizontalAlignment="Left" VerticalAlignment="Top" Width="189" Margin="276,150,0,0" Height="47" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" Click="DeleteChangesToRegistry" RenderTransformOrigin="0.494,0.574" FontSize="14"/>
 
                 <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Top" Width="189" Margin="499,6,0,0"/>
                 <Label Content="Download speed:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="533,0,0,0" Height="29" Width="123" FontWeight="Bold" FontSize="14"/>
-                <RadioButton Content="Max Speed" HorizontalAlignment="Left" GroupName="Download" IsChecked="True" VerticalAlignment="Top" Margin="536,21,0,0" FontWeight="Bold" Checked="MaxSpeed_Checked" Height="16"/>
-                <RadioButton Content="Normal Speed" HorizontalAlignment="Left" GroupName="Download" VerticalAlignment="Top" Margin="536,34,0,0" FontWeight="Bold" Checked="NormalSpeed_Checked"/>
+                <RadioButton Content="Max Speed" HorizontalAlignment="Left" x:Name="MaxSpeedButton" GroupName="Download" VerticalAlignment="Top" Margin="536,21,0,0" FontWeight="Bold" Checked="MaxSpeed_Checked" Height="16"/>
+                <RadioButton Content="Normal Speed" HorizontalAlignment="Left" x:Name="NormalSpeedButton" GroupName="Download" VerticalAlignment="Top" Margin="536,34,0,0" FontWeight="Bold" Checked="NormalSpeed_Checked"/>
             </Grid>
         </TabItem>
     </TabControl>

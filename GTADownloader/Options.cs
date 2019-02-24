@@ -84,6 +84,12 @@ namespace GTADownloader
                 case "automaticUpdateUnCheck":
                     keyRunMinimized.DeleteValue("Automatic Update");
                     break;
+                case "maxSpeed":
+                    Registry.SetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "Download Speed", "Max");
+                    break;
+                case "normalSpeed":
+                    Registry.SetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "Download Speed", "Normal");
+                    break;
                 case "removeRegistry":
                     try
                     {
@@ -164,7 +170,24 @@ namespace GTADownloader
                 win.S3TanoaCheckBox.IsChecked = false;
             else
                 win.S3TanoaCheckBox.IsChecked = true;
-        }
+
+            string downloadSpeed = "";
+            try
+            {
+                downloadSpeed = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "Download Speed", "Max").ToString();
+            }
+            catch (NullReferenceException)
+            {
+                win.MaxSpeedButton.IsChecked = true;
+            }
+            finally
+            {
+                if (downloadSpeed == "Max")
+                    win.MaxSpeedButton.IsChecked = true;
+                else if (downloadSpeed == "Normal")
+                    win.NormalSpeedButton.IsChecked = true;
+            }
+        }   
         public static async Task NotificationAsync(string whichOption, CancellationToken cancellationToken)
         {
             await Task.Run(async() =>

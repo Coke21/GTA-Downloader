@@ -250,11 +250,14 @@ namespace GTADownloader
         private void MaxSpeed_Checked(object sender, RoutedEventArgs e)
         {
             Download.downloadSpeed = "maxSpeed";
-        }
 
+            Options.Choose("maxSpeed");
+        }
         private void NormalSpeed_Checked(object sender, RoutedEventArgs e)
         {
             Download.downloadSpeed = "normalSpeed";
+
+            Options.Choose("normalSpeed");
         }
 
         protected override void OnClosed(EventArgs e)

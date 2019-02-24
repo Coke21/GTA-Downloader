@@ -2,7 +2,7 @@
 Hi, this is my version of GTA Downloader. This project was made public due to the following reasons:
 - People who are interested in the programming.
 - If one is afraid that is a virus, one can browse the code.
-- To build my porfolio.
+- To build my portfolio.
 
 I would like to mention that I've just started my journey with C# and so not everything is perfectly coded. I will be gradually improving the code.
 

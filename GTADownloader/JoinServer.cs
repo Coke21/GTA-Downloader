@@ -43,8 +43,16 @@ namespace GTADownloader
                     ServerInfo info1 = gta1.GetInfo();
                     if (info1 != null)
                     {
-                        win.Dispatcher.BeginInvoke((Action)(() => win.textBlockServer1.Text = $"{info1.Name} Players: {info1.Players + 1} / {info1.MaxPlayers}"));
-                        win.Dispatcher.BeginInvoke((Action)(() => win.JoinServer1Button.IsEnabled = true));
+                        if (info1.Players + 1 != info1.MaxPlayers)
+                        {
+                            win.Dispatcher.BeginInvoke((Action)(() => win.textBlockServer1.Text = $"{info1.Name} Players: {info1.Players + 1}/{info1.MaxPlayers}"));
+                            win.Dispatcher.BeginInvoke((Action)(() => win.JoinServer1Button.IsEnabled = true));
+                        }
+                        else
+                        {
+                            win.Dispatcher.BeginInvoke((Action)(() => win.textBlockServer1.Text = "Server full"));
+                            win.Dispatcher.BeginInvoke((Action)(() => win.JoinServer1Button.IsEnabled = false));
+                        }
                     }
                     else
                     {
@@ -56,8 +64,16 @@ namespace GTADownloader
                     ServerInfo info2 = gta2.GetInfo();
                     if (info2 != null)
                     {
-                        win.Dispatcher.BeginInvoke((Action)(() => win.textBlockServer2.Text = $"{info2.Name} Players: {info2.Players + 1} / {info2.MaxPlayers}"));
-                        win.Dispatcher.BeginInvoke((Action)(() => win.JoinServer2Button.IsEnabled = true));
+                        if (info2.Players + 1 != info2.MaxPlayers)
+                        {
+                            win.Dispatcher.BeginInvoke((Action)(() => win.textBlockServer2.Text = $"{info2.Name} Players: {info2.Players + 1}/{info2.MaxPlayers}"));
+                            win.Dispatcher.BeginInvoke((Action)(() => win.JoinServer2Button.IsEnabled = true));
+                        }
+                        else
+                        {
+                            win.Dispatcher.BeginInvoke((Action)(() => win.textBlockServer2.Text = "Server full"));
+                            win.Dispatcher.BeginInvoke((Action)(() => win.JoinServer2Button.IsEnabled = false));
+                        }
                     }
                     else
                     {
@@ -69,15 +85,23 @@ namespace GTADownloader
                     ServerInfo info3 = gta3.GetInfo();
                     if (info3 != null)
                     {
-                        win.Dispatcher.BeginInvoke((Action)(() => win.textBlockServer3.Text = $"{info3.Name} Players: {info3.Players + 1} / {info3.MaxPlayers}"));
-                        win.Dispatcher.BeginInvoke((Action)(() => win.JoinServer3Button.IsEnabled = true));
+                        if (info3.Players + 1 != info3.MaxPlayers)
+                        {
+                            win.Dispatcher.BeginInvoke((Action)(() => win.textBlockServer3.Text = $"{info3.Name} Players: {info3.Players + 1}/{info3.MaxPlayers}"));
+                            win.Dispatcher.BeginInvoke((Action)(() => win.JoinServer3Button.IsEnabled = true));
+                        }
+                        else
+                        {
+                            win.Dispatcher.BeginInvoke((Action)(() => win.textBlockServer3.Text = "Server full"));
+                            win.Dispatcher.BeginInvoke((Action)(() => win.JoinServer3Button.IsEnabled = false));
+                        }
                     }
                     else
                     {
                         win.Dispatcher.BeginInvoke((Action)(() => win.textBlockServer3.Text = "Server offline"));
                         win.Dispatcher.BeginInvoke((Action)(() => win.JoinServer3Button.IsEnabled = false));
                     }
-                    Task.Delay(1000);
+                    Task.Delay(2000);
                 }
             });
         }

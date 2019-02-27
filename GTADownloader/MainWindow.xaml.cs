@@ -227,8 +227,9 @@ namespace GTADownloader
         }
         private async void AutomaticUpdate_Checked(object sender, RoutedEventArgs e)
         {
-            Options.Choose("automaticUpdate");
             await Options.NotificationAsync("automaticUpdate", FileData.ctsAutomaticUpdate.Token);
+
+            Options.Choose("automaticUpdate");
         }
         private void AutomaticUpdateCheckBox_UnChecked(object sender, RoutedEventArgs e)
         {

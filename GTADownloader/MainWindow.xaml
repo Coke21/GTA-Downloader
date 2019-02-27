@@ -45,9 +45,9 @@
                 <Button Content="Join Server 3 (Conflict Server)" x:Name="JoinServer3Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="262" Margin="47,188,0,0" Height="66" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS3"/>
                 <Button Content="Join TS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="262" Margin="47,276,0,0" Height="66" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinTS"/>
 
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer1" TextWrapping="Wrap" VerticalAlignment="Top" Margin="315,32,0,0" Height="82" Width="375" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer2" TextWrapping="Wrap" VerticalAlignment="Top" Margin="315,122,0,0" Height="82" Width="375" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer3" TextWrapping="Wrap" VerticalAlignment="Top" Margin="315,211,0,0" Height="86" Width="360" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer1" TextWrapping="Wrap" VerticalAlignment="Top" Margin="315,32,0,0" Height="47" Width="375" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer2" TextWrapping="Wrap" VerticalAlignment="Top" Margin="315,122,0,0" Height="43" Width="375" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer3" TextWrapping="Wrap" VerticalAlignment="Top" Margin="315,211,0,0" Height="43" Width="360" FontWeight="Bold"/>
             </Grid>
         </TabItem>
 

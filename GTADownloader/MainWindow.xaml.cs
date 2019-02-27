@@ -140,80 +140,80 @@ namespace GTADownloader
         }
         private void S1AltisChecked(object sender, RoutedEventArgs e)
         {
-            Options.Choose("S1Altis");
             FileData.missionFileListName.Add(FileData.fileNameArray[0]);
             FileData.missionFileListID.Add(FileData.fileIDArray[0]);
+            Options.Choose("S1Altis");
         }
         private void S1Altis_UnChecked(object sender, RoutedEventArgs e)
         {
-            Options.Choose("S1AltisUnCheck");
             FileData.missionFileListName.Remove(FileData.fileNameArray[0]);
             FileData.missionFileListID.Remove(FileData.fileIDArray[0]);
+            Options.Choose("S1AltisUnCheck");
         }
         private void S2AltisChecked(object sender, RoutedEventArgs e)
         {
-            Options.Choose("S2Altis");
             FileData.missionFileListName.Add(FileData.fileNameArray[1]);
             FileData.missionFileListID.Add(FileData.fileIDArray[1]);
+            Options.Choose("S2Altis");
         }
         private void S2Altis_UnChecked(object sender, RoutedEventArgs e)
         {
-            Options.Choose("S2AltisUnCheck");
             FileData.missionFileListName.Remove(FileData.fileNameArray[1]);
             FileData.missionFileListID.Remove(FileData.fileIDArray[1]);
+            Options.Choose("S2AltisUnCheck");
         }
         private void S3AltisChecked(object sender, RoutedEventArgs e)
         {
-            Options.Choose("S3Altis");
             FileData.missionFileListName.Add(FileData.fileNameArray[2]);
             FileData.missionFileListID.Add(FileData.fileIDArray[2]);
+            Options.Choose("S3Altis");
         }
         private void S3Altis_UnChecked(object sender, RoutedEventArgs e)
         {
-            Options.Choose("S3AltisUnCheck");
             FileData.missionFileListName.Remove(FileData.fileNameArray[2]);
             FileData.missionFileListID.Remove(FileData.fileIDArray[2]);
+            Options.Choose("S3AltisUnCheck");
         }
         private void S1TanoaChecked(object sender, RoutedEventArgs e)
         {
-            Options.Choose("S1Tanoa");
             FileData.missionFileListName.Add(FileData.fileNameArray[3]);
             FileData.missionFileListID.Add(FileData.fileIDArray[3]);
+            Options.Choose("S1Tanoa");
         }
         private void S1Tanoa_UnChecked(object sender, RoutedEventArgs e)
         {
-            Options.Choose("S1TanoaUnCheck");
             FileData.missionFileListName.Remove(FileData.fileNameArray[3]);
             FileData.missionFileListID.Remove(FileData.fileIDArray[3]);
+            Options.Choose("S1TanoaUnCheck");
         }
         private void S2TanoaChecked(object sender, RoutedEventArgs e)
         {
-            Options.Choose("S2Tanoa");
             FileData.missionFileListName.Add(FileData.fileNameArray[4]);
             FileData.missionFileListID.Add(FileData.fileIDArray[4]);
+            Options.Choose("S2Tanoa");
         }
         private void S2Tanoa_UnChecked(object sender, RoutedEventArgs e)
         {
-            Options.Choose("S2TanoaUnCheck");
             FileData.missionFileListName.Remove(FileData.fileNameArray[4]);
             FileData.missionFileListID.Remove(FileData.fileIDArray[4]);
+            Options.Choose("S2TanoaUnCheck");
         }
         private void S3TanoaChecked(object sender, RoutedEventArgs e)
         {
-            Options.Choose("S3Tanoa");
             FileData.missionFileListName.Add(FileData.fileNameArray[5]);
             FileData.missionFileListID.Add(FileData.fileIDArray[5]);
+            Options.Choose("S3Tanoa");
         }
         private void S3Tanoa_UnChecked(object sender, RoutedEventArgs e)
         {
-            Options.Choose("S3TanoaUnCheck");
             FileData.missionFileListName.Remove(FileData.fileNameArray[5]);
             FileData.missionFileListID.Remove(FileData.fileIDArray[5]);
+            Options.Choose("S3TanoaUnCheck");
         }
         private async void NotificationCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            Options.Choose("notification");
             await Options.NotificationAsync("notification", FileData.ctsNotification.Token);
+            Options.Choose("notification");
         }
         private void NotificationCheckBox_UnChecked(object sender, RoutedEventArgs e)
         {

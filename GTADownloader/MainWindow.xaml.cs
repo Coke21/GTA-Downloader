@@ -263,6 +263,7 @@ namespace GTADownloader
 
         protected override void OnClosed(EventArgs e)
         {
+            FileData.notifyIcon.Visible = false;
             base.OnClosed(e);
             Application.Current.Shutdown();
         }

@@ -87,7 +87,7 @@ namespace GTADownloader
                     {
                         if (info3.Players + 1 != info3.MaxPlayers)
                         {
-                            win.Dispatcher.BeginInvoke((Action)(() => win.textBlockServer3.Text = $"{info3.Name} Players: {info3.Players + 1}/{info3.MaxPlayers}"));
+                            win.Dispatcher.BeginInvoke((Action)(() => win.textBlockServer3.Text = $"{info3.Name} {Environment.NewLine}Players: {info3.Players + 1}/{info3.MaxPlayers}"));
                             win.Dispatcher.BeginInvoke((Action)(() => win.JoinServer3Button.IsEnabled = true));
                         }
                         else

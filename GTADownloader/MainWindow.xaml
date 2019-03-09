@@ -3,13 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GTADownloader"
         mc:Ignorable="d"
-        Title="MainWindow" Height="420" Width="750">
+        Title="MainWindow" Height="400" Width="740">
     <TabControl Background="#FFBDB5B5">
         <TabItem Header="Mission File">
             <Grid>
-                <ProgressBar HorizontalAlignment="Left" Height="148" x:Name="progressBarDownload" VerticalAlignment="Top" Width="140" Margin="292,114,0,0" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" RenderTransformOrigin="0.53,0.492">
+                <ProgressBar HorizontalAlignment="Left" Height="148" x:Name="progressBarDownload" VerticalAlignment="Top" Width="140" Margin="291,134,0,0" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" RenderTransformOrigin="0.53,0.492">
                     <ProgressBar.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleY="0.876" ScaleX="1.14"/>
@@ -19,66 +18,65 @@
                         </TransformGroup>
                     </ProgressBar.RenderTransform>
                 </ProgressBar>
-                <Image HorizontalAlignment="Left" Height="254" VerticalAlignment="Top" Width="252" Margin="237,62,0,0" Source="Images/gta_logo_Icon.ico"/>
-                <Button Content="S1 - Altis" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" Margin="38,100,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S1AltisButton" Click="S1Altis"/>
-                <Button Content="S2 - Altis" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" Margin="38,158,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S2AltisButton" Click="S2Altis"/>
-                <Button Content="S3 - Altis" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" Margin="38,217,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S3AltisButton" Click="S3Altis"/>
-                <Button Content="All Altis (S1 + S2 + S3)" HorizontalAlignment="Left" VerticalAlignment="Top" Width="176" Margin="31,281,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S1S2S3AltisButton" Click="S1S2S3Altis"/>
-                <Button Content="S1 - Tanoa" HorizontalAlignment="Left" VerticalAlignment="Top" Width="165" Margin="524,100,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S1TanoaButton" Click="S1Tanoa"/>
-                <Button Content="S2 - Tanoa" HorizontalAlignment="Left" VerticalAlignment="Top" Width="165" Margin="525,158,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S2TanoaButton" Click="S2Tanoa"/>
-                <Button Content="S3 - Tanoa" HorizontalAlignment="Left" VerticalAlignment="Top" Width="165" Margin="524,217,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S3TanoaButton" Click="S3Tanoa"/>
-                <Button Content="All Tanoa (S1 + S2 + S3)" HorizontalAlignment="Left" VerticalAlignment="Top" Width="184" Margin="517,281,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S1S2S3TanoaButton" Click="S1S2S3Tanoa"/>
+                <Image HorizontalAlignment="Left" Height="254" VerticalAlignment="Top" Width="249" Margin="237,82,0,0" Source="Images/gta_logo_Icon.ico"/>
 
-                <Button Content="All Files" HorizontalAlignment="Left" VerticalAlignment="Top" Width="93" Margin="316,321,0,0" Height="32" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="AllFilesButton" Click="AllFiles"/>
+                <Button Content="S1 - Altis" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Margin="25,151,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S1AltisButton" Click="S1Altis"/>
+                <Button Content="S2 - Altis" HorizontalAlignment="Left" VerticalAlignment="Top" Width="95" Margin="119,151,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S2AltisButton" Click="S2Altis"/>
+                <Button Content="S3 - Tanoa" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Margin="26,224,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S3TanoaButton" Click="S3Tanoa"/>
+                <Button Content="S3 - Malden" HorizontalAlignment="Left" VerticalAlignment="Top" Width="94" Margin="120,224,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S3MaldenButton" Click="S3Malden"/>
 
-                <TextBlock HorizontalAlignment="Left" x:Name="TextTopTitle" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="212,31,0,0" Height="23" Width="303" FontWeight="Bold" FontSize="21" TextAlignment="Center"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="textblockDownload" TextWrapping="Wrap" VerticalAlignment="Top" Margin="213,303,0,0" Width="302" Height="15" FontSize="11" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="TextTopOperationNotice" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="100" Width="251" TextAlignment="Center" Foreground="Lime" FontWeight="Bold" Margin="482,0,0,0"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="TextTopOperationProgramNotice" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="252,57,0,0" Height="25" Width="220" TextAlignment="Center" Foreground="Lime" FontWeight="Bold"/>
+                <Button Content="All Altis" HorizontalAlignment="Left" VerticalAlignment="Top" Width="178" Margin="512,150,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S1S2AltisButton" Click="S1S2Altis"/>
+                <Button Content="All Special" HorizontalAlignment="Left" VerticalAlignment="Top" Width="178" Margin="512,198,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S3MaldenS3TanoaButton" Click="S3MaldenS3Tanoa"/>
+                <Button Content="All Active Mission Files" HorizontalAlignment="Left" VerticalAlignment="Top" Width="178" Margin="512,246,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="AllFiles" Click="AllFilesClick"/>
+
+                <TextBlock HorizontalAlignment="Left" x:Name="TextTopTitle" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="205,54,0,0" Height="23" Width="303" FontWeight="Bold" FontSize="21" TextAlignment="Center"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textblockDownload" TextWrapping="Wrap" VerticalAlignment="Top" Margin="171,317,0,0" Width="380" Height="15" FontSize="11" FontWeight="Bold" TextAlignment="Center"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="TextTopOperationNotice" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="129" Width="298" TextAlignment="Center" Foreground="{x:Null}" Margin="418,0,0,0" FontWeight="Bold" FontSize="11"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="TextTopOperationProgramNotice" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="245,79,0,0" Height="25" Width="220" TextAlignment="Center" FontWeight="Bold"/>
+
+                <Label Content="Active Normal MF:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="39,120,0,0" Width="154" FontSize="16" FontWeight="Bold"/>
+                <Label Content="Active Special MF:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,193,0,0" Width="155" FontSize="16" FontWeight="Bold"/>
+                <Label Content="Mass Download:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="528,119,0,0" Width="155" FontSize="16" FontWeight="Bold"/>
             </Grid>
         </TabItem>
 
         <TabItem Header="Join Server" PreviewMouseDown = "JoinServerTabItemClicked">
             <Grid>
-                <Button Content="Join Server 1" x:Name="JoinServer1Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="262" Margin="47,13,0,0" Height="66" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS1"/>
-                <Button Content="Join Server 2" x:Name="JoinServer2Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="262" Margin="47,99,0,0" Height="66" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS2"/>
-                <Button Content="Join Server 3 (Conflict Server)" x:Name="JoinServer3Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="262" Margin="47,188,0,0" Height="66" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS3"/>
-                <Button Content="Join TS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="262" Margin="47,276,0,0" Height="66" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinTS"/>
+                <Button Content="Join Server 1" x:Name="JoinServer1Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,57,0,0" Height="53" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS1"/>
+                <Button Content="Join Server 2" x:Name="JoinServer2Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,122,0,0" Height="53" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS2"/>
+                <Button Content="Join Server 3 (Conflict Server)" x:Name="JoinServer3Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,187,0,0" Height="53" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS3"/>
+                <Button Content="Join TS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,252,0,0" Height="53" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinTS"/>
 
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer1" TextWrapping="Wrap" VerticalAlignment="Top" Margin="315,32,0,0" Height="47" Width="375" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer2" TextWrapping="Wrap" VerticalAlignment="Top" Margin="315,122,0,0" Height="43" Width="375" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer3" TextWrapping="Wrap" VerticalAlignment="Top" Margin="315,211,0,0" Height="43" Width="360" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer1" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,71,0,0" Height="47" Width="375" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer2" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,140,0,0" Height="43" Width="375" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer3" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,205,0,0" Height="43" Width="360" FontWeight="Bold"/>
             </Grid>
         </TabItem>
 
         <TabItem Header="Options" PreviewMouseDown = "OptionsTabItemClicked">
             <Grid>
-                <Button Content="Official Thread" HorizontalAlignment="Left" VerticalAlignment="Top" Width="189" Margin="276,219,0,0" Height="53" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="OfficialThread_Click"/>
+                <Button Content="Official Thread" HorizontalAlignment="Left" VerticalAlignment="Top" Width="189" Margin="258,213,0,0" Height="53" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="OfficialThread_Click"/>
 
-                <Button Content="About" HorizontalAlignment="Left" VerticalAlignment="Top" Width="189" Margin="276,293,0,0" Height="53" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16"  Click="Info_Click"/>
+                <Button Content="About" HorizontalAlignment="Left" VerticalAlignment="Top" Width="189" Margin="258,277,0,0" Height="53" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16"  Click="Info_Click"/>
 
-                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="190" VerticalAlignment="Top" Width="189" Margin="276,7,0,0"/>
-                <CheckBox Content="Run at startup" Name="StartUpCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="302,8,0,0" Height="23" Width="129" FontWeight="Bold" FontSize="16" Checked="StartUpCheckBox_Checked" Unchecked="StartUpCheckBox_Unchecked"/>
-                <CheckBox Content="Run minimized" Name="MinimizedCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="316,29,0,0" Height="23" Width="110" FontWeight="Bold" Checked="RunMinimizedCheckBox_Checked" Unchecked="RunMinimizedCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439"/>
-                <Separator Background="#FF0F0E0E" Margin="281,30,268,290" FontWeight="Bold" />
+                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="199" VerticalAlignment="Top" Width="189" Margin="258,4,0,0"/>
+                <CheckBox Content="Run at startup" Name="StartUpCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="284,6,0,0" Height="23" Width="129" FontWeight="Bold" FontSize="16" Checked="StartUpCheckBox_Checked" Unchecked="StartUpCheckBox_Unchecked"/>
+                <CheckBox Content="Run minimized" Name="MinimizedCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="298,27,0,0" Height="23" Width="110" FontWeight="Bold" Checked="RunMinimizedCheckBox_Checked" Unchecked="RunMinimizedCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439"/>
+                <Separator Background="#FF0F0E0E" Margin="264,43,277,287" FontWeight="Bold" />
 
-                <CheckBox Content="S1 - Altis" x:Name="S1AltisCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="281,50,0,0" Height="20" Width="72" FontWeight="Bold" Checked="S1AltisChecked" Unchecked="S1Altis_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
-                <CheckBox Content="S2 - Altis" x:Name="S2AltisCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="281,71,0,0" Height="20" Width="72" FontWeight="Bold" Checked="S2AltisChecked" Unchecked="S2Altis_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
-                <CheckBox Content="S3 - Altis" x:Name="S3AltisCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="281,92,0,0" Height="20" Width="72" FontWeight="Bold" Checked="S3AltisChecked" Unchecked="S3Altis_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
+                <CheckBox Content="S1 - Altis" x:Name="S1AltisCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="263,47,0,0" Height="20" Width="72" FontWeight="Bold" Checked="S1AltisChecked" Unchecked="S1Altis_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
+                <CheckBox Content="S2 - Altis" x:Name="S2AltisCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="263,64,0,0" Height="20" Width="72" FontWeight="Bold" Checked="S2AltisChecked" Unchecked="S2Altis_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
+                <CheckBox Content="S3 - Tanoa" x:Name="S3TanoaCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="360,47,0,0" Height="20" Width="80" FontWeight="Bold" Checked="S3TanoaChecked" Unchecked="S3Tanoa_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
+                <CheckBox Content="S3 - Malden" x:Name="S3MaldenCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="360,64,0,0" Height="20" Width="84" FontWeight="Bold" Checked="S3MaldenChecked" Unchecked="S3Malden_UnChecked" Visibility="Visible" RenderTransformOrigin="0.539,1.3" FontSize="11"/>
 
-                <CheckBox Content="S1 - Tanoa" x:Name="S1TanoaCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="382,50,0,0" Height="20" Width="80" FontWeight="Bold" Checked="S1TanoaChecked" Unchecked="S1Tanoa_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
-                <CheckBox Content="S2 - Tanoa" x:Name="S2TanoaCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="382,71,0,0" Height="20" Width="80" FontWeight="Bold" Checked="S2TanoaChecked" Unchecked="S2Tanoa_UnChecked" Visibility="Visible" RenderTransformOrigin="0.539,1.3" FontSize="11"/>
-                <CheckBox Content="S3 - Tanoa" x:Name="S3TanoaCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="382,92,0,0" Height="20" Width="80" FontWeight="Bold" Checked="S3TanoaChecked" Unchecked="S3Tanoa_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
+                <CheckBox Content="Notification" x:Name="NotificationCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="293,82,0,0" Height="19" Width="121" FontWeight="Bold" FontSize="16" Checked="NotificationCheckBox_Checked" Unchecked="NotificationCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439" Visibility="Visible"/>
+                <CheckBox Content="Automatic update" x:Name="AutomaticUpdateCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="273,100,0,0" Height="19" Width="174" FontWeight="Bold" FontSize="16" Checked="AutomaticUpdate_Checked" Unchecked="AutomaticUpdateCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439" Visibility="Visible"/>
 
-                <CheckBox Content="Notification" x:Name="NotificationCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="311,110,0,0" Height="19" Width="121" FontWeight="Bold" FontSize="16" Checked="NotificationCheckBox_Checked" Unchecked="NotificationCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439" Visibility="Visible"/>
-                <CheckBox Content="Automatic update" x:Name="AutomaticUpdateCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="293,130,0,0" Height="19" Width="174" FontWeight="Bold" FontSize="16" Checked="AutomaticUpdate_Checked" Unchecked="AutomaticUpdateCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439" Visibility="Visible"/>
-
-                <Button Content="Delete changes to registry" HorizontalAlignment="Left" VerticalAlignment="Top" Width="189" Margin="276,150,0,0" Height="47" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" Click="DeleteChangesToRegistry" RenderTransformOrigin="0.494,0.574" FontSize="14"/>
-
-                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="44" VerticalAlignment="Top" Width="189" Margin="499,6,0,0"/>
-                <Label Content="Download speed:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="533,0,0,0" Height="29" Width="123" FontWeight="Bold" FontSize="14"/>
-                <RadioButton Content="Max Speed" HorizontalAlignment="Left" x:Name="MaxSpeedButton" GroupName="Download" VerticalAlignment="Top" Margin="536,21,0,0" FontWeight="Bold" Checked="MaxSpeed_Checked" Height="16"/>
-                <RadioButton Content="Normal Speed" HorizontalAlignment="Left" x:Name="NormalSpeedButton" GroupName="Download" VerticalAlignment="Top" Margin="536,34,0,0" FontWeight="Bold" Checked="NormalSpeed_Checked"/>
+                <Button Content="Delete changes to registry" HorizontalAlignment="Left" VerticalAlignment="Top" Width="189" Margin="258,162,0,0" Height="41" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" Click="DeleteChangesToRegistry" RenderTransformOrigin="0.494,0.574" FontSize="14"/>
+                <Label Content="Download speed:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="298,113,0,0" Height="29" Width="123" FontWeight="Bold" FontSize="14"/>
+                <RadioButton Content="Max Speed" HorizontalAlignment="Left" x:Name="MaxSpeedButton" GroupName="Download" VerticalAlignment="Top" Margin="301,134,0,0" FontWeight="Bold" Checked="MaxSpeed_Checked" Height="16"/>
+                <RadioButton Content="Normal Speed" HorizontalAlignment="Left" x:Name="NormalSpeedButton" GroupName="Download" VerticalAlignment="Top" Margin="301,147,0,0" FontWeight="Bold" Checked="NormalSpeed_Checked"/>
+                <Separator Background="#FF0F0E0E" Margin="263,119,277,211" FontWeight="Bold" />
             </Grid>
         </TabItem>
     </TabControl>

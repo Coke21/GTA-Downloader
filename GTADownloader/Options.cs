@@ -11,7 +11,7 @@ namespace GTADownloader
 {
     class Options
     {
-        public static MainWindow win = (MainWindow)System.Windows.Application.Current.MainWindow;
+        private static MainWindow win = (MainWindow)System.Windows.Application.Current.MainWindow;
 
         public static void Choose (string whichOption)
         {
@@ -48,29 +48,17 @@ namespace GTADownloader
                 case "S2AltisUnCheck":
                     keyRunMinimized.DeleteValue("S2Altis");
                     break;
-                case "S3Altis":
-                    Registry.SetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "S3Altis", "On");
-                    break;
-                case "S3AltisUnCheck":
-                    keyRunMinimized.DeleteValue("S3Altis");
-                    break;
-                case "S1Tanoa":
-                    Registry.SetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "S1Tanoa", "On");
-                    break;
-                case "S1TanoaUnCheck":
-                    keyRunMinimized.DeleteValue("S1Tanoa");
-                    break;
-                case "S2Tanoa":
-                    Registry.SetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "S2Tanoa", "On");
-                    break;
-                case "S2TanoaUnCheck":
-                    keyRunMinimized.DeleteValue("S2Tanoa");
-                    break;
                 case "S3Tanoa":
                     Registry.SetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "S3Tanoa", "On");
                     break;
                 case "S3TanoaUnCheck":
                     keyRunMinimized.DeleteValue("S3Tanoa");
+                    break;
+                case "S3Malden":
+                    Registry.SetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "S3Malden", "On");
+                    break;
+                case "S3MaldenUnCheck":
+                    keyRunMinimized.DeleteValue("S3Malden");
                     break;
                 case "notification":
                     Registry.SetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "Notification", "On");
@@ -129,6 +117,23 @@ namespace GTADownloader
             else
                 win.NotificationCheckBox.IsChecked = true;
 
+            string downloadSpeed = "";
+            try
+            {
+                downloadSpeed = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "Download Speed", "Max").ToString();
+            }
+            catch (NullReferenceException)
+            {
+                win.MaxSpeedButton.IsChecked = true;
+            }
+            finally
+            {
+                if (downloadSpeed == "Max")
+                    win.MaxSpeedButton.IsChecked = true;
+                else if (downloadSpeed == "Normal")
+                    win.NormalSpeedButton.IsChecked = true;
+            }
+
             object automaticUpdateValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "Automatic Update", null);
             if (automaticUpdateValue == null)
                 win.AutomaticUpdateCheckBox.IsChecked = false;
@@ -147,66 +152,38 @@ namespace GTADownloader
             else
                 win.S2AltisCheckBox.IsChecked = true;
 
-            object S3AltisValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "S3Altis", null);
-            if (S3AltisValue == null)
-                win.S3AltisCheckBox.IsChecked = false;
-            else
-                win.S3AltisCheckBox.IsChecked = true;
-
-            object S1TanoaValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "S1Tanoa", null);
-            if (S1TanoaValue == null)
-                win.S1TanoaCheckBox.IsChecked = false;
-            else
-                win.S1TanoaCheckBox.IsChecked = true;
-
-            object S2TanoaValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "S2Tanoa", null);
-            if (S2TanoaValue == null)
-                win.S2TanoaCheckBox.IsChecked = false;
-            else
-                win.S2TanoaCheckBox.IsChecked = true;
-
             object S3TanoaValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "S3Tanoa", null);
             if (S3TanoaValue == null)
                 win.S3TanoaCheckBox.IsChecked = false;
             else
                 win.S3TanoaCheckBox.IsChecked = true;
 
-            string downloadSpeed = "";
-            try
-            {
-                downloadSpeed = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "Download Speed", "Max").ToString();
-            }
-            catch (NullReferenceException)
-            {
-                win.MaxSpeedButton.IsChecked = true;
-            }
-            finally
-            {
-                if (downloadSpeed == "Max")
-                    win.MaxSpeedButton.IsChecked = true;
-                else if (downloadSpeed == "Normal")
-                    win.NormalSpeedButton.IsChecked = true;
-            }
+            object S3MaldenValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "S3Malden", null);
+            if (S3MaldenValue == null)
+                win.S3MaldenCheckBox.IsChecked = false;
+            else
+                win.S3MaldenCheckBox.IsChecked = true;
         }   
-        public static async Task NotificationAsync(string whichOption, CancellationToken cancellationToken)
+        public static async Task TypeOfNotification(string whichOption, CancellationToken cancellationToken)
         {
             await Task.Run(async() =>
             {
                 while (true)
                 {
-                    if (FileData.missionFileListName.Count > 0)
+                    if (FileData.missionFileListID.Count > 0)
                     {
-                        foreach (var file in FileData.missionFileListName.Zip(FileData.missionFileListID, Tuple.Create).ToList())
+                        foreach (var file in FileData.missionFileListID.ToList())
                         {
-                            var request = FileData.service.Files.Get(file.Item2);
-                            request.Fields = "size";
+                            var request = FileData.service.Files.Get(file);
+                            request.Fields = "size, name";
 
                             long fileSizeOnComputer = 0;
                             long? fileSizeOnline = request.Execute().Size;
+                            string fileName = request.Execute().Name;
 
                             try
                             {
-                                string fileLoc = Path.Combine(FileData.folderPath, file.Item1);
+                                string fileLoc = Path.Combine(FileData.folderPath, fileName);
                                 fileSizeOnComputer = new FileInfo(fileLoc).Length;
                             }
                             catch (FileNotFoundException)
@@ -217,40 +194,31 @@ namespace GTADownloader
                                 switch (whichOption)
                                 {
                                     case "notification":
-                                        if (cancellationToken.IsCancellationRequested) break;
-                                        FileData.notifyIcon.ShowBalloonTip(3000, $"Update Available for {file.Item1}", "Download now!", ToolTipIcon.None);
+                                        if (cancellationToken.IsCancellationRequested) goto Abort;
+                                        FileData.notifyIcon.ShowBalloonTip(4000, $"Update Available for {fileName}", "Download now!", ToolTipIcon.None);
                                         await Task.Delay(5000);
                                         break;
                                     case "automaticUpdate":
-                                        if (cancellationToken.IsCancellationRequested) goto End;
-                                            
-                                        await win.Dispatcher.BeginInvoke((Action)(async () =>
+                                        if (cancellationToken.IsCancellationRequested) goto Abort;
+
+                                        if (!Download.isExecuted)
                                         {
-                                            if (!Download.isExecuted)
+                                            switch (fileName)
                                             {
-                                                switch (file.Item1)
-                                                {
-                                                    case "s1.grandtheftarma.Altis.pbo":
-                                                        await Download.FileAsync(FileData.fileIDArray[0], FileData.fileNameArray[0]);
-                                                        break;
-                                                    case "s2.grandtheftarma.Altis.pbo":
-                                                        await Download.FileAsync(FileData.fileIDArray[1], FileData.fileNameArray[1]);
-                                                        break;
-                                                    case "s3.grandtheftarma.Altis.pbo":
-                                                        await Download.FileAsync(FileData.fileIDArray[2], FileData.fileNameArray[2]);
-                                                        break;
-                                                    case "s1.grandtheftarma.Tanoa.pbo":
-                                                        await Download.FileAsync(FileData.fileIDArray[3], FileData.fileNameArray[3]);
-                                                        break;
-                                                    case "s2.grandtheftarma.Tanoa.pbo":
-                                                        await Download.FileAsync(FileData.fileIDArray[4], FileData.fileNameArray[4]);
-                                                        break;
-                                                    case "s3.grandtheftarma.Tanoa.pbo":
-                                                        await Download.FileAsync(FileData.fileIDArray[5], FileData.fileNameArray[5]);
-                                                        break;
-                                                }
+                                                case "s1.grandtheftarma.Life.Altis.pbo":
+                                                    await Download.FileAsync(FileData.fileIDArray[0]);
+                                                    break;
+                                                case "s2.grandtheftarma.Life.Altis.pbo":
+                                                    await Download.FileAsync(FileData.fileIDArray[1]);
+                                                    break;
+                                                case "s3.grandtheftarma.Conflict.Tanoa.pbo":
+                                                    await Download.FileAsync(FileData.fileIDArray[2]);
+                                                    break;
+                                                case "s3.grandtheftarma.BattleRoyale.Malden.pbo":
+                                                    await Download.FileAsync(FileData.fileIDArray[3]);
+                                                    break;
                                             }
-                                        }));
+                                        }
                                         break;
                                 }
                             }
@@ -258,7 +226,7 @@ namespace GTADownloader
                     }
                 await Task.Delay(5000);
                 }
-            End:;
+            Abort:;
             });
         }
     }

@@ -10,17 +10,17 @@ namespace GTADownloader
 {
     class Download
     {
-        public static MainWindow win = (MainWindow)Application.Current.MainWindow;
+        private static MainWindow win = (MainWindow)Application.Current.MainWindow;
         public static bool isExecuted = false;
         public static string downloadSpeed;
 
-        public static async Task FileAsync(string fileID, string fileName)
+        public static async Task FileAsync(string fileID)
         {
             isExecuted = true;
             await Task.Run(async () =>
             {
-                MemoryStream stream = new MemoryStream();
                 await win.Dispatcher.BeginInvoke((Action)(() => FileData.ButtonsOption("beforeDownload")));
+                MemoryStream stream = new MemoryStream();
 
                 var request = FileData.service.Files.Get(fileID);
 
@@ -33,8 +33,9 @@ namespace GTADownloader
                         request.MediaDownloader.ChunkSize = 1000000;
                         break;
                 }
-                request.Fields = "size";
+                request.Fields = "size, name";
                 double checkedValue = Convert.ToDouble(request.Execute().Size);
+                string fileName = request.Execute().Name;
 
                 request.MediaDownloader.ProgressChanged += (IDownloadProgress progress) =>
                 {
@@ -50,7 +51,7 @@ namespace GTADownloader
 
                             win.Dispatcher.BeginInvoke((Action)(() =>
                             {
-                                win.textblockDownload.Text = $"Downloading {fileName} - " + truncated + "MB" + "/" + truncated2 + "MB";
+                                win.textblockDownload.Text = $"Downloading {fileName} - " + truncated + "MB/" + truncated2 + "MB";
                                 win.progressBarDownload.Value = percentage;
                             }));
                             break;
@@ -60,22 +61,18 @@ namespace GTADownloader
                             isExecuted = false;
                             break;
                         case DownloadStatus.Failed:
-                            win.Dispatcher.BeginInvoke((Action)(() =>
-                            {
-                                FileData.ButtonsOption("afterDownload");
-                            }));
+                            win.Dispatcher.BeginInvoke((Action)(() => FileData.ButtonsOption("afterDownload")));
                             break;
                     }
                 };
                 await request.DownloadAsync(stream);
             });
         }
-        public static void MoveMission (string locOfFile, string fileName)
+        private static void MoveMission (string locOfFile, string fileName)
         {
             string destFile = Path.Combine(FileData.folderPath, fileName);
             
-            if (File.Exists(destFile))
-                File.Delete(destFile);
+            if (File.Exists(destFile)) File.Delete(destFile);
 
             File.Move(locOfFile, destFile);
 
@@ -86,7 +83,7 @@ namespace GTADownloader
 
             FileData.ButtonsOption("afterDownload");
         }
-        public static void ShowTextFiles(string text)
+        private static void ShowTextFiles(string text)
         {
             win.TextTopOperationNotice.Text = text;
             win.TextTopOperationNotice.Foreground = Brushes.ForestGreen;
@@ -96,7 +93,7 @@ namespace GTADownloader
             myDispatcherTimer.Tick += new EventHandler(HideText);
             myDispatcherTimer.Start();
         }
-        public static void HideText(object sender, EventArgs e)
+        private static void HideText(object sender, EventArgs e)
         {
             win.TextTopOperationNotice.Text = "";
             DispatcherTimer timer = (DispatcherTimer)sender;

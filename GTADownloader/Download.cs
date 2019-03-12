@@ -10,12 +10,12 @@ namespace GTADownloader
 {
     class Download
     {
-        private static MainWindow win = (MainWindow)Application.Current.MainWindow;
         public static bool isExecuted = false;
         public static string downloadSpeed;
 
         public static async Task FileAsync(string fileID)
         {
+            MainWindow win = (MainWindow)Application.Current.MainWindow;
             isExecuted = true;
             await Task.Run(async () =>
             {
@@ -70,6 +70,7 @@ namespace GTADownloader
         }
         private static void MoveMission (string locOfFile, string fileName)
         {
+            MainWindow win = (MainWindow)Application.Current.MainWindow;
             string destFile = Path.Combine(FileData.folderPath, fileName);
             
             if (File.Exists(destFile)) File.Delete(destFile);
@@ -79,25 +80,21 @@ namespace GTADownloader
             win.TextTopOperationNotice.Text = "";
             win.TextTopOperationProgramNotice.Text = "";
 
-            ShowTextFiles($"{fileName} has been moved to your MPMissionsCache folder.");
-
-            FileData.ButtonsOption("afterDownload");
-        }
-        private static void ShowTextFiles(string text)
-        {
-            win.TextTopOperationNotice.Text = text;
+            win.TextTopOperationNotice.Text = $"{fileName} has been moved to your MPMissionsCache folder.";
             win.TextTopOperationNotice.Foreground = Brushes.ForestGreen;
 
             DispatcherTimer myDispatcherTimer = new DispatcherTimer();
             myDispatcherTimer.Interval = new TimeSpan(0, 0, 0, 2, 0);
             myDispatcherTimer.Tick += new EventHandler(HideText);
             myDispatcherTimer.Start();
-        }
-        private static void HideText(object sender, EventArgs e)
-        {
-            win.TextTopOperationNotice.Text = "";
-            DispatcherTimer timer = (DispatcherTimer)sender;
-            timer.Stop();
+
+            void HideText(object sender, EventArgs e)
+            {
+                win.TextTopOperationNotice.Text = "";
+                DispatcherTimer timer = (DispatcherTimer)sender;
+                timer.Stop();
+            }
+            FileData.ButtonsOption("afterDownload");
         }
     }
 }

@@ -94,10 +94,8 @@ namespace GTADownloader
         public static void UpdateCheckBoxes()
         {
             object startupValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run", "GTADownloader", null);
-            if (startupValue == null)
-                win.StartUpCheckBox.IsChecked = false;
-            else
-                win.StartUpCheckBox.IsChecked = true;
+            if (startupValue == null) win.StartUpCheckBox.IsChecked = false;
+            else win.StartUpCheckBox.IsChecked = true;
 
             object runMinimizedValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "Run Minimized", null);
             if (runMinimizedValue == null)
@@ -112,10 +110,8 @@ namespace GTADownloader
             }
 
             object notificationValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "Notification", null);
-            if (notificationValue == null)
-                win.NotificationCheckBox.IsChecked = false;
-            else
-                win.NotificationCheckBox.IsChecked = true;
+            if (notificationValue == null) win.NotificationCheckBox.IsChecked = false;
+            else win.NotificationCheckBox.IsChecked = true;
 
             string downloadSpeed = "";
             try
@@ -128,41 +124,29 @@ namespace GTADownloader
             }
             finally
             {
-                if (downloadSpeed == "Max")
-                    win.MaxSpeedButton.IsChecked = true;
-                else if (downloadSpeed == "Normal")
-                    win.NormalSpeedButton.IsChecked = true;
+                if (downloadSpeed == "Max") win.MaxSpeedButton.IsChecked = true;
+                else if (downloadSpeed == "Normal") win.NormalSpeedButton.IsChecked = true;
             }
 
             object automaticUpdateValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "Automatic Update", null);
-            if (automaticUpdateValue == null)
-                win.AutomaticUpdateCheckBox.IsChecked = false;
-            else
-                win.AutomaticUpdateCheckBox.IsChecked = true;
+            if (automaticUpdateValue == null) win.AutomaticUpdateCheckBox.IsChecked = false;
+            else win.AutomaticUpdateCheckBox.IsChecked = true;
 
             object S1AltisValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "S1Altis", null);
-            if (S1AltisValue == null)
-                win.S1AltisCheckBox.IsChecked = false;
-            else
-                win.S1AltisCheckBox.IsChecked = true;
+            if (S1AltisValue == null) win.S1AltisCheckBox.IsChecked = false;
+            else win.S1AltisCheckBox.IsChecked = true;
 
             object S2AltisValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "S2Altis", null);
-            if (S2AltisValue == null)
-                win.S2AltisCheckBox.IsChecked = false;
-            else
-                win.S2AltisCheckBox.IsChecked = true;
+            if (S2AltisValue == null) win.S2AltisCheckBox.IsChecked = false;
+            else win.S2AltisCheckBox.IsChecked = true;
 
             object S3TanoaValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "S3Tanoa", null);
-            if (S3TanoaValue == null)
-                win.S3TanoaCheckBox.IsChecked = false;
-            else
-                win.S3TanoaCheckBox.IsChecked = true;
+            if (S3TanoaValue == null) win.S3TanoaCheckBox.IsChecked = false;
+            else win.S3TanoaCheckBox.IsChecked = true;
 
             object S3MaldenValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\GTAProgram", "S3Malden", null);
-            if (S3MaldenValue == null)
-                win.S3MaldenCheckBox.IsChecked = false;
-            else
-                win.S3MaldenCheckBox.IsChecked = true;
+            if (S3MaldenValue == null) win.S3MaldenCheckBox.IsChecked = false;
+            else win.S3MaldenCheckBox.IsChecked = true;
         }   
         public static async Task TypeOfNotification(string whichOption, CancellationToken cancellationToken)
         {

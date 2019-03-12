@@ -79,13 +79,14 @@ namespace GTADownloader
             FileData.notifyIcon.Click += NotifyIcon_BalloonTipClicked;
             FileData.notifyIcon.BalloonTipClicked += NotifyIcon_BalloonTipClicked;
             FileData.notifyIcon.Text = "GTA Mission Downloader";
-        }
-        private static async void NotifyIcon_BalloonTipClicked(object sender, EventArgs e)
-        {
-            MainWindow win = (MainWindow)Application.Current.MainWindow;
-            win.StopOnStart();
-            win.WindowState = WindowState.Normal;
-            await Update(FileData.ctsOnStart.Token);
+
+            async void NotifyIcon_BalloonTipClicked(object sender, EventArgs e)
+            {
+                MainWindow win = (MainWindow)Application.Current.MainWindow;
+                win.StopOnStart();
+                win.WindowState = WindowState.Normal;
+                await Update(FileData.ctsOnStart.Token);
+            }
         }
     }
 }

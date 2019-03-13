@@ -13,7 +13,7 @@ namespace GTADownloader
 {
     class FileData
     {
-        public static string programVersion = "0.9a";
+        public static string programVersion = "0.9b";
 
         public static MainWindow win = (MainWindow)System.Windows.Application.Current.MainWindow;
         public static void Data()
@@ -29,7 +29,7 @@ namespace GTADownloader
                                               "1ZJQBHLuMK3-OT-BRglVg83wE2jEMrZgD",
                                               "1f5kNp5Erfs20J3u4pT2zBZNpV3A_f3sI"};
 
-        public static string programOnlineID = "1EHQqd72EELxE-GXFCS4urWzn_3fL5wI2";
+        public static string programID = "1EHQqd72EELxE-GXFCS4urWzn_3fL5wI2";
 
         public static DriveService service = new DriveService(new BaseClientService.Initializer()
         {
@@ -96,7 +96,7 @@ namespace GTADownloader
                     break;
                 case "deleteChangesToRegistry":
                     win.StartUpCheckBox.IsChecked = false;
-                    win.MinimizedCheckBox.IsChecked = false;
+                    win.HiddenCheckBox.IsChecked = false;
                     win.NotificationCheckBox.IsChecked = false;
                     win.AutomaticUpdateCheckBox.IsChecked = false;
                     break;

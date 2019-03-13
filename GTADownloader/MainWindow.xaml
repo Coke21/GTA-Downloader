@@ -61,7 +61,7 @@
 
                 <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="199" VerticalAlignment="Top" Width="189" Margin="258,4,0,0"/>
                 <CheckBox Content="Run at startup" Name="StartUpCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="284,6,0,0" Height="23" Width="129" FontWeight="Bold" FontSize="16" Checked="StartUpCheckBox_Checked" Unchecked="StartUpCheckBox_Unchecked"/>
-                <CheckBox Content="Run minimized" Name="MinimizedCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="298,27,0,0" Height="23" Width="110" FontWeight="Bold" Checked="RunMinimizedCheckBox_Checked" Unchecked="RunMinimizedCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439"/>
+                <CheckBox Content="Run hidden" Name="HiddenCheckBox" ToolTip="Hide the program upon run" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="298,27,0,0" Height="23" Width="110" FontWeight="Bold" Checked="RunHiddenCheckBox_Checked" Unchecked="RunHiddenCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439"/>
                 <Separator Background="#FF0F0E0E" Margin="264,43,277,287" FontWeight="Bold" />
 
                 <CheckBox Content="S1 - Altis" x:Name="S1AltisCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="263,47,0,0" Height="20" Width="72" FontWeight="Bold" Checked="S1AltisChecked" Unchecked="S1Altis_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>

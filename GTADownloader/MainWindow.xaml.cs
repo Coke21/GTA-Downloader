@@ -72,8 +72,8 @@ namespace GTADownloader
         }
         private void StartUpCheckBox_Checked(object sender, RoutedEventArgs e) => Options.Choose("startUp");
         private void StartUpCheckBox_Unchecked(object sender, RoutedEventArgs e) => Options.Choose("startUpUnCheck");
-        private void RunMinimizedCheckBox_Checked(object sender, RoutedEventArgs e) => Options.Choose("runMinimized");
-        private void RunMinimizedCheckBox_UnChecked(object sender, RoutedEventArgs e) => Options.Choose("runMinimizedUnCheck");
+        private void RunHiddenCheckBox_Checked(object sender, RoutedEventArgs e) => Options.Choose("runHidden");
+        private void RunHiddenCheckBox_UnChecked(object sender, RoutedEventArgs e) => Options.Choose("runHiddenUnCheck");
         private void S1AltisChecked(object sender, RoutedEventArgs e)
         {
             FileData.missionFileListID.Add(FileData.fileIDArray[0]);
@@ -117,7 +117,7 @@ namespace GTADownloader
         private async void NotificationCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             Options.Choose("notification");
-            await Options.TypeOfNotification("notification", FileData.ctsNotification.Token);
+            await CheckForUpdate.TypeOfNotification("notification", FileData.ctsNotification.Token);
         }
         private void NotificationCheckBox_UnChecked(object sender, RoutedEventArgs e)
         {
@@ -132,7 +132,7 @@ namespace GTADownloader
         private async void AutomaticUpdate_Checked(object sender, RoutedEventArgs e)
         {
             Options.Choose("automaticUpdate");
-            await Options.TypeOfNotification("automaticUpdate", FileData.ctsAutomaticUpdate.Token);
+            await CheckForUpdate.TypeOfNotification("automaticUpdate", FileData.ctsAutomaticUpdate.Token);
         }
         private void AutomaticUpdateCheckBox_UnChecked(object sender, RoutedEventArgs e)
         {

@@ -4,7 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="740">
+        Loaded="WindowLoad"
+        Title="MainWindow" Height="400" Width="740"
+        WindowStartupLocation ="CenterScreen"
+        ResizeMode="CanMinimize">
     <TabControl Background="#FFBDB5B5">
         <TabItem Header="Mission File">
             <Grid>
@@ -29,7 +32,7 @@
                 <Button Content="All Special" HorizontalAlignment="Left" VerticalAlignment="Top" Width="178" Margin="512,198,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S3MaldenS3TanoaButton" Click="S3MaldenS3Tanoa"/>
                 <Button Content="All Active Mission Files" HorizontalAlignment="Left" VerticalAlignment="Top" Width="178" Margin="512,246,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="AllFiles" Click="AllFilesClick"/>
 
-                <TextBlock HorizontalAlignment="Left" x:Name="TextTopTitle" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="205,54,0,0" Height="23" Width="303" FontWeight="Bold" FontSize="21" TextAlignment="Center"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="TextTopTitle" TextWrapping="Wrap" Text="GTA Mission Downloader" VerticalAlignment="Top" Margin="205,54,0,0" Height="23" Width="303" FontWeight="Bold" FontSize="21" TextAlignment="Center"/>
                 <TextBlock HorizontalAlignment="Left" x:Name="textblockDownload" TextWrapping="Wrap" VerticalAlignment="Top" Margin="171,317,0,0" Width="380" Height="15" FontSize="11" FontWeight="Bold" TextAlignment="Center"/>
                 <TextBlock HorizontalAlignment="Left" x:Name="TextTopOperationNotice" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="129" Width="298" TextAlignment="Center" Foreground="{x:Null}" Margin="418,0,0,0" FontWeight="Bold" FontSize="11"/>
                 <TextBlock HorizontalAlignment="Left" x:Name="TextTopOperationProgramNotice" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="245,79,0,0" Height="25" Width="220" TextAlignment="Center" FontWeight="Bold"/>
@@ -60,13 +63,14 @@
                 <Button Content="About" HorizontalAlignment="Left" VerticalAlignment="Top" Width="189" Margin="258,277,0,0" Height="53" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16"  Click="Info_Click"/>
 
                 <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="199" VerticalAlignment="Top" Width="189" Margin="258,4,0,0"/>
-                <CheckBox Content="Run at startup" Name="StartUpCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="284,6,0,0" Height="23" Width="129" FontWeight="Bold" FontSize="16" Checked="StartUpCheckBox_Checked" Unchecked="StartUpCheckBox_Unchecked"/>
-                <CheckBox Content="Run hidden" Name="HiddenCheckBox" ToolTip="Hide the program upon run" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="298,27,0,0" Height="23" Width="110" FontWeight="Bold" Checked="RunHiddenCheckBox_Checked" Unchecked="RunHiddenCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439"/>
+                <CheckBox Content="Run at startup" Name="StartUpCheckBox" ToolTip="Run the program automatically upon PC restart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="287,6,0,0" Height="21" Width="129" FontWeight="Bold" FontSize="16" Checked="StartUpCheckBox_Checked" Unchecked="StartUpCheckBox_Unchecked"/>
+                <CheckBox Content="Run hidden" Name="HiddenCheckBox" ToolTip="Hide the program upon run" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="263,27,0,0" Height="16" Width="88" FontWeight="Bold" Checked="RunHiddenCheckBox_Checked" Unchecked="RunHiddenCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439"/>
+                <CheckBox Content="Run TS" x:Name="RunTSAuto" ToolTip="Run TS automatically upon program start" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="360,27,0,0" Height="16" Width="65" FontWeight="Bold" Checked="RunTSAutoCheckBox_Checked" Unchecked="RunTSAutoCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439"/>
                 <Separator Background="#FF0F0E0E" Margin="264,43,277,287" FontWeight="Bold" />
 
-                <CheckBox Content="S1 - Altis" x:Name="S1AltisCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="263,47,0,0" Height="20" Width="72" FontWeight="Bold" Checked="S1AltisChecked" Unchecked="S1Altis_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
-                <CheckBox Content="S2 - Altis" x:Name="S2AltisCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="263,64,0,0" Height="20" Width="72" FontWeight="Bold" Checked="S2AltisChecked" Unchecked="S2Altis_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
-                <CheckBox Content="S3 - Tanoa" x:Name="S3TanoaCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="360,47,0,0" Height="20" Width="80" FontWeight="Bold" Checked="S3TanoaChecked" Unchecked="S3Tanoa_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
+                <CheckBox Content="S1 - Altis" x:Name="S1AltisCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="263,47,0,0" Height="20" Width="68" FontWeight="Bold" Checked="S1AltisChecked" Unchecked="S1Altis_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
+                <CheckBox Content="S2 - Altis" x:Name="S2AltisCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="263,64,0,0" Height="20" Width="68" FontWeight="Bold" Checked="S2AltisChecked" Unchecked="S2Altis_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
+                <CheckBox Content="S3 - Tanoa" x:Name="S3TanoaCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="360,47,0,0" Height="20" Width="76" FontWeight="Bold" Checked="S3TanoaChecked" Unchecked="S3Tanoa_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
                 <CheckBox Content="S3 - Malden" x:Name="S3MaldenCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="360,64,0,0" Height="20" Width="84" FontWeight="Bold" Checked="S3MaldenChecked" Unchecked="S3Malden_UnChecked" Visibility="Visible" RenderTransformOrigin="0.539,1.3" FontSize="11"/>
 
                 <CheckBox Content="Notification" x:Name="NotificationCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="293,82,0,0" Height="19" Width="121" FontWeight="Bold" FontSize="16" Checked="NotificationCheckBox_Checked" Unchecked="NotificationCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439" Visibility="Visible"/>
@@ -77,6 +81,7 @@
                 <RadioButton Content="Max Speed" HorizontalAlignment="Left" x:Name="MaxSpeedButton" GroupName="Download" VerticalAlignment="Top" Margin="301,134,0,0" FontWeight="Bold" Checked="MaxSpeed_Checked" Height="16"/>
                 <RadioButton Content="Normal Speed" HorizontalAlignment="Left" x:Name="NormalSpeedButton" GroupName="Download" VerticalAlignment="Top" Margin="301,147,0,0" FontWeight="Bold" Checked="NormalSpeed_Checked"/>
                 <Separator Background="#FF0F0E0E" Margin="263,119,277,211" FontWeight="Bold" />
+                
             </Grid>
         </TabItem>
     </TabControl>

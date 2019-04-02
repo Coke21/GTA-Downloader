@@ -13,7 +13,7 @@ namespace GTADownloader
     {
         private static long gtaProgramOnComputerSize = new FileInfo(FileData.programPath + FileData.programName).Length;
 
-        public static async Task Update(CancellationToken cancellationToken)
+        public static async Task UpdateAsync(CancellationToken cancellationToken)
         {
             MainWindow win = (MainWindow)Application.Current.MainWindow;
             await Task.Run(() =>
@@ -86,11 +86,11 @@ namespace GTADownloader
                 win.StopOnStart();
                 win.WindowState = WindowState.Normal;
                 win.Show();
-                await Update(FileData.ctsOnStart.Token);
+                await UpdateAsync(FileData.ctsOnStart.Token);
             }
         }
 
-        public static async Task TypeOfNotification(string whichOption, CancellationToken cancellationToken)
+        public static async Task TypeOfNotificationAsync(string whichOption, CancellationToken cancellationToken)
         {
             MainWindow win = (MainWindow)Application.Current.MainWindow;
             await Task.Run(async () =>

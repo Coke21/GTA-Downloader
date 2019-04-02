@@ -13,16 +13,7 @@ namespace GTADownloader
 {
     class FileData
     {
-        public static string programVersion = "0.9b";
-
-        public static MainWindow win = (MainWindow)System.Windows.Application.Current.MainWindow;
-        public static void Data()
-        {
-            win.Title = $"GTA Mission Downloader | {programVersion} by Coke";
-            win.ResizeMode = ResizeMode.CanMinimize;
-            win.TextTopTitle.Text = "GTA Mission Downloader";
-            win.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-        }
+        public static string programVersion = "0.9c";
 
         public static string[] fileIDArray = {"1KIzqR9NMBZoxcdibMZPxr13__azGdGye",
                                               "15Or16ZcPqSzGF6b41p7_IDGzI3SDGCnJ",
@@ -40,10 +31,11 @@ namespace GTADownloader
         public static string folderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/Arma 3/MPMissionsCache/";
 
         public static string getDownloadFolderPath = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders", "{374DE290-123F-4565-9164-39C4925E467B}", String.Empty).ToString() + @"\";
-        public static string getSteamFolderPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\bohemia interactive\arma 3", "main", String.Empty).ToString() + @"\arma3battleye";
+        public static string getArma3EXEPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\bohemia interactive\arma 3", "main", String.Empty).ToString() + @"\arma3battleye";
 
         public static string programPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
         public static string programName = AppDomain.CurrentDomain.FriendlyName;
+        public static string programRegeditPath = @"HKEY_CURRENT_USER\Software\GTAProgram";
 
         public static List<string> missionFileListID = new List<string>();
         public static NotifyIcon notifyIcon = new NotifyIcon();
@@ -55,6 +47,7 @@ namespace GTADownloader
 
         public static void ButtonsOption(string whichOption)
         {
+            MainWindow win = (MainWindow)System.Windows.Application.Current.MainWindow;
             switch (whichOption)
             {
                 case "beforeDownload":
@@ -97,6 +90,7 @@ namespace GTADownloader
                 case "deleteChangesToRegistry":
                     win.StartUpCheckBox.IsChecked = false;
                     win.HiddenCheckBox.IsChecked = false;
+                    win.RunTSAuto.IsChecked = false;
                     win.NotificationCheckBox.IsChecked = false;
                     win.AutomaticUpdateCheckBox.IsChecked = false;
                     break;

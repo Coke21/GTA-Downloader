@@ -8,6 +8,21 @@
         Title="MainWindow" Height="400" Width="740"
         WindowStartupLocation ="CenterScreen"
         ResizeMode="CanMinimize">
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
     <TabControl Background="#FFBDB5B5">
         <TabItem Header="Mission File">
             <Grid>
@@ -40,19 +55,25 @@
                 <Label Content="Active Normal MF:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="39,120,0,0" Width="154" FontSize="16" FontWeight="Bold"/>
                 <Label Content="Active Special MF:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,193,0,0" Width="155" FontSize="16" FontWeight="Bold"/>
                 <Label Content="Mass Download:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="528,119,0,0" Width="155" FontSize="16" FontWeight="Bold"/>
+
+                <Button Style="{StaticResource ButtonStyle}" HorizontalAlignment="Left" ToolTip="Stops the current download" VerticalAlignment="Top" Margin="411,299,0,0" Background="{x:Null}" Foreground="Black" FontWeight="Bold" x:Name="StopDownloadName" Visibility="Hidden" Click="StopDownloadClick" BorderBrush="{x:Null}">
+                    <StackPanel>
+                        <Image Source="Images/pauseIcon.png" Height="25" Width="25" />
+                    </StackPanel>
+                </Button>
             </Grid>
         </TabItem>
 
-        <TabItem Header="Join Server" PreviewMouseDown = "JoinServerTabItemClicked">
+        <TabItem Header="Join" PreviewMouseDown = "JoinServerTabItemClicked">
             <Grid>
-                <Button Content="Join Server 1" x:Name="JoinServer1Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,57,0,0" Height="53" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS1"/>
-                <Button Content="Join Server 2" x:Name="JoinServer2Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,122,0,0" Height="53" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS2"/>
-                <Button Content="Join Server 3 (Conflict Server)" x:Name="JoinServer3Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,187,0,0" Height="53" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS3"/>
-                <Button Content="Join TS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,252,0,0" Height="53" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinTS"/>
+                <Button Content="Join Server 1" x:Name="JoinServer1Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,48,0,0" Height="56" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS1"/>
+                <Button Content="Join Server 2" x:Name="JoinServer2Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,113,0,0" Height="56" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS2"/>
+                <Button Content="Join Server 3 (Conflict Server)" x:Name="JoinServer3Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,178,0,0" Height="56" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS3"/>
+                <Button Content="Join TS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,243,0,0" Height="56" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinTS"/>
 
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer1" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,71,0,0" Height="47" Width="375" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer2" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,140,0,0" Height="43" Width="375" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer3" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,205,0,0" Height="43" Width="360" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer1" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,62,0,0" Height="47" Width="375" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer2" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,131,0,0" Height="43" Width="375" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer3" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,196,0,0" Height="43" Width="360" FontWeight="Bold"/>
             </Grid>
         </TabItem>
 
@@ -74,14 +95,14 @@
                 <CheckBox Content="S3 - Malden" x:Name="S3MaldenCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="360,64,0,0" Height="20" Width="84" FontWeight="Bold" Checked="S3MaldenChecked" Unchecked="S3Malden_UnChecked" Visibility="Visible" RenderTransformOrigin="0.539,1.3" FontSize="11"/>
 
                 <CheckBox Content="Notification" x:Name="NotificationCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="293,82,0,0" Height="19" Width="121" FontWeight="Bold" FontSize="16" Checked="NotificationCheckBox_Checked" Unchecked="NotificationCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439" Visibility="Visible"/>
+                <Label Content="Download speed:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="298,113,0,0" Height="29" Width="123" FontWeight="Bold" FontSize="14"/>
                 <CheckBox Content="Automatic update" x:Name="AutomaticUpdateCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="273,100,0,0" Height="19" Width="174" FontWeight="Bold" FontSize="16" Checked="AutomaticUpdate_Checked" Unchecked="AutomaticUpdateCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439" Visibility="Visible"/>
 
                 <Button Content="Delete changes to registry" HorizontalAlignment="Left" VerticalAlignment="Top" Width="189" Margin="258,162,0,0" Height="41" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" Click="DeleteChangesToRegistry" RenderTransformOrigin="0.494,0.574" FontSize="14"/>
-                <Label Content="Download speed:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="298,113,0,0" Height="29" Width="123" FontWeight="Bold" FontSize="14"/>
+
                 <RadioButton Content="Max Speed" HorizontalAlignment="Left" x:Name="MaxSpeedButton" GroupName="Download" VerticalAlignment="Top" Margin="301,134,0,0" FontWeight="Bold" Checked="MaxSpeed_Checked" Height="16"/>
                 <RadioButton Content="Normal Speed" HorizontalAlignment="Left" x:Name="NormalSpeedButton" GroupName="Download" VerticalAlignment="Top" Margin="301,147,0,0" FontWeight="Bold" Checked="NormalSpeed_Checked"/>
                 <Separator Background="#FF0F0E0E" Margin="263,119,277,211" FontWeight="Bold" />
-                
             </Grid>
         </TabItem>
     </TabControl>

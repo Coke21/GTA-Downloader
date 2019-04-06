@@ -16,42 +16,42 @@ namespace GTADownloader
         }
         private void WindowLoad(object sender, RoutedEventArgs e)
         {
-            Title = $"GTA Mission Downloader | {FileData.programVersion} by Coke";
+            Title = $"GTA Mission Downloader | {Data.programVersion} by Coke";
             RemoveRemainsAsync();
-            CheckForUpdate.UpdateAsync(FileData.ctsOnStart.Token);
+            CheckForUpdate.UpdateAsync(Data.ctsOnStart.Token);
             Join.UpdateServerAsync();
             CheckForUpdate.TaskBar();
             Options.UpdateCheckBoxes();
         }
-        private async void S1Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(FileData.fileIDArray[0]);
-        private async void S2Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(FileData.fileIDArray[1]);
-        private async void S3Tanoa(object sender, RoutedEventArgs e) => await Download.FileAsync(FileData.fileIDArray[2]);
-        private async void S3Malden(object sender, RoutedEventArgs e) => await Download.FileAsync(FileData.fileIDArray[3]);
+        private async void S1Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
+        private async void S2Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[1], Data.ctsStopDownloading.Token);
+        private async void S3Tanoa(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token);
+        private async void S3Malden(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token);
         private async void S1S2Altis(object sender, RoutedEventArgs e)
         {
-            await Download.FileAsync(FileData.fileIDArray[0]);
-            await Download.FileAsync(FileData.fileIDArray[1]);
+            await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
+            await Download.FileAsync(Data.fileIDArray[1], Data.ctsStopDownloading.Token);
         }
         private async void S3MaldenS3Tanoa(object sender, RoutedEventArgs e)
         {
-            await Download.FileAsync(FileData.fileIDArray[2]);
-            await Download.FileAsync(FileData.fileIDArray[3]);
+            await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token);
+            await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token);
         }
         private async void AllFilesClick(object sender, RoutedEventArgs e)
         {
-            await Download.FileAsync(FileData.fileIDArray[0]);
-            await Download.FileAsync(FileData.fileIDArray[1]);
-            await Download.FileAsync(FileData.fileIDArray[2]);
-            await Download.FileAsync(FileData.fileIDArray[3]);
+            await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
+            await Download.FileAsync(Data.fileIDArray[1], Data.ctsStopDownloading.Token);
+            await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token);
+            await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token);
         }
         // Is Update Available
         private void JoinServerTabItemClicked(object sender, MouseButtonEventArgs e) => StopOnStart();
         private void OptionsTabItemClicked(object sender, MouseButtonEventArgs e) => StopOnStart();
         public void StopOnStart()
         {
-            FileData.ctsOnStart.Cancel();
-            FileData.ctsOnStart.Dispose();
-            FileData.ctsOnStart = new CancellationTokenSource();
+            Data.ctsOnStart.Cancel();
+            Data.ctsOnStart.Dispose();
+            Data.ctsOnStart = new CancellationTokenSource();
 
             TextTopOperationNotice.Text = "";
             TextTopOperationProgramNotice.Text = "";
@@ -63,11 +63,11 @@ namespace GTADownloader
         private void JoinTS(object sender, RoutedEventArgs e) => Join.Server("joinTS");
         //Options
         private void OfficialThread_Click(object sender, RoutedEventArgs e) => Process.Start("https://grandtheftarma.com/topic/116196-gta-mission-downloader/");
-        private void Info_Click(object sender, RoutedEventArgs e) => MessageBox.Show($"Current version {FileData.programVersion}. \n" +
-        $"Do you want to help develop this application? " +
-        $"If so, head to official thread on GTA's forum and post your suggestion. \n" +
-        $"Thank you for using this application! - Coke",
-        "Information", MessageBoxButton.OK, MessageBoxImage.Warning);
+        private void Info_Click(object sender, RoutedEventArgs e) => MessageBox.Show($"Current version {Data.programVersion}. \n" +
+                                                                    $"Do you want to help develop this application? " +
+                                                                    $"If so, head to official thread on GTA's forum and post your suggestion. \n" +
+                                                                    $"Thank you for using this application! - Coke",
+                                                                    "Information", MessageBoxButton.OK, MessageBoxImage.Warning);
 
         private async void StartUpCheckBox_Checked(object sender, RoutedEventArgs e) => await Options.Choose("startUp");
         private async void StartUpCheckBox_Unchecked(object sender, RoutedEventArgs e) => await Options.Choose("startUpUnCheck");
@@ -103,8 +103,8 @@ namespace GTADownloader
 
         protected override void OnClosed(EventArgs e)
         {
-            FileData.notifyIcon.Icon.Dispose();
-            FileData.notifyIcon.Dispose();
+            Data.notifyIcon.Icon.Dispose();
+            Data.notifyIcon.Dispose();
 
             base.OnClosed(e);
             Application.Current.Shutdown();
@@ -113,13 +113,13 @@ namespace GTADownloader
         {
             await Task.Run(() =>
             {
-                foreach (var item in FileData.fileIDArray)
+                foreach (var item in Data.fileIDArray)
                 {
-                    var request = FileData.service.Files.Get(item);
+                    var request = Data.service.Files.Get(item);
                     request.Fields = "name";
                     string fileName = request.Execute().Name;
 
-                    string filePath = FileData.getDownloadFolderPath + fileName;
+                    string filePath = Data.getDownloadFolderPath + fileName;
                     if (File.Exists(filePath))
                     {
                         MessageBox.Show($"Found remains of {fileName}, deleting it...", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -127,6 +127,13 @@ namespace GTADownloader
                     }
                 }
             });
+        }
+
+        private void StopDownloadClick(object sender, RoutedEventArgs e)
+        {
+            Data.ctsStopDownloading.Cancel();
+            Data.ctsStopDownloading.Dispose();
+            Data.ctsStopDownloading = new CancellationTokenSource();
         }
     }
 }

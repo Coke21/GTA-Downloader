@@ -143,7 +143,7 @@
     </Compile>
     <Compile Include="CheckForUpdate.cs" />
     <Compile Include="Download.cs" />
-    <Compile Include="FileData.cs" />
+    <Compile Include="Data.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -169,6 +169,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\pauseIcon.png" />
     <None Include=".dll files\Google.Apis.Core.dll" />
     <None Include=".dll files\Google.Apis.Core.pdb" />
     <None Include=".dll files\Google.Apis.dll" />

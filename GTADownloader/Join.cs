@@ -11,8 +11,6 @@ namespace GTADownloader
     {
         public static void Server(string server, bool showNotificationMsg = true)
         {
-            if (showNotificationMsg) MessageBox.Show("The application is starting...(this window can be closed)", "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
             switch (server)
             {
                 case "joinS1":
@@ -32,6 +30,8 @@ namespace GTADownloader
                     Process.Start("ts3server://" + arg4);
                     break;
             }
+
+            if (showNotificationMsg) MessageBox.Show("The application is starting...(this window can be closed)", "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
         public static async Task UpdateServerAsync()
         {

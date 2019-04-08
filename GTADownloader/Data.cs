@@ -46,6 +46,13 @@ namespace GTADownloader
         public static CancellationTokenSource ctsStopDownloading = new CancellationTokenSource();
 
 
+        public static void TaskBar()
+        {
+            notifyIcon.Visible = true;
+            notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath);
+            notifyIcon.Text = "GTA Mission Downloader";
+            notifyIcon.Click += (sender, e) => CheckForUpdate.NotifyIconBalloonTipClicked(sender, e);
+        }
         public static void ButtonsOption(string whichOption)
         {
             MainWindow win = (MainWindow)System.Windows.Application.Current.MainWindow;

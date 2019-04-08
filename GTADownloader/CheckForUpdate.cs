@@ -13,7 +13,7 @@ namespace GTADownloader
     {
         private static long gtaProgramOnComputerSize = new FileInfo(Data.programPath + Data.programName).Length;
 
-        public static async Task UpdateAsync(CancellationToken cancellationToken)
+        public static async Task <bool> UpdateAsync(CancellationToken cancellationToken)
         {
             MainWindow win = (MainWindow)Application.Current.MainWindow;
             await Task.Run(() =>
@@ -71,28 +71,22 @@ namespace GTADownloader
                         if (cancellationToken.IsCancellationRequested) win.TextTopOperationProgramNotice.Text = "";
                     }));
             });
+            return true;
         }
-        public static void TaskBar()
-        {
-            Data.notifyIcon.Visible = true;
-            Data.notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath);
-            Data.notifyIcon.Click += NotifyIcon_BalloonTipClicked;
-            Data.notifyIcon.BalloonTipClicked += NotifyIcon_BalloonTipClicked;
-            Data.notifyIcon.Text = "GTA Mission Downloader";
 
-            async void NotifyIcon_BalloonTipClicked(object sender, EventArgs e)
-            {
-                MainWindow win = (MainWindow)Application.Current.MainWindow;
-                win.StopOnStart();
-                win.WindowState = WindowState.Normal;
-                win.Show();
-                await UpdateAsync(Data.ctsOnStart.Token);
-            }
+        public static async void NotifyIconBalloonTipClicked(object sender, EventArgs e, bool stopOnStart = true, bool updateFiles = true)
+        {
+            MainWindow win = (MainWindow)Application.Current.MainWindow;
+            bool result = stopOnStart ? win.StopOnStart() : false;
+            win.WindowState = WindowState.Normal;
+            win.Show();
+            bool result2 = updateFiles ? await UpdateAsync(Data.ctsOnStart.Token) : false;
         }
 
         public static async Task TypeOfNotificationAsync(string whichOption, CancellationToken cancellationToken)
         {
             MainWindow win = (MainWindow)Application.Current.MainWindow;
+            Data.notifyIcon.BalloonTipClicked += (sender, e) => NotifyIconBalloonTipClicked(sender, e);
             await Task.Run(async () =>
             {
                 while (!cancellationToken.IsCancellationRequested)
@@ -121,7 +115,7 @@ namespace GTADownloader
                                 switch (whichOption)
                                 {
                                     case "notification":
-                                        Data.notifyIcon.ShowBalloonTip(4000, $"Update Available for {fileName}", "Download now!", System.Windows.Forms.ToolTipIcon.None);
+                                        Data.notifyIcon.ShowBalloonTip(4000, "Download now!", $"Update Available for {fileName}", System.Windows.Forms.ToolTipIcon.None);
                                         await Task.Delay(5000);
                                         break;
                                     case "automaticUpdate":

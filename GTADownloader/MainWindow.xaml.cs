@@ -20,7 +20,7 @@ namespace GTADownloader
             RemoveRemainsAsync();
             CheckForUpdate.UpdateAsync(Data.ctsOnStart.Token);
             Join.UpdateServerAsync();
-            CheckForUpdate.TaskBar();
+            Data.TaskBar();
             Options.UpdateCheckBoxes();
         }
         private async void S1Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
@@ -44,10 +44,16 @@ namespace GTADownloader
             await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token);
             await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token);
         }
+        private void StopDownloadClick(object sender, RoutedEventArgs e)
+        {
+            Data.ctsStopDownloading.Cancel();
+            Data.ctsStopDownloading.Dispose();
+            Data.ctsStopDownloading = new CancellationTokenSource();
+        }
         // Is Update Available
         private void JoinServerTabItemClicked(object sender, MouseButtonEventArgs e) => StopOnStart();
         private void OptionsTabItemClicked(object sender, MouseButtonEventArgs e) => StopOnStart();
-        public void StopOnStart()
+        public bool StopOnStart()
         {
             Data.ctsOnStart.Cancel();
             Data.ctsOnStart.Dispose();
@@ -55,6 +61,7 @@ namespace GTADownloader
 
             TextTopOperationNotice.Text = "";
             TextTopOperationProgramNotice.Text = "";
+            return true;
         }
         // Join server
         private void JoinS1(object sender, RoutedEventArgs e) => Join.Server("joinS1");
@@ -63,7 +70,7 @@ namespace GTADownloader
         private void JoinTS(object sender, RoutedEventArgs e) => Join.Server("joinTS");
         //Options
         private void OfficialThread_Click(object sender, RoutedEventArgs e) => Process.Start("https://grandtheftarma.com/topic/116196-gta-mission-downloader/");
-        private void Info_Click(object sender, RoutedEventArgs e) => MessageBox.Show($"Current version {Data.programVersion}. \n" +
+        private void About_Click(object sender, RoutedEventArgs e) => MessageBox.Show($"Current version {Data.programVersion}. \n" +
                                                                     $"Do you want to help develop this application? " +
                                                                     $"If so, head to official thread on GTA's forum and post your suggestion. \n" +
                                                                     $"Thank you for using this application! - Coke",
@@ -127,13 +134,6 @@ namespace GTADownloader
                     }
                 }
             });
-        }
-
-        private void StopDownloadClick(object sender, RoutedEventArgs e)
-        {
-            Data.ctsStopDownloading.Cancel();
-            Data.ctsStopDownloading.Dispose();
-            Data.ctsStopDownloading = new CancellationTokenSource();
         }
     }
 }

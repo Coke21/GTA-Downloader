@@ -82,7 +82,6 @@ namespace GTADownloader
         }
         private static void MoveMission (string locOfFile, string fileName)
         {
-            MainWindow win = (MainWindow)Application.Current.MainWindow;
             string destFile = Path.Combine(Data.folderPath, fileName);
             
             if (File.Exists(destFile)) File.Delete(destFile);

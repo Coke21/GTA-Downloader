@@ -58,7 +58,6 @@ namespace GTADownloader
         }
         private static void GetServerInfo(ServerInfo info, System.Windows.Controls.TextBlock textBlock, System.Windows.Controls.Button button)
         {
-            MainWindow win = (MainWindow)Application.Current.MainWindow;
             if (info != null)
             {
                 if (info.Players + 1 != info.MaxPlayers)

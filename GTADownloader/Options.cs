@@ -33,6 +33,7 @@ namespace GTADownloader
                 case "runHiddenUnCheck":
                     win.StartUpCheckBox.IsEnabled = true;
                     keyDeleteValue.DeleteValue("Run Hidden");
+                    win.ShowInTaskbar = true;
                     break;
                 case "runTSAuto":
                     Registry.SetValue($"{Data.programRegeditPath}", "Run TS Auto", "On");
@@ -126,12 +127,13 @@ namespace GTADownloader
             if (startupValue != null) win.StartUpCheckBox.IsChecked = true;
 
             object runMinimizedValue = Registry.GetValue($"{Data.programRegeditPath}", "Run Hidden", null);
-            if (runMinimizedValue == null) win.WindowState = WindowState.Normal;
-            else
+            if (runMinimizedValue != null)
             {
                 win.HiddenCheckBox.IsChecked = true;
                 win.ShowInTaskbar = false;
                 win.Hide();
+                Data.notifyIcon.ShowBalloonTip(4000, "Reminder!", $"The program is running in the background!", System.Windows.Forms.ToolTipIcon.None);
+                Data.notifyIcon.BalloonTipClicked += (sender, e) => CheckForUpdate.NotifyIconBalloonTipClicked(sender, e, false, false);
             }
 
             object runTSAutoValue = Registry.GetValue($"{Data.programRegeditPath}", "Run TS Auto", null);

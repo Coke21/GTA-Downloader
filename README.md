@@ -4,6 +4,8 @@ Hi, this is my version of GTA Downloader. This project was made public due to th
 - If one is afraid that is a virus, one can browse the code.
 - To build my portfolio.
 
+Changelog: https://docs.google.com/document/d/1HzbVqK26YLsJtSBC2XJ7s_VcQ9IWH9ZWy3LEGEDwrJk/edit
+
 I would like to mention that I've just started my journey with C# and so not everything is perfectly coded. I will be gradually improving the code.
 
 Due to the fact that I have to use a private API key to access the Google drive API, I've removed the key from FileData -> service. To acquire such key follow the steps below.

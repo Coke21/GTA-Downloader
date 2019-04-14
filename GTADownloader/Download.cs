@@ -65,7 +65,8 @@ namespace GTADownloader
                                 break;
                             case DownloadStatus.Failed:
                                 win.Dispatcher.BeginInvoke((Action)(() => Data.ButtonsOption("afterDownload")));
-                                win.Dispatcher.BeginInvoke((Action)(() => WriteNotification($"An error appeared with {fileName} file!", Brushes.Red, 5)));
+                                win.Dispatcher.BeginInvoke((Action)(() => TypeNotification($"An error appeared with {fileName} file!", Brushes.Red, 5)));
+                                Data.missionFileListID.Remove(fileID);
                                 isExecuted = false;
                                 break;
                         }
@@ -82,17 +83,17 @@ namespace GTADownloader
         }
         private static void MoveMission (string locOfFile, string fileName)
         {
-            string destFile = Path.Combine(Data.folderPath, fileName);
+            string destFile = Path.Combine(Data.missionFolderPath, fileName);
             
             if (File.Exists(destFile)) File.Delete(destFile);
 
             File.Move(locOfFile, destFile);
 
-            WriteNotification($"{fileName} has been moved to your MPMissionsCache folder", Brushes.ForestGreen);
+            TypeNotification($"{fileName} has been moved to your MPMissionsCache folder", Brushes.ForestGreen);
 
             Data.ButtonsOption("afterDownload");
         }
-        private static void WriteNotification (string text, SolidColorBrush colour, int timeDisplaySec = 3)
+        private static void TypeNotification (string text, SolidColorBrush colour, int timeDisplaySec = 3)
         {
             MainWindow win = (MainWindow)Application.Current.MainWindow;
 

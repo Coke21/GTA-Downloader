@@ -11,7 +11,7 @@ namespace GTADownloader
 {
     class CheckForUpdate
     {
-        private static long gtaProgramOnComputerSize = new FileInfo(Data.programPath + Data.programName).Length;
+        private static long gtaProgramOnComputerSize = new FileInfo(Data.programPathExe + Data.programName).Length;
 
         public static async Task <bool> UpdateAsync(CancellationToken cancellationToken)
         {
@@ -31,7 +31,7 @@ namespace GTADownloader
                     long fileSizeOnComputer = 0;
                     string fileName = request.Execute().Name;
 
-                    string fileLoc = Path.Combine(Data.folderPath, fileName);
+                    string fileLoc = Path.Combine(Data.missionFolderPath, fileName);
 
                     if (cancellationToken.IsCancellationRequested)
                     {
@@ -104,7 +104,7 @@ namespace GTADownloader
 
                             try
                             {
-                                string fileLoc = Path.Combine(Data.folderPath, fileName);
+                                string fileLoc = Path.Combine(Data.missionFolderPath, fileName);
                                 fileSizeOnComputer = new FileInfo(fileLoc).Length;
                             }
                             catch (FileNotFoundException)

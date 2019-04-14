@@ -4,6 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 
 namespace GTADownloader
 {
@@ -14,7 +16,6 @@ namespace GTADownloader
         public static async Task Choose (string whichOption)
         {
             RegistryKey keyStartUp = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-            RegistryKey keyDeleteValue = Registry.CurrentUser.OpenSubKey(@"Software\GTAProgram", true);
             RegistryKey keyRemoveSubKey = Registry.CurrentUser.OpenSubKey(@"Software\", true);
 
             switch (whichOption)
@@ -28,57 +29,58 @@ namespace GTADownloader
                 case "runHidden":
                     win.StartUpCheckBox.IsChecked = true;
                     win.StartUpCheckBox.IsEnabled = false;
-                    Registry.SetValue($"{Data.programRegeditPath}", "Run Hidden", "Yes");
+                    FileOperation.EditFileLine("Run Hidden=0", "Run Hidden=1");
                     break;
                 case "runHiddenUnCheck":
                     win.StartUpCheckBox.IsEnabled = true;
-                    keyDeleteValue.DeleteValue("Run Hidden");
+                    FileOperation.EditFileLine("Run Hidden=1", "Run Hidden=0");
                     win.ShowInTaskbar = true;
                     break;
                 case "runTSAuto":
-                    Registry.SetValue($"{Data.programRegeditPath}", "Run TS Auto", "On");
+                    FileOperation.EditFileLine("Run TS Auto=0", "Run TS Auto=1");
                     break;
                 case "runTSAutoUnCheck":
-                    keyDeleteValue.DeleteValue("Run TS Auto");
+                    FileOperation.EditFileLine("Run TS Auto=1", "Run TS Auto=0");
                     break;
                 case "S1Altis":
-                    Registry.SetValue($"{Data.programRegeditPath}", "S1Altis", "On");
+                    FileOperation.EditFileLine("S1Altis=0", "S1Altis=1");
                     Data.missionFileListID.Add(Data.fileIDArray[0]);
                     break;
                 case "S1AltisUnCheck":
-                    keyDeleteValue.DeleteValue("S1Altis");
+                    FileOperation.EditFileLine("S1Altis=1", "S1Altis=0");
                     Data.missionFileListID.Remove(Data.fileIDArray[0]);
                     break;
                 case "S2Altis":
-                    Registry.SetValue($"{Data.programRegeditPath}", "S2Altis", "On");
+                    FileOperation.EditFileLine("S2Altis=0", "S2Altis=1");
                     Data.missionFileListID.Add(Data.fileIDArray[1]);
                     break;
                 case "S2AltisUnCheck":
-                    keyDeleteValue.DeleteValue("S2Altis");
+                    FileOperation.EditFileLine("S2Altis=1", "S2Altis=0");
                     Data.missionFileListID.Remove(Data.fileIDArray[1]);
                     break;
                 case "S3Tanoa":
-                    Registry.SetValue($"{Data.programRegeditPath}", "S3Tanoa", "On");
+                    FileOperation.EditFileLine("S3Tanoa=0", "S3Tanoa=1");
                     Data.missionFileListID.Add(Data.fileIDArray[2]);
                     break;
                 case "S3TanoaUnCheck":
-                    keyDeleteValue.DeleteValue("S3Tanoa");
+                    FileOperation.EditFileLine("S3Tanoa=1", "S3Tanoa=0");
                     Data.missionFileListID.Remove(Data.fileIDArray[2]);
                     break;
                 case "S3Malden":
-                    Registry.SetValue($"{Data.programRegeditPath}", "S3Malden", "On");
+                    FileOperation.EditFileLine("S3Malden=0", "S3Malden=1");
                     Data.missionFileListID.Add(Data.fileIDArray[3]);
                     break;
                 case "S3MaldenUnCheck":
-                    keyDeleteValue.DeleteValue("S3Malden");
+                    FileOperation.EditFileLine("S3Malden=1", "S3Malden=0");
                     Data.missionFileListID.Remove(Data.fileIDArray[3]);
                     break;
                 case "notification":
-                    Registry.SetValue($"{Data.programRegeditPath}", "Notification", "On");
+                    FileOperation.EditFileLine("Notification=0", "Notification=1");
                     await CheckForUpdate.TypeOfNotificationAsync("notification", Data.ctsNotification.Token);
                     break;
                 case "notificationUnCheck":
-                    keyDeleteValue.DeleteValue("Notification");
+                    FileOperation.EditFileLine("Notification=1", "Notification=0");
+
                     Data.ctsNotification.Cancel();
                     Data.ctsNotification.Dispose();
                     Data.ctsNotification = new CancellationTokenSource();
@@ -86,11 +88,12 @@ namespace GTADownloader
                     Data.ButtonsOption("optionsCheckBoxOff");
                     break;
                 case "automaticUpdate":
-                    Registry.SetValue($"{Data.programRegeditPath}", "Automatic Update", "On");
+                    FileOperation.EditFileLine("Automatic Update=0", "Automatic Update=1");
                     await CheckForUpdate.TypeOfNotificationAsync("automaticUpdate", Data.ctsAutomaticUpdate.Token);
                     break;
                 case "automaticUpdateUnCheck":
-                    keyDeleteValue.DeleteValue("Automatic Update");
+                    FileOperation.EditFileLine("Automatic Update=1", "Automatic Update=0");
+
                     Data.ctsAutomaticUpdate.Cancel();
                     Data.ctsAutomaticUpdate.Dispose();
                     Data.ctsAutomaticUpdate = new CancellationTokenSource();
@@ -98,11 +101,11 @@ namespace GTADownloader
                     Data.ButtonsOption("optionsCheckBoxOff");
                     break;
                 case "maxSpeed":
-                    Registry.SetValue($"{Data.programRegeditPath}", "Download Speed", "Max");
+                    FileOperation.EditFileLine("Download Speed=0", "Download Speed=1");
                     Download.downloadSpeed = "maxSpeed";
                     break;
                 case "normalSpeed":
-                    Registry.SetValue($"{Data.programRegeditPath}", "Download Speed", "Normal");
+                    FileOperation.EditFileLine("Download Speed=1", "Download Speed=0");
                     Download.downloadSpeed = "normalSpeed";
                     break;
                 case "removeRegistry":
@@ -112,22 +115,30 @@ namespace GTADownloader
                         Data.ButtonsOption("deleteChangesToRegistry");
 
                         keyRemoveSubKey.DeleteSubKey("GTAProgram");
-                        System.Windows.MessageBox.Show("All changes made to your registry have been deleted.", "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        MessageBox.Show("All changes made to your registry have been deleted.", "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                     catch (ArgumentException exc)
                     {
-                        System.Windows.MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     break;
             }
         }
+
         public static void UpdateCheckBoxes()
         {
+            var data = File
+            .ReadAllLines(Data.configFilePath)
+            .Select(x => x.Split('='))
+            .Where(x => x.Length > 1)
+            .ToDictionary(x => x[0].Trim(), x => x[1]);
+
+            if (data["Default Lv channel"].Length > 0) win.insertTSChannelName.Text = data["Default Lv channel"];
+
             object startupValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run", "GTADownloader", null);
             if (startupValue != null) win.StartUpCheckBox.IsChecked = true;
 
-            object runMinimizedValue = Registry.GetValue($"{Data.programRegeditPath}", "Run Hidden", null);
-            if (runMinimizedValue != null)
+            if (data["Run Hidden"] == "1")
             {
                 win.HiddenCheckBox.IsChecked = true;
                 win.ShowInTaskbar = false;
@@ -136,8 +147,7 @@ namespace GTADownloader
                 Data.notifyIcon.BalloonTipClicked += (sender, e) => CheckForUpdate.NotifyIconBalloonTipClicked(sender, e, false, false);
             }
 
-            object runTSAutoValue = Registry.GetValue($"{Data.programRegeditPath}", "Run TS Auto", null);
-            if (runTSAutoValue != null)
+            if (data["Run TS Auto"] == "1")
             {
                 win.RunTSAuto.IsChecked = true;
 
@@ -145,38 +155,25 @@ namespace GTADownloader
                 if (process.Length == 0) Join.Server("joinTS", false);
             }
 
-            object notificationValue = Registry.GetValue($"{Data.programRegeditPath}", "Notification", null);
-            if (notificationValue != null) win.NotificationCheckBox.IsChecked = true;
+            if (data["S1Altis"] == "1") win.S1AltisCheckBox.IsChecked = true;
 
-            string downloadSpeed = "";
-            try
+            if (data["S2Altis"] == "1") win.S2AltisCheckBox.IsChecked = true;
+
+            if (data["S3Tanoa"] == "1") win.S3TanoaCheckBox.IsChecked = true;
+
+            if (data["S3Malden"] == "1") win.S3MaldenCheckBox.IsChecked = true;
+
+            if (data["Notification"] == "1") win.NotificationCheckBox.IsChecked = true;
+
+            if (data["Automatic Update"] == "1") win.AutomaticUpdateCheckBox.IsChecked = true;
+
+            switch (data["Download Speed"])
             {
-                downloadSpeed = Registry.GetValue($"{Data.programRegeditPath}", "Download Speed", "Max").ToString();
+                case "1": win.MaxSpeedButton.IsChecked = true;
+                    break;
+                case "0": win.NormalSpeedButton.IsChecked = true;
+                    break;
             }
-            catch (NullReferenceException)
-            {
-                win.MaxSpeedButton.IsChecked = true;
-            }
-            finally
-            {
-                if (downloadSpeed == "Max") win.MaxSpeedButton.IsChecked = true;
-                else if (downloadSpeed == "Normal") win.NormalSpeedButton.IsChecked = true;
-            }
-
-            object automaticUpdateValue = Registry.GetValue($"{Data.programRegeditPath}", "Automatic Update", null);
-            if (automaticUpdateValue != null) win.AutomaticUpdateCheckBox.IsChecked = true;
-
-            object S1AltisValue = Registry.GetValue($"{Data.programRegeditPath}", "S1Altis", null);
-            if (S1AltisValue != null) win.S1AltisCheckBox.IsChecked = true;
-
-            object S2AltisValue = Registry.GetValue($"{Data.programRegeditPath}", "S2Altis", null);
-            if (S2AltisValue != null) win.S2AltisCheckBox.IsChecked = true;
-
-            object S3TanoaValue = Registry.GetValue($"{Data.programRegeditPath}", "S3Tanoa", null);
-            if (S3TanoaValue != null) win.S3TanoaCheckBox.IsChecked = true;
-
-            object S3MaldenValue = Registry.GetValue($"{Data.programRegeditPath}", "S3Malden", null);
-            if (S3MaldenValue != null) win.S3MaldenCheckBox.IsChecked = true;
         }   
     }
 }

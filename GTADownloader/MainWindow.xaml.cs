@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Input;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace GTADownloader
 {
@@ -17,12 +18,15 @@ namespace GTADownloader
         private void WindowLoad(object sender, RoutedEventArgs e)
         {
             Title = $"GTA Mission Downloader | {Data.programVersion} by Coke";
-            RemoveRemainsAsync();
-            CheckForUpdate.UpdateAsync(Data.ctsOnStart.Token);
-            Join.UpdateServerAsync();
+            FileOperation.IsFilePresent("config");
+            ListView.PopulateLvOnStart();
+            _ = CheckForUpdate.UpdateAsync(Data.ctsOnStart.Token);
+            _ = Join.UpdateServerAsync();
             Data.TaskBar();
             Options.UpdateCheckBoxes();
+            _ = RemoveRemainsAsync();
         }
+        // Mfs
         private async void S1Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
         private async void S2Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[1], Data.ctsStopDownloading.Token);
         private async void S3Tanoa(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token);
@@ -50,7 +54,7 @@ namespace GTADownloader
             Data.ctsStopDownloading.Dispose();
             Data.ctsStopDownloading = new CancellationTokenSource();
         }
-        // Is Update Available
+        // Stop Notification
         private void JoinServerTabItemClicked(object sender, MouseButtonEventArgs e) => StopOnStart();
         private void OptionsTabItemClicked(object sender, MouseButtonEventArgs e) => StopOnStart();
         public bool StopOnStart()
@@ -68,6 +72,20 @@ namespace GTADownloader
         private void JoinS2(object sender, RoutedEventArgs e) => Join.Server("joinS2");
         private void JoinS3(object sender, RoutedEventArgs e) => Join.Server("joinS3(Conflict)");
         private void JoinTS(object sender, RoutedEventArgs e) => Join.Server("joinTS");
+
+        //ListView
+        private void AddFileMenuItemClick(object sender, RoutedEventArgs e) => ListView.MenuItemClick("addPathClick");
+        private void CopyPathMenuClick(object sender, RoutedEventArgs e) => ListView.MenuItemClick("copyPathClick");
+        private void DeleteMenuClick(object sender, RoutedEventArgs e) => ListView.MenuItemClick("deletePathClick");
+
+        private void LvItemMouseEnter(object sender, MouseEventArgs e) => ListView.LvItemMouseEnter(sender, e);
+        private void LvMouseMoveDragDrop(object sender, MouseEventArgs e) => ListView.LvMouseMoveDragDrop(sender, e);
+        private void TbMouseMoveDragDrop(object sender, MouseEventArgs e) => ListView.TbMouseMoveDragDrop(sender, e);
+
+        private void PathDropTb(object sender, DragEventArgs e) => ListView.PathDropTb(sender, e);
+        private void PathDropLv(object sender, DragEventArgs e) => ListView.PathDropLv(sender, e);
+
+        private void LvItemHotKeys(object sender, KeyEventArgs e) => ListView.LvItemHotkeys(sender, e);
         //Options
         private void OfficialThread_Click(object sender, RoutedEventArgs e) => Process.Start("https://grandtheftarma.com/topic/116196-gta-mission-downloader/");
         private void About_Click(object sender, RoutedEventArgs e) => MessageBox.Show($"Current version {Data.programVersion}. \n" +
@@ -106,10 +124,17 @@ namespace GTADownloader
         private async void MaxSpeed_Checked(object sender, RoutedEventArgs e) => await Options.Choose("maxSpeed");
         private async void NormalSpeed_Checked(object sender, RoutedEventArgs e) => await Options.Choose("normalSpeed");
 
+        private void OpenConfigFolder(object sender, RoutedEventArgs e) => Process.Start(Data.programFolderPath);
         private async void DeleteChangesToRegistry(object sender, RoutedEventArgs e) => await Options.Choose("removeRegistry");
 
         protected override void OnClosed(EventArgs e)
         {
+            if (insertTSChannelName.Text.Length > 0)
+            {
+                var readingLine = File.ReadLines(Data.configFilePath).Skip(4).Take(1).First();
+                FileOperation.EditFileLine(readingLine, $"Default Lv channel={insertTSChannelName.Text}");
+            }
+
             Data.notifyIcon.Icon.Dispose();
             Data.notifyIcon.Dispose();
 

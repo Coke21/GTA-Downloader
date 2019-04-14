@@ -13,7 +13,7 @@ namespace GTADownloader
 {
     class Data
     {
-        public static string programVersion = "0.9c";
+        public static string programVersion = "1.0";
 
         public static string[] fileIDArray = {"1KIzqR9NMBZoxcdibMZPxr13__azGdGye",
                                               "15Or16ZcPqSzGF6b41p7_IDGzI3SDGCnJ",
@@ -28,14 +28,16 @@ namespace GTADownloader
             ApplicationName = "xd",
         });
 
-        public static string folderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/Arma 3/MPMissionsCache/";
+        public static string missionFolderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/Arma 3/MPMissionsCache/";
+        public static string programFolderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader";
+        public static string listViewFilePath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader/GTALvData.txt";
+        public static string configFilePath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader/GTAData.txt";
 
         public static string getDownloadFolderPath = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders", "{374DE290-123F-4565-9164-39C4925E467B}", String.Empty).ToString() + @"\";
         public static string getArma3EXEPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\bohemia interactive\arma 3", "main", String.Empty).ToString() + @"\arma3battleye";
 
-        public static string programPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
+        public static string programPathExe = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
         public static string programName = AppDomain.CurrentDomain.FriendlyName;
-        public static string programRegeditPath = @"HKEY_CURRENT_USER\Software\GTAProgram";
 
         public static List<string> missionFileListID = new List<string>();
         public static NotifyIcon notifyIcon = new NotifyIcon();
@@ -44,7 +46,6 @@ namespace GTADownloader
         public static CancellationTokenSource ctsNotification = new CancellationTokenSource();
         public static CancellationTokenSource ctsAutomaticUpdate = new CancellationTokenSource();
         public static CancellationTokenSource ctsStopDownloading = new CancellationTokenSource();
-
 
         public static void TaskBar()
         {

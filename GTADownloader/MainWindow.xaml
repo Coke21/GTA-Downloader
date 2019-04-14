@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Loaded="WindowLoad"
-        Title="MainWindow" Height="400" Width="740"
+        Height="400" Width="740"
         WindowStartupLocation ="CenterScreen"
         ResizeMode="CanMinimize">
     <Window.Resources>
@@ -47,10 +47,10 @@
                 <Button Content="All Special" HorizontalAlignment="Left" VerticalAlignment="Top" Width="178" Margin="512,198,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S3MaldenS3TanoaButton" Click="S3MaldenS3Tanoa"/>
                 <Button Content="All Active Mission Files" HorizontalAlignment="Left" VerticalAlignment="Top" Width="178" Margin="512,246,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="AllFiles" Click="AllFilesClick"/>
 
-                <TextBlock HorizontalAlignment="Left" x:Name="TextTopTitle" TextWrapping="Wrap" Text="GTA Mission Downloader" VerticalAlignment="Top" Margin="206,54,0,0" Height="23" Width="303" FontWeight="Bold" FontSize="21" TextAlignment="Center"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="TextTopTitle" TextWrapping="Wrap" Text="GTA Mission Downloader" VerticalAlignment="Top" Margin="208,54,0,0" Height="23" Width="303" FontWeight="Bold" FontSize="21" TextAlignment="Center"/>
                 <TextBlock HorizontalAlignment="Left" x:Name="textblockDownload" TextWrapping="Wrap" VerticalAlignment="Top" Margin="171,317,0,0" Width="380" Height="15" FontSize="11" FontWeight="Bold" TextAlignment="Center"/>
                 <TextBlock HorizontalAlignment="Left" x:Name="TextTopOperationNotice" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="129" Width="298" TextAlignment="Center" Foreground="{x:Null}" Margin="418,0,0,0" FontWeight="Bold" FontSize="11"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="TextTopOperationProgramNotice" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="246,79,0,0" Height="25" Width="220" TextAlignment="Center" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="TextTopOperationProgramNotice" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="248,79,0,0" Height="25" Width="220" TextAlignment="Center" FontWeight="Bold"/>
 
                 <Label Content="Active Normal MF:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="39,120,0,0" Width="154" FontSize="16" FontWeight="Bold"/>
                 <Label Content="Active Special MF:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,193,0,0" Width="155" FontSize="16" FontWeight="Bold"/>
@@ -71,9 +71,63 @@
                 <Button Content="Join Server 3 (Conflict Server)" x:Name="JoinServer3Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,178,0,0" Height="56" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS3"/>
                 <Button Content="Join TS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,243,0,0" Height="56" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinTS"/>
 
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer1" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,62,0,0" Height="47" Width="375" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer2" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,131,0,0" Height="43" Width="375" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer3" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,196,0,0" Height="43" Width="360" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer1" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,48,0,0" Height="47" Width="375" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer2" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,113,0,0" Height="43" Width="375" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer3" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,178,0,0" Height="43" Width="360" FontWeight="Bold"/>
+                
+                <TextBox HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" Name="insertTSChannelName" ToolTip="Insert the FULL path to the TS channel (It's case-sensitive!) e.g. Staff Lounges/Waiting for Support" AllowDrop="True" PreviewDrop="PathDropTb" PreviewMouseMove="TbMouseMoveDragDrop"  VerticalAlignment="Top" Width="181" Margin="296,259,0,0" Background="{x:Null}" BorderBrush="Black"/>
+                <ListView 
+                    HorizontalAlignment="Left" 
+                    Height="113" 
+                    VerticalAlignment="Top" 
+                    Width="236" 
+                    Margin="482,220,0,0" 
+                    Background="{x:Null}"
+                    SelectionMode="Single" 
+                    Name="LvName"
+                    BorderThickness="1.000001" 
+                    BorderBrush="Black"
+                    Foreground="Black"
+                    ToolTip="Add,copy and remove channel paths, right click to open the menu or hotkeys - ctrl+c, ctrl+v, delete"
+                    AllowDrop="True"
+                    PreviewKeyDown ="LvItemHotKeys"
+                    PreviewDrop="PathDropLv"
+                    >
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <EventSetter Event="MouseEnter" Handler="LvItemMouseEnter"/>
+                            <EventSetter Event="PreviewMouseMove" Handler="LvMouseMoveDragDrop"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                    <Setter Property="Background" Value="LightGreen"/>
+                                    <Setter Property="Foreground" Value="Blue"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="true">
+                                    <Setter Property="Background" Value="Red"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ContextMenu>
+                        <ContextMenu Name="LvContextMenuName">
+                            <MenuItem Header="Add" Name="AddFileMenuName" Click="AddFileMenuItemClick" ></MenuItem>
+                            <MenuItem Header="Copy" Click="CopyPathMenuClick" />
+                            <MenuItem Header="Delete" Click="DeleteMenuClick" />
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                    <ListView.View>
+                        <GridView>
+                            <GridView.ColumnHeaderContainerStyle>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="Background" Value="LightGray" />
+                                </Style>
+                            </GridView.ColumnHeaderContainerStyle>
+                            <GridViewColumn Header="Channel path(s):" Width="220" DisplayMemberBinding="{Binding ChannelPath}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </Grid>
         </TabItem>
 
@@ -94,11 +148,12 @@
                 <CheckBox Content="S3 - Tanoa" x:Name="S3TanoaCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="360,47,0,0" Height="20" Width="76" FontWeight="Bold" Checked="S3TanoaChecked" Unchecked="S3Tanoa_UnChecked" Visibility="Visible" RenderTransformOrigin="0.522,0.439" FontSize="11"/>
                 <CheckBox Content="S3 - Malden" x:Name="S3MaldenCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="360,64,0,0" Height="20" Width="84" FontWeight="Bold" Checked="S3MaldenChecked" Unchecked="S3Malden_UnChecked" Visibility="Visible" RenderTransformOrigin="0.539,1.3" FontSize="11"/>
 
-                <CheckBox Content="Notification" ToolTip="Sends the Windows notification if chosen mission file(s) are outdated" x:Name="NotificationCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="293,82,0,0" Height="19" Width="121" FontWeight="Bold" FontSize="16" Checked="NotificationCheckBox_Checked" Unchecked="NotificationCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439" Visibility="Visible"/>
+                <CheckBox Content="Notification" ToolTip="Sends the Windows notification if the chosen mission file(s) are outdated" x:Name="NotificationCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="293,82,0,0" Height="19" Width="121" FontWeight="Bold" FontSize="16" Checked="NotificationCheckBox_Checked" Unchecked="NotificationCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439" Visibility="Visible"/>
                 <Label Content="Download speed:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="298,113,0,0" Height="29" Width="123" FontWeight="Bold" FontSize="14"/>
-                <CheckBox Content="Automatic update" ToolTip="Turns on the automatic update and downloads automatically chosen mission file(s)" x:Name="AutomaticUpdateCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="273,100,0,0" Height="19" Width="174" FontWeight="Bold" FontSize="16" Checked="AutomaticUpdate_Checked" Unchecked="AutomaticUpdateCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439" Visibility="Visible"/>
+                <CheckBox Content="Automatic update" ToolTip="Turns on the automatic update and automatically downloads the chosen mission file(s)" x:Name="AutomaticUpdateCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="273,100,0,0" Height="19" Width="174" FontWeight="Bold" FontSize="16" Checked="AutomaticUpdate_Checked" Unchecked="AutomaticUpdateCheckBox_UnChecked" RenderTransformOrigin="0.522,0.439" Visibility="Visible"/>
 
-                <Button Content="Delete changes to registry" ToolTip="Removes any changes made to your registry" HorizontalAlignment="Left" VerticalAlignment="Top" Width="189" Margin="258,162,0,0" Height="41" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" Click="DeleteChangesToRegistry" RenderTransformOrigin="0.494,0.574" FontSize="14"/>
+                <Button Content="Registry" ToolTip="Removes any changes made to your registry" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="355,162,0,0" Height="41" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" Click="DeleteChangesToRegistry" RenderTransformOrigin="0.494,0.574" FontSize="14"/>
+                <Button Content="Folder" ToolTip="Opens the config folder on your PC" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="258,162,0,0" Height="41" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" Click="OpenConfigFolder" RenderTransformOrigin="0.494,0.574" FontSize="14"/>
 
                 <RadioButton Content="Max Speed" HorizontalAlignment="Left" x:Name="MaxSpeedButton" GroupName="Download" VerticalAlignment="Top" Margin="301,134,0,0" FontWeight="Bold" Checked="MaxSpeed_Checked" Height="16"/>
                 <RadioButton Content="Normal Speed" HorizontalAlignment="Left" x:Name="NormalSpeedButton" GroupName="Download" VerticalAlignment="Top" Margin="301,147,0,0" FontWeight="Bold" Checked="NormalSpeed_Checked"/>

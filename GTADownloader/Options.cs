@@ -6,6 +6,7 @@ using System.Windows;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace GTADownloader
 {
@@ -127,52 +128,62 @@ namespace GTADownloader
 
         public static void UpdateCheckBoxes()
         {
+            object startupValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run", "GTADownloader", null);
+            if (startupValue != null) win.StartUpCheckBox.IsChecked = true;
+
             var data = File
             .ReadAllLines(Data.configFilePath)
             .Select(x => x.Split('='))
             .Where(x => x.Length > 1)
             .ToDictionary(x => x[0].Trim(), x => x[1]);
 
-            if (data["Default Lv channel"].Length > 0) win.insertTSChannelName.Text = data["Default Lv channel"];
-
-            object startupValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run", "GTADownloader", null);
-            if (startupValue != null) win.StartUpCheckBox.IsChecked = true;
-
-            if (data["Run Hidden"] == "1")
+            try
             {
-                win.HiddenCheckBox.IsChecked = true;
-                win.ShowInTaskbar = false;
-                win.Hide();
-                Data.notifyIcon.ShowBalloonTip(4000, "Reminder!", $"The program is running in the background!", System.Windows.Forms.ToolTipIcon.None);
-                Data.notifyIcon.BalloonTipClicked += (sender, e) => CheckForUpdate.NotifyIconBalloonTipClicked(sender, e, false, false);
+                if (data["Default Lv channel"].Length > 0) win.insertTSChannelName.Text = data["Default Lv channel"];
+                if (data["Default Lv password"].Length > 0) win.insertTSChannelPasswordName.Text = data["Default Lv password"];
+
+                if (data["Run Hidden"] == "1")
+                {
+                    win.HiddenCheckBox.IsChecked = true;
+                    win.ShowInTaskbar = false;
+                    win.Hide();
+                    Data.notifyIcon.ShowBalloonTip(4000, "Reminder!", $"The program is running in the background!", System.Windows.Forms.ToolTipIcon.None);
+                    Data.notifyIcon.BalloonTipClicked += (sender, e) => CheckForUpdate.NotifyIconBalloonTipClicked(sender, e, false, false);
+                }
+                if (data["Run TS Auto"] == "1")
+                {
+                    win.RunTSAuto.IsChecked = true;
+
+                    Process[] process = Process.GetProcessesByName("ts3client_win64");
+                    if (process.Length == 0) Join.Server("joinTS", false);
+                }
+
+                if (data["S1Altis"] == "1") win.S1AltisCheckBox.IsChecked = true;
+
+                if (data["S2Altis"] == "1") win.S2AltisCheckBox.IsChecked = true;
+
+                if (data["S3Tanoa"] == "1") win.S3TanoaCheckBox.IsChecked = true;
+
+                if (data["S3Malden"] == "1") win.S3MaldenCheckBox.IsChecked = true;
+
+                if (data["Notification"] == "1") win.NotificationCheckBox.IsChecked = true;
+
+                if (data["Automatic Update"] == "1") win.AutomaticUpdateCheckBox.IsChecked = true;
+
+                switch (data["Download Speed"])
+                {
+                    case "1":
+                        win.MaxSpeedButton.IsChecked = true;
+                        break;
+                    case "0":
+                        win.NormalSpeedButton.IsChecked = true;
+                        break;
+                }
             }
-
-            if (data["Run TS Auto"] == "1")
+            catch (KeyNotFoundException)
             {
-                win.RunTSAuto.IsChecked = true;
-
-                Process[] process = Process.GetProcessesByName("ts3client_win64");
-                if (process.Length == 0) Join.Server("joinTS", false);
-            }
-
-            if (data["S1Altis"] == "1") win.S1AltisCheckBox.IsChecked = true;
-
-            if (data["S2Altis"] == "1") win.S2AltisCheckBox.IsChecked = true;
-
-            if (data["S3Tanoa"] == "1") win.S3TanoaCheckBox.IsChecked = true;
-
-            if (data["S3Malden"] == "1") win.S3MaldenCheckBox.IsChecked = true;
-
-            if (data["Notification"] == "1") win.NotificationCheckBox.IsChecked = true;
-
-            if (data["Automatic Update"] == "1") win.AutomaticUpdateCheckBox.IsChecked = true;
-
-            switch (data["Download Speed"])
-            {
-                case "1": win.MaxSpeedButton.IsChecked = true;
-                    break;
-                case "0": win.NormalSpeedButton.IsChecked = true;
-                    break;
+                File.Delete(Data.configFilePath);
+                FileOperation.IsFilePresent("config");
             }
         }   
     }

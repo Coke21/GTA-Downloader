@@ -57,7 +57,7 @@ namespace GTADownloader
         // Stop Notification
         private void JoinServerTabItemClicked(object sender, MouseButtonEventArgs e) => StopOnStart();
         private void OptionsTabItemClicked(object sender, MouseButtonEventArgs e) => StopOnStart();
-        public bool StopOnStart()
+        public void StopOnStart()
         {
             Data.ctsOnStart.Cancel();
             Data.ctsOnStart.Dispose();
@@ -65,13 +65,12 @@ namespace GTADownloader
 
             TextTopOperationNotice.Text = "";
             TextTopOperationProgramNotice.Text = "";
-            return true;
         }
         // Join server
         private void JoinS1(object sender, RoutedEventArgs e) => Join.Server("joinS1");
         private void JoinS2(object sender, RoutedEventArgs e) => Join.Server("joinS2");
         private void JoinS3(object sender, RoutedEventArgs e) => Join.Server("joinS3(Conflict)");
-        private void JoinTS(object sender, RoutedEventArgs e) => Join.Server("joinTS");
+        private void JoinTS(object sender, RoutedEventArgs e) => Join.Server("joinTS", false);
 
         //ListView
         private void AddFileMenuItemClick(object sender, RoutedEventArgs e) => ListView.MenuItemClick("addPathClick");
@@ -82,7 +81,8 @@ namespace GTADownloader
         private void LvMouseMoveDragDrop(object sender, MouseEventArgs e) => ListView.LvMouseMoveDragDrop(sender, e);
         private void TbMouseMoveDragDrop(object sender, MouseEventArgs e) => ListView.TbMouseMoveDragDrop(sender, e);
 
-        private void PathDropTb(object sender, DragEventArgs e) => ListView.PathDropTb(sender, e);
+        private void PathDropTbCP(object sender, DragEventArgs e) => ListView.PathDropTbCP(sender, e);
+        private void PathDropTbPass(object sender, DragEventArgs e) => ListView.PathDropTbPass(sender, e);
         private void PathDropLv(object sender, DragEventArgs e) => ListView.PathDropLv(sender, e);
 
         private void LvItemHotKeys(object sender, KeyEventArgs e) => ListView.LvItemHotkeys(sender, e);
@@ -133,6 +133,11 @@ namespace GTADownloader
             {
                 var readingLine = File.ReadLines(Data.configFilePath).Skip(4).Take(1).First();
                 FileOperation.EditFileLine(readingLine, $"Default Lv channel={insertTSChannelName.Text}");
+            }
+            if (insertTSChannelPasswordName.Text.Length > 0)
+            {
+                var readingLine = File.ReadLines(Data.configFilePath).Skip(5).Take(1).First();
+                FileOperation.EditFileLine(readingLine, $"Default Lv password={ insertTSChannelPasswordName.Text}");
             }
 
             Data.notifyIcon.Icon.Dispose();

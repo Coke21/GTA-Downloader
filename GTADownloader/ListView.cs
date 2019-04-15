@@ -63,7 +63,6 @@ namespace GTADownloader
                 {
                     items.Add(new LvItem() { ChannelPath = $"{item}" });
                     win.LvName.ItemsSource = items;
-                    win.LvName.Items.Refresh();
                 }
             }
         }
@@ -87,14 +86,19 @@ namespace GTADownloader
             if(Mouse.LeftButton == MouseButtonState.Pressed)
                 if(!win.insertTSChannelName.IsMouseOver)
                     DragDrop.DoDragDrop(win.insertTSChannelName, win.insertTSChannelName.Text, DragDropEffects.Copy);
-
         }
         // Channel path land
-        public static void PathDropTb(object sender, DragEventArgs e)
+        public static void PathDropTbCP(object sender, DragEventArgs e)
         {
             win.insertTSChannelName.Clear();
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 win.insertTSChannelName.Text = (string)e.Data.GetData(DataFormats.FileDrop);
+        }
+        public static void PathDropTbPass(object sender, DragEventArgs e)
+        {
+            win.insertTSChannelPasswordName.Clear();
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                win.insertTSChannelPasswordName.Text = (string)e.Data.GetData(DataFormats.FileDrop);
         }
         public static void PathDropLv(object sender, DragEventArgs e)
         {

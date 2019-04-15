@@ -28,10 +28,9 @@ namespace GTADownloader
                     break;
                 case "joinTS":
                     string arg4 = "TS.grandtheftarma.com:9987";
-                    Process.Start("ts3server://" + arg4 + $"?channel={win.insertTSChannelName.Text}");
+                    Process.Start("ts3server://" + arg4 + $"?channel={win.insertTSChannelName.Text}" + $"&channelpassword={win.insertTSChannelPasswordName.Text}");
                     break;
             }
-
             if (showNotificationMsg) MessageBox.Show("The application is starting...(this window can be closed)", "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
         public static async Task UpdateServerAsync()

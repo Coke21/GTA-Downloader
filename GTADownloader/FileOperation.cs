@@ -46,9 +46,10 @@ namespace GTADownloader
                     {
                         string[] lines = { "|Config file automatically created by GTA Mission Downloader.",
                                             "|Don't touch, unless you know what to do.",
-                                            "|Default Lv channel - string, rest - 0 or 1",
+                                            "|Default Lv channel & password - string, rest - 0 or 1",
                                             "---------------------------------------------------------",
                                             "Default Lv channel=",
+                                            "Default Lv password=",
                                             "Run Hidden=0",
                                             "Run TS Auto=0",
                                             "S1Altis=0",

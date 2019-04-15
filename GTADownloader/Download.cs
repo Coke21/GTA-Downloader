@@ -11,16 +11,13 @@ namespace GTADownloader
 {
     class Download
     {
-        public static bool isExecuted = false;
         public static string downloadSpeed;
-
         public static async Task FileAsync(string fileID, CancellationToken cancellationToken)
         {
             MainWindow win = (MainWindow)Application.Current.MainWindow;
-            isExecuted = true;
-            await Task.Run(async () =>
+            await Task.Run(async() =>
             {
-                await win.Dispatcher.BeginInvoke((Action)(() => Data.ButtonsOption("beforeDownload")));
+                win.Dispatcher.Invoke(() => Data.ButtonsOption("beforeDownload"));
 
                 using (MemoryStream stream = new MemoryStream())
                 {
@@ -51,23 +48,21 @@ namespace GTADownloader
                                 double truncated = Math.Truncate(bytesIn / 1000000);
                                 double truncated2 = Math.Truncate(checkedValue / 1000000);
 
-                                win.Dispatcher.BeginInvoke((Action)(() =>
+                                win.Dispatcher.Invoke(() =>
                                 {
                                     win.textblockDownload.Text = $"Downloading {fileName} - " + truncated + "MB/" + truncated2 + "MB";
                                     win.progressBarDownload.Value = percentage;
-                                }));
+                                });
                                 break;
                             case DownloadStatus.Completed:
                                 using (FileStream file = new FileStream(Data.getDownloadFolderPath + fileName, FileMode.Create, FileAccess.Write))
                                     stream.WriteTo(file);
-                                win.Dispatcher.BeginInvoke((Action)(() => MoveMission(Data.getDownloadFolderPath + fileName, fileName)));
-                                isExecuted = false;
+                                win.Dispatcher.Invoke(() => MoveMission(Data.getDownloadFolderPath + fileName, fileName));
                                 break;
                             case DownloadStatus.Failed:
-                                win.Dispatcher.BeginInvoke((Action)(() => Data.ButtonsOption("afterDownload")));
-                                win.Dispatcher.BeginInvoke((Action)(() => TypeNotification($"An error appeared with {fileName} file!", Brushes.Red, 5)));
+                                win.Dispatcher.Invoke(() => Data.ButtonsOption("afterDownload"));
+                                win.Dispatcher.Invoke(() => TypeNotification($"An error appeared with {fileName} file!", Brushes.Red, 5));
                                 Data.missionFileListID.Remove(fileID);
-                                isExecuted = false;
                                 break;
                         }
                     };

@@ -66,22 +66,33 @@
 
         <TabItem Header="Join" PreviewMouseDown = "JoinServerTabItemClicked">
             <Grid>
-                <Button Content="Join Server 1" x:Name="JoinServer1Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,48,0,0" Height="56" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS1"/>
-                <Button Content="Join Server 2" x:Name="JoinServer2Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,113,0,0" Height="56" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS2"/>
-                <Button Content="Join Server 3 (Conflict Server)" x:Name="JoinServer3Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,178,0,0" Height="56" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS3"/>
-                <Button Content="Join TS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="59,243,0,0" Height="56" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinTS"/>
+                <Button Content="Join Server 1" x:Name="JoinServer1Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="25,48,0,0" Height="56" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS1"/>
+                <Button Content="Join Server 2" x:Name="JoinServer2Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="25,113,0,0" Height="56" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS2"/>
+                <Button Content="Join Server 3 (Conflict Server)" x:Name="JoinServer3Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="25,178,0,0" Height="56" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinS3"/>
+                <Button Content="Join TS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Margin="25,243,0,0" Height="56" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" Click="JoinTS"/>
 
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer1" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,48,0,0" Height="47" Width="375" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer2" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,113,0,0" Height="43" Width="375" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer3" TextWrapping="Wrap" VerticalAlignment="Top" Margin="296,178,0,0" Height="43" Width="360" FontWeight="Bold"/>
-                
-                <TextBox HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" Name="insertTSChannelName" ToolTip="Insert the FULL path to the TS channel (It's case-sensitive!) e.g. Staff Lounges/Waiting for Support" AllowDrop="True" PreviewDrop="PathDropTb" PreviewMouseMove="TbMouseMoveDragDrop"  VerticalAlignment="Top" Width="181" Margin="296,259,0,0" Background="{x:Null}" BorderBrush="Black"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer1" TextWrapping="Wrap" VerticalAlignment="Top" Margin="262,48,0,0" Height="47" Width="375" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer2" TextWrapping="Wrap" VerticalAlignment="Top" Margin="262,113,0,0" Height="43" Width="375" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="textBlockServer3" TextWrapping="Wrap" VerticalAlignment="Top" Margin="262,178,0,0" Height="43" Width="360" FontWeight="Bold"/>
+
+                <TextBlock HorizontalAlignment="Left" Height="20" TextAlignment="Center" TextWrapping="Wrap" Text="Cp:" VerticalAlignment="Top" Width="25" Margin="266,251,0,0" Background="{x:Null}"/>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="34" VerticalAlignment="Top" Width="161" Margin="291,243,0,0" Background="{x:Null}" BorderBrush="Black">
+                    <TextBox TextWrapping="Wrap" Name="insertTSChannelName" ToolTip="Insert the FULL path to the TS channel (It's case-sensitive!) e.g. Staff Lounges/Waiting for Support" AllowDrop="True" PreviewDrop="PathDropTbCP" PreviewMouseMove="TbMouseMoveDragDrop" Background="{x:Null}" BorderBrush="Black"/>
+                </ScrollViewer>
+
+                <TextBlock HorizontalAlignment="Left" Height="20" TextAlignment="Center" TextWrapping="Wrap" Text="Pass:" VerticalAlignment="Top" Width="29" Margin="260,278,0,0" Background="{x:Null}"/>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="21" VerticalAlignment="Top" Width="161" Margin="291,278,0,0" Background="{x:Null}" BorderBrush="Black">
+                    <TextBox TextWrapping="Wrap" x:Name="insertTSChannelPasswordName" PreviewDrop="PathDropTbPass" ToolTip="Insert the password to the channel or leave it empty" Background="{x:Null}" BorderBrush="Black"/>
+                </ScrollViewer>
+
                 <ListView 
                     HorizontalAlignment="Left" 
-                    Height="113" 
+                    Height="129" 
                     VerticalAlignment="Top" 
-                    Width="236" 
-                    Margin="482,220,0,0" 
+                    Width="256" 
+                    Margin="462,204,0,0" 
                     Background="{x:Null}"
                     SelectionMode="Single" 
                     Name="LvName"
@@ -112,7 +123,7 @@
                     </ListView.ItemContainerStyle>
                     <ListView.ContextMenu>
                         <ContextMenu Name="LvContextMenuName">
-                            <MenuItem Header="Add" Name="AddFileMenuName" Click="AddFileMenuItemClick" ></MenuItem>
+                            <MenuItem Header="Add" Click="AddFileMenuItemClick" ></MenuItem>
                             <MenuItem Header="Copy" Click="CopyPathMenuClick" />
                             <MenuItem Header="Delete" Click="DeleteMenuClick" />
                         </ContextMenu>
@@ -124,7 +135,7 @@
                                     <Setter Property="Background" Value="LightGray" />
                                 </Style>
                             </GridView.ColumnHeaderContainerStyle>
-                            <GridViewColumn Header="Channel path(s):" Width="220" DisplayMemberBinding="{Binding ChannelPath}" />
+                            <GridViewColumn Header="Channel path(s):" Width="245" DisplayMemberBinding="{Binding ChannelPath}" />
                         </GridView>
                     </ListView.View>
                 </ListView>

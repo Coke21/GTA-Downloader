@@ -11,17 +11,11 @@ namespace GTADownloader
 {
     class CheckForUpdate
     {
-        private static long gtaProgramOnComputerSize = new FileInfo(Data.programPathExe + Data.programName).Length;
-
-        public static async Task <bool> UpdateAsync(CancellationToken cancellationToken)
+        public static async Task UpdateAsync(CancellationToken cancellationToken)
         {
             MainWindow win = (MainWindow)Application.Current.MainWindow;
             await Task.Run(() =>
             {
-                var requestForProgram = Data.service.Files.Get(Data.programID);
-                requestForProgram.Fields = "size";
-                long? gtaProgramOnlineSize = requestForProgram.Execute().Size;
-
                 foreach (var file in Data.fileIDArray)
                 {
                     var request = Data.service.Files.Get(file);
@@ -35,58 +29,63 @@ namespace GTADownloader
 
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        win.Dispatcher.BeginInvoke((Action)(() =>
+                        win.Dispatcher.Invoke(() =>
                         {
                             win.TextTopOperationNotice.Text = "";
                             win.TextTopOperationProgramNotice.Text = "";
-                        }));
+                        });
                         break;
                     }
+
                     try
                     {
                         fileSizeOnComputer = new FileInfo(fileLoc).Length;
                     }
                     catch (FileNotFoundException)
                     {
-                        win.Dispatcher.BeginInvoke((Action)(() => win.TextTopOperationNotice.Inlines.Add(new Run($"{fileName} is missing!\n") { Foreground = Brushes.Black })));
+                        win.Dispatcher.Invoke(() => win.TextTopOperationNotice.Inlines.Add(new Run($"{fileName} is missing!\n") { Foreground = Brushes.Black }));
                     }
                     if (File.Exists(fileLoc))
                         if (fileSizeOnline == fileSizeOnComputer)
-                            win.Dispatcher.BeginInvoke((Action)(() => win.TextTopOperationNotice.Inlines.Add(new Run($"{fileName} is updated.\n") { Foreground = Brushes.ForestGreen })));
+                            win.Dispatcher.Invoke(() => win.TextTopOperationNotice.Inlines.Add(new Run($"{fileName} is updated.\n") { Foreground = Brushes.ForestGreen }));
                         else
-                            win.Dispatcher.BeginInvoke((Action)(() => win.TextTopOperationNotice.Inlines.Add(new Run($"{fileName} is outdated!\n") { Foreground = Brushes.Red })));
+                            win.Dispatcher.Invoke(() => win.TextTopOperationNotice.Inlines.Add(new Run($"{fileName} is outdated!\n") { Foreground = Brushes.Red }));
                 }
-                if (gtaProgramOnlineSize == gtaProgramOnComputerSize)
-                    win.Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        win.TextTopOperationProgramNotice.Text = "The GTA program is updated.";
-                        win.TextTopOperationProgramNotice.Foreground = Brushes.ForestGreen;
-                        if (cancellationToken.IsCancellationRequested) win.TextTopOperationProgramNotice.Text = "";
-                    }));
-                else
-                    win.Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        win.TextTopOperationProgramNotice.Text = "The GTA program is outdated!";
-                        win.TextTopOperationProgramNotice.Foreground = Brushes.Red;
-                        if (cancellationToken.IsCancellationRequested) win.TextTopOperationProgramNotice.Text = "";
-                    }));
-            });
-            return true;
-        }
 
+                var requestForProgram = Data.service.Files.Get(Data.programID);
+                requestForProgram.Fields = "size";
+                long? gtaProgramOnlineSize = requestForProgram.Execute().Size;
+
+                long gtaProgramOnComputerSize = new FileInfo(Data.programPathExe + Data.programName).Length;
+
+                win.Dispatcher.Invoke(() =>
+                {
+                    if (gtaProgramOnlineSize == gtaProgramOnComputerSize)
+                        UpdateNotiProgram("The GTA program is updated.", Brushes.ForestGreen);
+                    else
+                        UpdateNotiProgram("The GTA program is outdated!", Brushes.Red);
+                });
+                void UpdateNotiProgram(string text, SolidColorBrush colour)
+                {
+                    win.TextTopOperationProgramNotice.Text = text;
+                    win.TextTopOperationProgramNotice.Foreground = colour;
+                    if (cancellationToken.IsCancellationRequested) win.TextTopOperationProgramNotice.Text = "";
+                }
+            });
+        }
         public static async void NotifyIconBalloonTipClicked(object sender, EventArgs e, bool stopOnStart = true, bool updateFiles = true)
         {
             MainWindow win = (MainWindow)Application.Current.MainWindow;
-            bool result = stopOnStart ? win.StopOnStart() : false;
+            if (stopOnStart) win.StopOnStart();
             win.WindowState = WindowState.Normal;
             win.Show();
-            bool result2 = updateFiles ? await UpdateAsync(Data.ctsOnStart.Token) : false;
+            if (updateFiles) await UpdateAsync(Data.ctsOnStart.Token);
         }
-
         public static async Task TypeOfNotificationAsync(string whichOption, CancellationToken cancellationToken)
         {
             MainWindow win = (MainWindow)Application.Current.MainWindow;
             Data.notifyIcon.BalloonTipClicked += (sender, e) => NotifyIconBalloonTipClicked(sender, e);
+
             await Task.Run(async () =>
             {
                 while (!cancellationToken.IsCancellationRequested)
@@ -116,33 +115,31 @@ namespace GTADownloader
                                 {
                                     case "notification":
                                         Data.notifyIcon.ShowBalloonTip(4000, "Download now!", $"Update Available for {fileName}", System.Windows.Forms.ToolTipIcon.None);
-                                        await Task.Delay(5000);
+                                        await Task.Delay(6000);
                                         break;
                                     case "automaticUpdate":
-                                        if (!Download.isExecuted)
+                                        switch (fileName)
                                         {
-                                            switch (fileName)
-                                            {
-                                                case "s1.grandtheftarma.Life.Altis.pbo":
-                                                    await win.Dispatcher.BeginInvoke((Action)(async () => await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token)));
-                                                    break;
-                                                case "s2.grandtheftarma.Life.Altis.pbo":
-                                                    await win.Dispatcher.BeginInvoke((Action)(async () => await Download.FileAsync(Data.fileIDArray[1], Data.ctsStopDownloading.Token)));
-                                                    break;
-                                                case "s3.grandtheftarma.Conflict.Tanoa.pbo":
-                                                    await win.Dispatcher.BeginInvoke((Action)(async () => await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token)));
-                                                    break;
-                                                case "s3.grandtheftarma.BattleRoyale.Malden.pbo":
-                                                    await win.Dispatcher.BeginInvoke((Action)(async () => await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token)));
-                                                    break;
-                                            }
+                                            case "s1.grandtheftarma.Life.Altis.pbo":
+                                                await win.Dispatcher.Invoke(async () => await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token));
+                                                break;
+                                            case "s2.grandtheftarma.Life.Altis.pbo":
+                                                await win.Dispatcher.Invoke(async () => await Download.FileAsync(Data.fileIDArray[1], Data.ctsStopDownloading.Token));
+                                                break;
+                                            case "s3.grandtheftarma.Conflict.Tanoa.pbo":
+                                                await win.Dispatcher.Invoke(async () => await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token));
+                                                break;
+                                            case "s3.grandtheftarma.BattleRoyale.Malden.pbo":
+                                                await win.Dispatcher.Invoke(async () => await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token));
+                                                break;
                                         }
                                         break;
                                 }
                             }
                         }
+                        //5 min
+                        await Task.Delay(300000);
                     }
-                    await Task.Delay(5000);
                 }
             });
         }

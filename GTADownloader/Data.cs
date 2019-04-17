@@ -13,7 +13,7 @@ namespace GTADownloader
 {
     class Data
     {
-        public static string programVersion = "1.0a";
+        public static string programVersion = "1.0b";
 
         public static string[] fileIDArray = {"1KIzqR9NMBZoxcdibMZPxr13__azGdGye",
                                               "15Or16ZcPqSzGF6b41p7_IDGzI3SDGCnJ",

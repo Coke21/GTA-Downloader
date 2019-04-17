@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Diagnostics;
 using System;
 using System.IO;
@@ -129,16 +129,11 @@ namespace GTADownloader
 
         protected override void OnClosed(EventArgs e)
         {
-            if (insertTSChannelName.Text.Length > 0)
-            {
-                var readingLine = File.ReadLines(Data.configFilePath).Skip(4).Take(1).First();
-                FileOperation.EditFileLine(readingLine, $"Default Lv channel={insertTSChannelName.Text}");
-            }
-            if (insertTSChannelPasswordName.Text.Length > 0)
-            {
-                var readingLine = File.ReadLines(Data.configFilePath).Skip(5).Take(1).First();
-                FileOperation.EditFileLine(readingLine, $"Default Lv password={ insertTSChannelPasswordName.Text}");
-            }
+            var readingCP = File.ReadLines(Data.configFilePath).Skip(4).Take(1).First();
+            FileOperation.EditFileLine(readingCP, $"Default Lv channel={insertTSChannelName.Text}");
+
+            var readingPass = File.ReadLines(Data.configFilePath).Skip(5).Take(1).First();
+            FileOperation.EditFileLine(readingPass, $"Default Lv password={ insertTSChannelPasswordName.Text}");
 
             Data.notifyIcon.Icon.Dispose();
             Data.notifyIcon.Dispose();

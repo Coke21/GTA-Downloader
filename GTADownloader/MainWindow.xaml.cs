@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Diagnostics;
 using System;
 using System.IO;
@@ -24,7 +24,6 @@ namespace GTADownloader
             _ = Join.UpdateServerAsync();
             Data.TaskBar();
             Options.UpdateCheckBoxes();
-            _ = RemoveRemainsAsync();
         }
         // Mfs
         private async void S1Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
@@ -124,15 +123,15 @@ namespace GTADownloader
         private async void MaxSpeed_Checked(object sender, RoutedEventArgs e) => await Options.Choose("maxSpeed");
         private async void NormalSpeed_Checked(object sender, RoutedEventArgs e) => await Options.Choose("normalSpeed");
 
-        private void OpenConfigFolder(object sender, RoutedEventArgs e) => Process.Start(Data.programFolderPath);
+        private void OpenConfigFolder(object sender, RoutedEventArgs e) => Process.Start(Data.getProgramFolderPath);
         private async void DeleteChangesToRegistry(object sender, RoutedEventArgs e) => await Options.Choose("removeRegistry");
 
         protected override void OnClosed(EventArgs e)
         {
-            var readingCP = File.ReadLines(Data.configFilePath).Skip(4).Take(1).First();
+            var readingCP = File.ReadLines(Data.getConfigFilePath).Skip(4).Take(1).First();
             FileOperation.EditFileLine(readingCP, $"Default Lv channel={insertTSChannelName.Text}");
 
-            var readingPass = File.ReadLines(Data.configFilePath).Skip(5).Take(1).First();
+            var readingPass = File.ReadLines(Data.getConfigFilePath).Skip(5).Take(1).First();
             FileOperation.EditFileLine(readingPass, $"Default Lv password={ insertTSChannelPasswordName.Text}");
 
             Data.notifyIcon.Icon.Dispose();
@@ -140,25 +139,6 @@ namespace GTADownloader
 
             base.OnClosed(e);
             Application.Current.Shutdown();
-        }
-        private async Task RemoveRemainsAsync()
-        {
-            await Task.Run(() =>
-            {
-                foreach (var item in Data.fileIDArray)
-                {
-                    var request = Data.service.Files.Get(item);
-                    request.Fields = "name";
-                    string fileName = request.Execute().Name;
-
-                    string filePath = Data.getDownloadFolderPath + fileName;
-                    if (File.Exists(filePath))
-                    {
-                        MessageBox.Show($"Found remains of {fileName}, deleting it...", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        File.Delete(filePath);
-                    }
-                }
-            });
         }
     }
 }

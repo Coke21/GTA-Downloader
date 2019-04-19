@@ -8,7 +8,7 @@ namespace GTADownloader
         public static void AppendFileLine(string line)
         {
             IsFilePresent("lv");
-            using (var tw = new StreamWriter(Data.listViewFilePath, true))
+            using (var tw = new StreamWriter(Data.getListViewFilePath, true))
             {
                 tw.WriteLine($"{line}");
             }
@@ -16,33 +16,33 @@ namespace GTADownloader
         public static void DeleteFileLine(string deleteLine)
         {
             IsFilePresent("lv");
-            File.WriteAllLines(Data.listViewFilePath, File.ReadLines(Data.listViewFilePath).Where(lines => lines != deleteLine).ToList());
+            File.WriteAllLines(Data.getListViewFilePath, File.ReadLines(Data.getListViewFilePath).Where(lines => lines != deleteLine).ToList());
         }
         public static void EditFileLine(string oldValue, string newValue)
         {
-            string text = File.ReadAllText(Data.configFilePath);
+            string text = File.ReadAllText(Data.getConfigFilePath);
             text = text.Replace(oldValue, newValue);
-            File.WriteAllText(Data.configFilePath, text);
+            File.WriteAllText(Data.getConfigFilePath, text);
         }
         public static void IsFilePresent(string type)
         {
-            if (!Directory.Exists(Data.programFolderPath))
-                Directory.CreateDirectory(Data.programFolderPath);
+            if (!Directory.Exists(Data.getProgramFolderPath))
+                Directory.CreateDirectory(Data.getProgramFolderPath);
 
             switch (type)
             {
                 case "lv":
-                    if (!File.Exists(Data.listViewFilePath))
+                    if (!File.Exists(Data.getListViewFilePath))
                     {
                         string[] lines = { "|ListView Data automatically created by GTA Mission Downloader.",
                                             "|Don't touch, unless you know what to do.",
                                             "|You can manually add/edit channel paths below.",
                                             "--------------------------------------------------------"};
-                        File.AppendAllLines(Data.listViewFilePath, lines);
+                        File.AppendAllLines(Data.getListViewFilePath, lines);
                     }
                     break;
                 case "config":
-                    if (!File.Exists(Data.configFilePath))
+                    if (!File.Exists(Data.getConfigFilePath))
                     {
                         string[] lines = { "|Config file automatically created by GTA Mission Downloader.",
                                             "|Don't touch, unless you know what to do.",
@@ -59,7 +59,7 @@ namespace GTADownloader
                                             "Notification=0",
                                             "Automatic Update=0",
                                             "Download Speed=1"};
-                        File.AppendAllLines(Data.configFilePath, lines);
+                        File.AppendAllLines(Data.getConfigFilePath, lines);
                     }
                     break;
             }

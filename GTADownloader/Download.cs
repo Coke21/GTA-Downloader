@@ -19,10 +19,12 @@ namespace GTADownloader
             {
                 win.Dispatcher.Invoke(() => Data.ButtonsOption("beforeDownload"));
 
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    var request = Data.service.Files.Get(fileID);
+                var request = Data.service.Files.Get(fileID);
+                string fileName = request.Execute().Name;
 
+                using (MemoryStream stream = new MemoryStream())
+                using (FileStream file = new FileStream(Data.getMissionFolderPath + fileName, FileMode.Create, FileAccess.Write))
+                {
                     switch (downloadSpeed)
                     {
                         case "maxSpeed":
@@ -34,7 +36,6 @@ namespace GTADownloader
                     }
                     request.Fields = "size, name";
                     double checkedValue = Convert.ToDouble(request.Execute().Size);
-                    string fileName = request.Execute().Name;
 
                     request.MediaDownloader.ProgressChanged += (IDownloadProgress progress) =>
                     {
@@ -55,9 +56,9 @@ namespace GTADownloader
                                 });
                                 break;
                             case DownloadStatus.Completed:
-                                using (FileStream file = new FileStream(Data.getDownloadFolderPath + fileName, FileMode.Create, FileAccess.Write))
-                                    stream.WriteTo(file);
-                                win.Dispatcher.Invoke(() => MoveMission(Data.getDownloadFolderPath + fileName, fileName));
+                                stream.WriteTo(file);
+                                win.Dispatcher.Invoke(() => Data.ButtonsOption("afterDownload"));
+                                win.Dispatcher.Invoke(() => TypeNotification($"{fileName} has been moved to your MPMissionsCache folder", Brushes.ForestGreen));
                                 break;
                             case DownloadStatus.Failed:
                                 win.Dispatcher.Invoke(() => Data.ButtonsOption("afterDownload"));
@@ -75,18 +76,6 @@ namespace GTADownloader
                     }
                 }         
             });
-        }
-        private static void MoveMission (string locOfFile, string fileName)
-        {
-            string destFile = Path.Combine(Data.missionFolderPath, fileName);
-            
-            if (File.Exists(destFile)) File.Delete(destFile);
-
-            File.Move(locOfFile, destFile);
-
-            TypeNotification($"{fileName} has been moved to your MPMissionsCache folder", Brushes.ForestGreen);
-
-            Data.ButtonsOption("afterDownload");
         }
         private static void TypeNotification (string text, SolidColorBrush colour, int timeDisplaySec = 3)
         {

@@ -25,7 +25,7 @@ namespace GTADownloader
                     long fileSizeOnComputer = 0;
                     string fileName = request.Execute().Name;
 
-                    string fileLoc = Path.Combine(Data.missionFolderPath, fileName);
+                    string fileLoc = Path.Combine(Data.getMissionFolderPath, fileName);
 
                     if (cancellationToken.IsCancellationRequested)
                     {
@@ -56,7 +56,7 @@ namespace GTADownloader
                 requestForProgram.Fields = "size";
                 long? gtaProgramOnlineSize = requestForProgram.Execute().Size;
 
-                long gtaProgramOnComputerSize = new FileInfo(Data.programPathExe + Data.programName).Length;
+                long gtaProgramOnComputerSize = new FileInfo(Data.getProgramPathExe + Data.getProgramName).Length;
 
                 win.Dispatcher.Invoke(() =>
                 {
@@ -103,7 +103,7 @@ namespace GTADownloader
 
                             try
                             {
-                                string fileLoc = Path.Combine(Data.missionFolderPath, fileName);
+                                string fileLoc = Path.Combine(Data.getMissionFolderPath, fileName);
                                 fileSizeOnComputer = new FileInfo(fileLoc).Length;
                             }
                             catch (FileNotFoundException)

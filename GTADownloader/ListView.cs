@@ -57,9 +57,9 @@ namespace GTADownloader
         }
         public static void PopulateLvOnStart()
         {
-            if (File.Exists(Data.listViewFilePath))
+            if (File.Exists(Data.getListViewFilePath))
             {
-                foreach (var item in File.ReadLines(Data.listViewFilePath).Skip(4))
+                foreach (var item in File.ReadLines(Data.getListViewFilePath).Skip(4))
                 {
                     items.Add(new LvItem() { ChannelPath = $"{item}" });
                     win.LvName.ItemsSource = items;

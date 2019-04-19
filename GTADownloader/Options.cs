@@ -132,7 +132,7 @@ namespace GTADownloader
             if (startupValue != null) win.StartUpCheckBox.IsChecked = true;
 
             var data = File
-            .ReadAllLines(Data.configFilePath)
+            .ReadAllLines(Data.getConfigFilePath)
             .Select(x => x.Split('='))
             .Where(x => x.Length > 1)
             .ToDictionary(x => x[0].Trim(), x => x[1]);
@@ -182,7 +182,7 @@ namespace GTADownloader
             }
             catch (KeyNotFoundException)
             {
-                File.Delete(Data.configFilePath);
+                File.Delete(Data.getConfigFilePath);
                 FileOperation.IsFilePresent("config");
             }
         }   

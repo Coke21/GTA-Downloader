@@ -20,11 +20,13 @@ namespace GTADownloader
                 win.Dispatcher.Invoke(() => Data.ButtonsOption("beforeDownload"));
 
                 var request = Data.service.Files.Get(fileID);
+                request.Fields = "size, name";
                 string fileName = request.Execute().Name;
 
                 using (MemoryStream stream = new MemoryStream())
                 using (FileStream file = new FileStream(Data.getMissionFolderPath + fileName, FileMode.Create, FileAccess.Write))
                 {
+
                     switch (downloadSpeed)
                     {
                         case "maxSpeed":
@@ -34,7 +36,6 @@ namespace GTADownloader
                             request.MediaDownloader.ChunkSize = 1000000;
                             break;
                     }
-                    request.Fields = "size, name";
                     double checkedValue = Convert.ToDouble(request.Execute().Size);
 
                     request.MediaDownloader.ProgressChanged += (IDownloadProgress progress) =>
@@ -61,6 +62,7 @@ namespace GTADownloader
                                 win.Dispatcher.Invoke(() => TypeNotification($"{fileName} has been moved to your MPMissionsCache folder", Brushes.ForestGreen));
                                 break;
                             case DownloadStatus.Failed:
+                                stream.WriteTo(file);
                                 win.Dispatcher.Invoke(() => Data.ButtonsOption("afterDownload"));
                                 win.Dispatcher.Invoke(() => TypeNotification($"An error appeared with {fileName} file!", Brushes.Red, 5));
                                 Data.missionFileListID.Remove(fileID);
@@ -74,7 +76,7 @@ namespace GTADownloader
                     catch (TaskCanceledException)
                     {
                     }
-                }         
+                }
             });
         }
         private static void TypeNotification (string text, SolidColorBrush colour, int timeDisplaySec = 3)

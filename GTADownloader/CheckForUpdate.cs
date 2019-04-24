@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,14 +15,14 @@ namespace GTADownloader
             MainWindow win = (MainWindow)Application.Current.MainWindow;
             await Task.Run(() =>
             {
-                foreach (var file in Data.fileIDArray)
+                foreach (var fileID in Data.fileIDArray)
                 {
-                    var request = Data.service.Files.Get(file);
-                    request.Fields = "size, name";
+                    var request = Data.GetFileRequest(fileID, "size, name");
 
                     long? fileSizeOnline = request.Execute().Size;
-                    long fileSizeOnComputer = 0;
                     string fileName = request.Execute().Name;
+
+                    long fileSizeOnComputer = 0;
 
                     string fileLoc = Path.Combine(Data.getMissionFolderPath, fileName);
 
@@ -36,7 +35,6 @@ namespace GTADownloader
                         });
                         break;
                     }
-
                     try
                     {
                         fileSizeOnComputer = new FileInfo(fileLoc).Length;
@@ -52,18 +50,20 @@ namespace GTADownloader
                             win.Dispatcher.Invoke(() => win.TextTopOperationNotice.Inlines.Add(new Run($"{fileName} is outdated!\n") { Foreground = Brushes.Red }));
                 }
 
-                var requestForProgram = Data.service.Files.Get(Data.programID);
-                requestForProgram.Fields = "size";
-                long? gtaProgramOnlineSize = requestForProgram.Execute().Size;
+                long? gtaSizeProgramOnline = Data.GetFileRequest(Data.programID, "size").Execute().Size;
 
-                long gtaProgramOnComputerSize = new FileInfo(Data.getProgramPathExe + Data.getProgramName).Length;
+                long gtaSizeProgramOnComputer = new FileInfo(Data.getProgramFolderPath + Data.getProgramName).Length;
 
                 win.Dispatcher.Invoke(() =>
                 {
-                    if (gtaProgramOnlineSize == gtaProgramOnComputerSize)
+                    if (gtaSizeProgramOnline == gtaSizeProgramOnComputer)
                         UpdateNotiProgram("The GTA program is updated.", Brushes.ForestGreen);
                     else
+                    {
                         UpdateNotiProgram("The GTA program is outdated!", Brushes.Red);
+                        win.ProgramUpdateName.Visibility = Visibility.Visible;
+                    }
+                        
                 });
                 void UpdateNotiProgram(string text, SolidColorBrush colour)
                 {
@@ -73,18 +73,10 @@ namespace GTADownloader
                 }
             });
         }
-        public static async void NotifyIconBalloonTipClicked(object sender, EventArgs e, bool stopOnStart = true, bool updateFiles = true)
-        {
-            MainWindow win = (MainWindow)Application.Current.MainWindow;
-            if (stopOnStart) win.StopOnStart();
-            win.WindowState = WindowState.Normal;
-            win.Show();
-            if (updateFiles) await UpdateAsync(Data.ctsOnStart.Token);
-        }
         public static async Task TypeOfNotificationAsync(string whichOption, CancellationToken cancellationToken)
         {
             MainWindow win = (MainWindow)Application.Current.MainWindow;
-            Data.notifyIcon.BalloonTipClicked += (sender, e) => NotifyIconBalloonTipClicked(sender, e);
+            Data.notifyIcon.BalloonTipClicked += (sender, e) => Data.NotifyIconBalloonTipClicked();
 
             await Task.Run(async () =>
             {
@@ -92,14 +84,13 @@ namespace GTADownloader
                 {
                     if (Data.missionFileListID.Count > 0)
                     {
-                        foreach (var file in Data.missionFileListID.ToList())
+                        foreach (var fileID in Data.missionFileListID.ToList())
                         {
-                            var request = Data.service.Files.Get(file);
-                            request.Fields = "size, name";
-
-                            long fileSizeOnComputer = 0;
+                            var request = Data.GetFileRequest(fileID, "size, name");
                             long? fileSizeOnline = request.Execute().Size;
                             string fileName = request.Execute().Name;
+
+                            long fileSizeOnComputer = 0;
 
                             try
                             {

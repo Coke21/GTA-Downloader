@@ -12,8 +12,7 @@ namespace GTADownloader
 {
     class Options
     {
-        private static MainWindow win = (MainWindow)System.Windows.Application.Current.MainWindow;
-
+        private static MainWindow win = (MainWindow)Application.Current.MainWindow;
         public static async Task Choose (string whichOption)
         {
             RegistryKey keyStartUp = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
@@ -103,11 +102,11 @@ namespace GTADownloader
                     break;
                 case "maxSpeed":
                     FileOperation.EditFileLine("Download Speed=0", "Download Speed=1");
-                    Download.downloadSpeed = "maxSpeed";
+                    Download.DownloadSpeed = "maxSpeed";
                     break;
                 case "normalSpeed":
                     FileOperation.EditFileLine("Download Speed=1", "Download Speed=0");
-                    Download.downloadSpeed = "normalSpeed";
+                    Download.DownloadSpeed = "normalSpeed";
                     break;
                 case "removeRegistry":
                     try
@@ -148,7 +147,7 @@ namespace GTADownloader
                     win.ShowInTaskbar = false;
                     win.Hide();
                     Data.notifyIcon.ShowBalloonTip(4000, "Reminder!", $"The program is running in the background!", System.Windows.Forms.ToolTipIcon.None);
-                    Data.notifyIcon.BalloonTipClicked += (sender, e) => CheckForUpdate.NotifyIconBalloonTipClicked(sender, e, false, false);
+                    Data.notifyIcon.BalloonTipClicked += (sender, e) => Data.NotifyIconBalloonTipClicked(false, false);
                 }
                 if (data["Run TS Auto"] == "1")
                 {

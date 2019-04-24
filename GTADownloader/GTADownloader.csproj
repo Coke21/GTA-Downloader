@@ -171,6 +171,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\windowBack.png" />
     <Resource Include="Images\pauseIcon.png" />
     <None Include=".dll files\Google.Apis.Core.dll" />
     <None Include=".dll files\Google.Apis.Core.pdb" />

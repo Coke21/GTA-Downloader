@@ -26,8 +26,8 @@ namespace GTADownloader
         }
         public static void IsFilePresent(string type)
         {
-            if (!Directory.Exists(Data.getProgramFolderPath))
-                Directory.CreateDirectory(Data.getProgramFolderPath);
+            if (!Directory.Exists(Data.getDataFolderPath))
+                Directory.CreateDirectory(Data.getDataFolderPath);
 
             switch (type)
             {

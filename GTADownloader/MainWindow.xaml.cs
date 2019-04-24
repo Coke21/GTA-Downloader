@@ -1,10 +1,8 @@
 ﻿using System.Windows;
 using System.Diagnostics;
-using System;
 using System.IO;
 using System.Windows.Input;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Linq;
 
 namespace GTADownloader
@@ -47,6 +45,7 @@ namespace GTADownloader
             await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token);
             await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token);
         }
+        private async void ProgramUpdateClick(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.programID, Data.ctsStopDownloading.Token, "programUpdate");
         private void StopDownloadClick(object sender, RoutedEventArgs e)
         {
             Data.ctsStopDownloading.Cancel();
@@ -62,6 +61,7 @@ namespace GTADownloader
             Data.ctsOnStart.Dispose();
             Data.ctsOnStart = new CancellationTokenSource();
 
+            ProgramUpdateName.Visibility = Visibility.Hidden;
             TextTopOperationNotice.Text = "";
             TextTopOperationProgramNotice.Text = "";
         }
@@ -123,10 +123,10 @@ namespace GTADownloader
         private async void MaxSpeed_Checked(object sender, RoutedEventArgs e) => await Options.Choose("maxSpeed");
         private async void NormalSpeed_Checked(object sender, RoutedEventArgs e) => await Options.Choose("normalSpeed");
 
-        private void OpenConfigFolder(object sender, RoutedEventArgs e) => Process.Start(Data.getProgramFolderPath);
+        private void OpenConfigFolder(object sender, RoutedEventArgs e) => Process.Start(Data.getDataFolderPath);
         private async void DeleteChangesToRegistry(object sender, RoutedEventArgs e) => await Options.Choose("removeRegistry");
 
-        protected override void OnClosed(EventArgs e)
+        private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             var readingCP = File.ReadLines(Data.getConfigFilePath).Skip(4).Take(1).First();
             FileOperation.EditFileLine(readingCP, $"Default Lv channel={insertTSChannelName.Text}");

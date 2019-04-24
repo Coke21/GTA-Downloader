@@ -25,17 +25,16 @@ namespace GTADownloader
         public static DriveService service = new DriveService(new BaseClientService.Initializer()
         {
             ApiKey = "xd",
-            ApplicationName = "xd",
         });
 
         public static string getMissionFolderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/Arma 3/MPMissionsCache/";
-        public static string getProgramFolderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader";
+        public static string getDataFolderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader";
         public static string getListViewFilePath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader/GTALvData.txt";
         public static string getConfigFilePath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader/GTAData.txt";
 
-        public static string getArma3EXEPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\bohemia interactive\arma 3", "main", String.Empty).ToString() + @"\arma3battleye";
+        public static string getArma3EXEPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\bohemia interactive\arma 3", "main", string.Empty).ToString() + @"\arma3battleye";
 
-        public static string getProgramPathExe = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
+        public static string getProgramFolderPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
         public static string getProgramName = AppDomain.CurrentDomain.FriendlyName;
 
         public static List<string> missionFileListID = new List<string>();
@@ -51,7 +50,22 @@ namespace GTADownloader
             notifyIcon.Visible = true;
             notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath);
             notifyIcon.Text = "GTA Mission Downloader";
-            notifyIcon.Click += (sender, e) => CheckForUpdate.NotifyIconBalloonTipClicked(sender, e);
+            notifyIcon.Click += (sender, e) => NotifyIconBalloonTipClicked();
+        }
+        public static async void NotifyIconBalloonTipClicked(bool stopOnStart = true, bool updateFiles = true)
+        {
+            MainWindow win = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (stopOnStart) win.StopOnStart();
+            win.WindowState = WindowState.Normal;
+            win.Show();
+            if (updateFiles) await CheckForUpdate.UpdateAsync(ctsOnStart.Token);
+        }
+        public static FilesResource.GetRequest GetFileRequest (string fileID, string field)
+        {
+            var request = service.Files.Get(fileID);
+            request.Fields = $"{field}";
+
+            return request;
         }
         public static void ButtonsOption(string whichOption)
         {

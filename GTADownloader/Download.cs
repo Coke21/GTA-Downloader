@@ -1,5 +1,6 @@
 ﻿using Google.Apis.Download;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,23 +12,24 @@ namespace GTADownloader
 {
     class Download
     {
-        public static string downloadSpeed;
-        public static async Task FileAsync(string fileID, CancellationToken cancellationToken)
+        public static string DownloadSpeed { get; set; }
+        public static async Task FileAsync(string fileID, CancellationToken cancellationToken, string option = "missionFile")
         {
             MainWindow win = (MainWindow)Application.Current.MainWindow;
             await Task.Run(async() =>
             {
                 win.Dispatcher.Invoke(() => Data.ButtonsOption("beforeDownload"));
 
-                var request = Data.service.Files.Get(fileID);
-                request.Fields = "size, name";
+                var request = Data.GetFileRequest(fileID, "size, name");
                 string fileName = request.Execute().Name;
 
-                using (MemoryStream stream = new MemoryStream())
-                using (FileStream file = new FileStream(Data.getMissionFolderPath + fileName, FileMode.Create, FileAccess.Write))
-                {
+                string mFPath = Path.Combine(Data.getMissionFolderPath, fileName);
+                string programPath = Path.Combine(Data.getProgramFolderPath, fileName + ".exe");
 
-                    switch (downloadSpeed)
+                using (MemoryStream stream = new MemoryStream())
+                using (FileStream file = new FileStream(option == "missionFile" ? mFPath : programPath, FileMode.Create, FileAccess.Write))
+                {
+                    switch (DownloadSpeed)
                     {
                         case "maxSpeed":
                             request.MediaDownloader.ChunkSize = 10000000;
@@ -36,7 +38,6 @@ namespace GTADownloader
                             request.MediaDownloader.ChunkSize = 1000000;
                             break;
                     }
-                    double checkedValue = Convert.ToDouble(request.Execute().Size);
 
                     request.MediaDownloader.ProgressChanged += (IDownloadProgress progress) =>
                     {
@@ -44,25 +45,23 @@ namespace GTADownloader
                         {
                             case DownloadStatus.Downloading:
                                 double bytesIn = progress.BytesDownloaded;
+                                double checkedValue = (double)(request.Execute().Size);
 
                                 double percentage = bytesIn / checkedValue * 100;
 
                                 double truncated = Math.Truncate(bytesIn / 1000000);
                                 double truncated2 = Math.Truncate(checkedValue / 1000000);
 
-                                win.Dispatcher.Invoke(() =>
-                                {
-                                    win.textblockDownload.Text = $"Downloading {fileName} - " + truncated + "MB/" + truncated2 + "MB";
-                                    win.progressBarDownload.Value = percentage;
-                                });
+                                win.Dispatcher.Invoke(() => win.textblockDownload.Text = $"Downloading {fileName} - " + truncated + "MB/" + truncated2 + "MB");
+                                win.Dispatcher.Invoke(() => win.progressBarDownload.Value = percentage);
                                 break;
                             case DownloadStatus.Completed:
                                 stream.WriteTo(file);
                                 win.Dispatcher.Invoke(() => Data.ButtonsOption("afterDownload"));
-                                win.Dispatcher.Invoke(() => TypeNotification($"{fileName} has been moved to your MPMissionsCache folder", Brushes.ForestGreen));
+                                win.Dispatcher.Invoke(() => TypeNotification(option == "missionFile" ? $"{fileName} has been moved to your MPMissionsCache folder" : "The updated version has been downloaded!", Brushes.ForestGreen));
                                 break;
                             case DownloadStatus.Failed:
-                                stream.WriteTo(file);
+                                stream.SetLength(0);
                                 win.Dispatcher.Invoke(() => Data.ButtonsOption("afterDownload"));
                                 win.Dispatcher.Invoke(() => TypeNotification($"An error appeared with {fileName} file!", Brushes.Red, 5));
                                 Data.missionFileListID.Remove(fileID);
@@ -75,7 +74,21 @@ namespace GTADownloader
                     }
                     catch (TaskCanceledException)
                     {
+                        return;
                     }
+                }
+                if (option == "programUpdate")
+                {
+                    Process.Start(programPath);
+                    Process.Start(new ProcessStartInfo()
+                    {
+                        Arguments = "/C choice /C Y /N /D Y /T 3 & Del \"" + Data.getProgramFolderPath + Data.getProgramName + "\"",
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        CreateNoWindow = true,
+                        FileName = "cmd.exe"
+                    });
+
+                    win.Dispatcher.Invoke(() => win.Close());
                 }
             });
         }

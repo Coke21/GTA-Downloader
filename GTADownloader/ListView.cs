@@ -13,9 +13,10 @@ namespace GTADownloader
         {
             public string ChannelPath { get; set; }
         }
+        private static LvItem CurrentItem { get; set; }
+        private static List<LvItem> Items { get; set; } = new List<LvItem>();
+
         private static MainWindow win = (MainWindow)Application.Current.MainWindow;
-        private static LvItem currentItem;
-        public static List<LvItem> items = new List<LvItem>();
         public static void MenuItemClick (string menuItem)
         {
             LvItem selectedItem = (LvItem)win.LvName.SelectedItem;
@@ -23,12 +24,13 @@ namespace GTADownloader
             {
                 case "addPathClick":
                     if (Clipboard.GetText() == "") return;
-                    if (!items.Any(item => item.ChannelPath == Clipboard.GetText()))
+                    if (!Items.Any(item => item.ChannelPath == Clipboard.GetText()))
                     {
+                        win.insertTSChannelName.Clear();
                         if (Clipboard.GetText().Length > 0)
                         {
-                            items.Add(new LvItem() { ChannelPath = $"{Clipboard.GetText()}" });
-                            win.LvName.ItemsSource = items;
+                            Items.Add(new LvItem() { ChannelPath = $"{Clipboard.GetText()}" });
+                            win.LvName.ItemsSource = Items;
 
                             FileOperation.AppendFileLine($"{Clipboard.GetText()}");
                             win.LvName.Items.Refresh();
@@ -46,7 +48,7 @@ namespace GTADownloader
                 case "deletePathClick":
                     if (selectedItem != null)
                     {
-                        items.Remove(selectedItem);
+                        Items.Remove(selectedItem);
                         FileOperation.DeleteFileLine($"{selectedItem.ChannelPath}");
                         win.LvName.Items.Refresh();
                     }
@@ -61,8 +63,8 @@ namespace GTADownloader
             {
                 foreach (var item in File.ReadLines(Data.getListViewFilePath).Skip(4))
                 {
-                    items.Add(new LvItem() { ChannelPath = $"{item}" });
-                    win.LvName.ItemsSource = items;
+                    Items.Add(new LvItem() { ChannelPath = $"{item}" });
+                    win.LvName.ItemsSource = Items;
                 }
             }
         }
@@ -71,7 +73,7 @@ namespace GTADownloader
         {
             win.LvName.Focus();
             var item = sender as ListViewItem;
-            currentItem = (LvItem)item.Content;
+            CurrentItem = (LvItem)item.Content;
         }
         //DragDrop
         public static void LvMouseMoveDragDrop(object sender, MouseEventArgs e)
@@ -102,7 +104,6 @@ namespace GTADownloader
         }
         public static void PathDropLv(object sender, DragEventArgs e)
         {
-            win.insertTSChannelName.Clear();
             if (e.Data.GetDataPresent(DataFormats.Text))
             {
                 Clipboard.SetText((string)e.Data.GetData(DataFormats.Text));
@@ -113,17 +114,17 @@ namespace GTADownloader
         public static void LvItemHotkeys (object sender, KeyEventArgs e)
         {
             if (e.Key == Key.C && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
-                Clipboard.SetText(currentItem.ChannelPath);
+                Clipboard.SetText(CurrentItem.ChannelPath);
 
             if (e.Key == Key.V && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
                 MenuItemClick("addPathClick");
 
             if (e.Key == Key.Delete)
             {
-                if (currentItem != null)
+                if (CurrentItem != null)
                 {
-                    items.Remove(currentItem);
-                    FileOperation.DeleteFileLine($"{currentItem.ChannelPath}");
+                    Items.Remove(CurrentItem);
+                    FileOperation.DeleteFileLine($"{CurrentItem.ChannelPath}");
                     win.LvName.Items.Refresh();
                 }
             }

@@ -48,10 +48,10 @@
                 <Button Content="All Special" HorizontalAlignment="Left" VerticalAlignment="Top" Width="178" Margin="512,198,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="S3MaldenS3TanoaButton" Click="S3MaldenS3Tanoa"/>
                 <Button Content="All Active Mission Files" HorizontalAlignment="Left" VerticalAlignment="Top" Width="178" Margin="512,246,0,0" Height="42" Background="{x:Null}" BorderBrush="Black" Foreground="Black" FontWeight="Bold" FontSize="16" x:Name="AllFiles" Click="AllFilesClick"/>
 
-                <TextBlock HorizontalAlignment="Left" x:Name="TextTopTitle" TextWrapping="Wrap" Text="GTA Mission Downloader" VerticalAlignment="Top" Margin="211,54,0,0" Height="23" Width="303" FontWeight="Bold" FontSize="21" TextAlignment="Center"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="TextTopTitle" TextWrapping="Wrap" Text="GTA Mission Downloader" VerticalAlignment="Top" Margin="210,54,0,0" Height="23" Width="303" FontWeight="Bold" FontSize="21" TextAlignment="Center"/>
                 <TextBlock HorizontalAlignment="Left" x:Name="textblockDownload" TextWrapping="Wrap" VerticalAlignment="Top" Margin="171,317,0,0" Width="380" Height="15" FontSize="11" FontWeight="Bold" TextAlignment="Center"/>
                 <TextBlock HorizontalAlignment="Left" x:Name="TextTopOperationNotice" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="61" Width="298" TextAlignment="Center" Foreground="{x:Null}" Margin="418,0,0,0" FontWeight="Bold" FontSize="11"/>
-                <TextBlock HorizontalAlignment="Left" x:Name="TextTopOperationProgramNotice" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="251,79,0,0" Height="25" Width="220" TextAlignment="Center" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" x:Name="TextTopOperationProgramNotice" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="250,79,0,0" Height="25" Width="220" TextAlignment="Center" FontWeight="Bold"/>
 
                 <Label Content="Active Normal MF:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="39,120,0,0" Width="154" FontSize="16" FontWeight="Bold"/>
                 <Label Content="Active Special MF:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,193,0,0" Width="155" FontSize="16" FontWeight="Bold"/>

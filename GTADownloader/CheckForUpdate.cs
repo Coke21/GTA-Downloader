@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,58 +20,43 @@ namespace GTADownloader
                 {
                     var request = Data.GetFileRequest(fileID, "size, name");
 
-                    long? fileSizeOnline = request.Execute().Size;
                     string fileName = request.Execute().Name;
+                    long? fileSizeOnline = request.Execute().Size;
 
                     long fileSizeOnComputer = 0;
 
                     string fileLoc = Path.Combine(Data.getMissionFolderPath, fileName);
 
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        win.Dispatcher.Invoke(() =>
-                        {
-                            win.TextTopOperationNotice.Text = "";
-                            win.TextTopOperationProgramNotice.Text = "";
-                        });
-                        break;
-                    }
+                    if (cancellationToken.IsCancellationRequested) return;
+
                     try
                     {
                         fileSizeOnComputer = new FileInfo(fileLoc).Length;
                     }
                     catch (FileNotFoundException)
                     {
-                        win.Dispatcher.Invoke(() => win.TextTopOperationNotice.Inlines.Add(new Run($"{fileName} is missing!\n") { Foreground = Brushes.Black }));
+                        win.Dispatcher.Invoke(() => updateNotiMF("missing", Brushes.Black));
                     }
                     if (File.Exists(fileLoc))
                         if (fileSizeOnline == fileSizeOnComputer)
-                            win.Dispatcher.Invoke(() => win.TextTopOperationNotice.Inlines.Add(new Run($"{fileName} is updated.\n") { Foreground = Brushes.ForestGreen }));
+                            win.Dispatcher.Invoke(() => updateNotiMF("updated", Brushes.ForestGreen));
                         else
-                            win.Dispatcher.Invoke(() => win.TextTopOperationNotice.Inlines.Add(new Run($"{fileName} is outdated!\n") { Foreground = Brushes.Red }));
+                            win.Dispatcher.Invoke(() => updateNotiMF("outdated", Brushes.Red));
+
+                    void updateNotiMF(string text, SolidColorBrush colour) => win.TextTopOperationNotice.Inlines.Add(new Run($"{fileName} is {text}!\n") { Foreground = colour });
                 }
 
                 long? gtaSizeProgramOnline = Data.GetFileRequest(Data.programID, "size").Execute().Size;
-
                 long gtaSizeProgramOnComputer = new FileInfo(Data.getProgramFolderPath + Data.getProgramName).Length;
 
-                win.Dispatcher.Invoke(() =>
+                if (gtaSizeProgramOnline == gtaSizeProgramOnComputer)
+                    win.Dispatcher.Invoke(() => UpdateNotiProgram("updated.", Brushes.ForestGreen));
+                else
                 {
-                    if (gtaSizeProgramOnline == gtaSizeProgramOnComputer)
-                        UpdateNotiProgram("The GTA program is updated.", Brushes.ForestGreen);
-                    else
-                    {
-                        UpdateNotiProgram("The GTA program is outdated!", Brushes.Red);
-                        win.ProgramUpdateName.Visibility = Visibility.Visible;
-                    }
-                        
-                });
-                void UpdateNotiProgram(string text, SolidColorBrush colour)
-                {
-                    win.TextTopOperationProgramNotice.Text = text;
-                    win.TextTopOperationProgramNotice.Foreground = colour;
-                    if (cancellationToken.IsCancellationRequested) win.TextTopOperationProgramNotice.Text = "";
+                    win.Dispatcher.Invoke(() => UpdateNotiProgram("outdated", Brushes.Red));
+                    win.Dispatcher.Invoke(() => win.ProgramUpdateName.Visibility = Visibility.Visible);
                 }
+                void UpdateNotiProgram(string text, SolidColorBrush colour) => win.TextTopOperationProgramNotice.Inlines.Add(new Run($"The GTA program is {text}!") { Foreground = colour });
             });
         }
         public static async Task TypeOfNotificationAsync(string whichOption, CancellationToken cancellationToken)

@@ -61,9 +61,9 @@ namespace GTADownloader
             Data.ctsOnStart.Dispose();
             Data.ctsOnStart = new CancellationTokenSource();
 
-            ProgramUpdateName.Visibility = Visibility.Hidden;
             TextTopOperationNotice.Text = "";
             TextTopOperationProgramNotice.Text = "";
+            ProgramUpdateName.Visibility = Visibility.Hidden;
         }
         // Join server
         private void JoinS1(object sender, RoutedEventArgs e) => Join.Server("joinS1");

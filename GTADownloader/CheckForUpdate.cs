@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -47,7 +47,7 @@ namespace GTADownloader
                 long gtaSizeProgramOnComputer = new FileInfo(Data.getProgramFolderPath + Data.getProgramName).Length;
 
                 if (gtaSizeProgramOnline == gtaSizeProgramOnComputer)
-                    win.Dispatcher.Invoke(() => UpdateNotiProgram("updated.", Brushes.ForestGreen));
+                    win.Dispatcher.Invoke(() => UpdateNotiProgram("updated", Brushes.ForestGreen));
                 else
                 {
                     win.Dispatcher.Invoke(() => UpdateNotiProgram("outdated", Brushes.Red));

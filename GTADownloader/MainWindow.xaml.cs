@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Input;
 using System.Threading;
 using System.Linq;
+using System.ComponentModel;
 
 namespace GTADownloader
 {
@@ -13,15 +14,16 @@ namespace GTADownloader
         {
             InitializeComponent();
         }
-        private void WindowLoad(object sender, RoutedEventArgs e)
+        private async void WindowLoad(object sender, RoutedEventArgs e)
         {
             Title = $"GTA Mission Downloader | {Data.programVersion} by Coke";
             FileOperation.IsFilePresent("config");
             ListView.PopulateLvOnStart();
-            _ = CheckForUpdate.UpdateAsync(Data.ctsOnStart.Token);
             _ = Join.UpdateServerAsync();
             Data.TaskBar();
             Options.UpdateCheckBoxes();
+            await Data.PopulateFileNameArray();
+            _ = CheckForUpdate.UpdateAsync(Data.ctsOnStart.Token);
         }
         // Mfs
         private async void S1Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
@@ -123,10 +125,10 @@ namespace GTADownloader
         private async void MaxSpeed_Checked(object sender, RoutedEventArgs e) => await Options.Choose("maxSpeed");
         private async void NormalSpeed_Checked(object sender, RoutedEventArgs e) => await Options.Choose("normalSpeed");
 
-        private void OpenConfigFolder(object sender, RoutedEventArgs e) => Process.Start(Data.getDataFolderPath);
+        private void OpenConfigFolder(object sender, RoutedEventArgs e) => Process.Start(Data.getProgramDataFolderPath);
         private async void DeleteChangesToRegistry(object sender, RoutedEventArgs e) => await Options.Choose("removeRegistry");
 
-        private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void WindowClosing(object sender, CancelEventArgs e)
         {
             var readingCP = File.ReadLines(Data.getConfigFilePath).Skip(4).Take(1).First();
             FileOperation.EditFileLine(readingCP, $"Default Lv channel={insertTSChannelName.Text}");

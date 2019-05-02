@@ -16,19 +16,16 @@ namespace GTADownloader
             MainWindow win = (MainWindow)Application.Current.MainWindow;
             await Task.Run(() =>
             {
-                foreach (var fileID in Data.fileIDArray)
+                foreach (var file in Data.fileIDArray.Zip(Data.fileNameArray, Tuple.Create))
                 {
-                    var request = Data.GetFileRequest(fileID, "size, name");
-
-                    string fileName = request.Execute().Name;
+                    var request = Data.GetFileRequest(file.Item1, "size");
                     long? fileSizeOnline = request.Execute().Size;
+                    string fileName = file.Item2;
 
+                    string fileLoc = Path.Combine(Data.getArma3MissionFolderPath, fileName);
                     long fileSizeOnComputer = 0;
 
-                    string fileLoc = Path.Combine(Data.getMissionFolderPath, fileName);
-
                     if (cancellationToken.IsCancellationRequested) return;
-
                     try
                     {
                         fileSizeOnComputer = new FileInfo(fileLoc).Length;
@@ -76,11 +73,11 @@ namespace GTADownloader
                             long? fileSizeOnline = request.Execute().Size;
                             string fileName = request.Execute().Name;
 
-                            long fileSizeOnComputer = 0;
+                            string fileLoc = Path.Combine(Data.getArma3MissionFolderPath, fileName);
 
+                            long fileSizeOnComputer = 0;
                             try
                             {
-                                string fileLoc = Path.Combine(Data.getMissionFolderPath, fileName);
                                 fileSizeOnComputer = new FileInfo(fileLoc).Length;
                             }
                             catch (FileNotFoundException)

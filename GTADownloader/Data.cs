@@ -1,4 +1,4 @@
-using Google.Apis.Drive.v3;
+﻿using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Microsoft.Win32;
 using System;
@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 
@@ -19,16 +20,17 @@ namespace GTADownloader
                                               "15Or16ZcPqSzGF6b41p7_IDGzI3SDGCnJ",
                                               "1ZJQBHLuMK3-OT-BRglVg83wE2jEMrZgD",
                                               "1f5kNp5Erfs20J3u4pT2zBZNpV3A_f3sI"};
+        public static string[] fileNameArray = new string[4];
 
         public static string programID = "1EHQqd72EELxE-GXFCS4urWzn_3fL5wI2";
 
         public static DriveService service = new DriveService(new BaseClientService.Initializer()
         {
-            ApiKey = "xd",
+            ApiKey = "AIzaSyB8KixGHl2SPwQ5HJixKGm7IGbOYbpuc1w"
         });
 
-        public static string getMissionFolderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/Arma 3/MPMissionsCache/";
-        public static string getDataFolderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader";
+        public static string getArma3MissionFolderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/Arma 3/MPMissionsCache/";
+        public static string getProgramDataFolderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader";
         public static string getListViewFilePath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader/GTALvData.txt";
         public static string getConfigFilePath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader/GTAData.txt";
 
@@ -66,6 +68,18 @@ namespace GTADownloader
             request.Fields = $"{field}";
 
             return request;
+        }
+        public static async Task PopulateFileNameArray()
+        {
+            await Task.Run(() =>
+            {
+                int i = 0;
+                foreach (var item in fileIDArray)
+                {
+                    var request = GetFileRequest(item, "name");
+                    fileNameArray[i++] = request.Execute().Name;
+                }
+            });
         }
         public static void ButtonsOption(string whichOption)
         {

@@ -124,7 +124,6 @@ namespace GTADownloader
                     break;
             }
         }
-
         public static void UpdateCheckBoxes()
         {
             object startupValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run", "GTADownloader", null);

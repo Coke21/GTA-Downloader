@@ -23,7 +23,7 @@ namespace GTADownloader
                 var request = Data.GetFileRequest(fileID, "size, name");
                 string fileName = request.Execute().Name;
 
-                string mFPath = Path.Combine(Data.getMissionFolderPath, fileName);
+                string mFPath = Path.Combine(Data.getArma3MissionFolderPath, fileName);
                 string programPath = Path.Combine(Data.getProgramFolderPath, fileName + ".exe");
 
                 using (MemoryStream stream = new MemoryStream())
@@ -58,12 +58,11 @@ namespace GTADownloader
                             case DownloadStatus.Completed:
                                 stream.WriteTo(file);
                                 win.Dispatcher.Invoke(() => Data.ButtonsOption("afterDownload"));
-                                win.Dispatcher.Invoke(() => TypeNotification(option == "missionFile" ? $"{fileName} has been moved to your MPMissionsCache folder" : "The updated version has been downloaded!", Brushes.ForestGreen));
+                                win.Dispatcher.Invoke(() => Notify(option == "missionFile" ? $"{fileName} has been moved to your MPMissionsCache folder" : "The updated version of GTA program has been downloaded!", Brushes.ForestGreen));
                                 break;
                             case DownloadStatus.Failed:
-                                stream.SetLength(0);
                                 win.Dispatcher.Invoke(() => Data.ButtonsOption("afterDownload"));
-                                win.Dispatcher.Invoke(() => TypeNotification($"An error appeared with {fileName} file!", Brushes.Red, 5));
+                                win.Dispatcher.Invoke(() => Notify($"An error appeared with {fileName} file!", Brushes.Red, 5));
                                 Data.missionFileListID.Remove(fileID);
                                 break;
                         }
@@ -92,7 +91,7 @@ namespace GTADownloader
                 }
             });
         }
-        private static void TypeNotification (string text, SolidColorBrush colour, int timeDisplaySec = 3)
+        private static void Notify (string text, SolidColorBrush colour, int timeDisplaySec = 3)
         {
             MainWindow win = (MainWindow)Application.Current.MainWindow;
 

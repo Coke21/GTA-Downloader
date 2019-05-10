@@ -20,9 +20,9 @@ namespace GTADownloader
             FileOperation.IsFilePresent("config");
             ListView.PopulateLvOnStart();
             _ = Join.UpdateServerAsync();
-            Data.TaskBar();
+            DataHelper.TaskBar();
             Options.UpdateCheckBoxes();
-            await Data.PopulateFileNameArray();
+            await DataHelper.PopulateFileNameArray();
             _ = CheckForUpdate.UpdateAsync(Data.ctsOnStart.Token);
         }
         // Mfs
@@ -48,6 +48,7 @@ namespace GTADownloader
             await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token);
         }
         private async void ProgramUpdateClick(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.programID, Data.ctsStopDownloading.Token, "programUpdate");
+        private void ReadChangelogClick(object sender, RoutedEventArgs e) => Process.Start("https://docs.google.com/document/d/1HzbVqK26YLsJtSBC2XJ7s_VcQ9IWH9ZWy3LEGEDwrJk/edit");
         private void StopDownloadClick(object sender, RoutedEventArgs e)
         {
             Data.ctsStopDownloading.Cancel();
@@ -65,7 +66,9 @@ namespace GTADownloader
 
             TextTopOperationNotice.Text = "";
             TextTopOperationProgramNotice.Text = "";
+
             ProgramUpdateName.Visibility = Visibility.Hidden;
+            ReadChangelogName.Visibility = Visibility.Hidden;
         }
         // Join server
         private void JoinS1(object sender, RoutedEventArgs e) => Join.Server("joinS1");
@@ -80,13 +83,14 @@ namespace GTADownloader
 
         private void LvItemMouseEnter(object sender, MouseEventArgs e) => ListView.LvItemMouseEnter(sender, e);
         private void LvMouseMoveDragDrop(object sender, MouseEventArgs e) => ListView.LvMouseMoveDragDrop(sender, e);
-        private void TbMouseMoveDragDrop(object sender, MouseEventArgs e) => ListView.TbMouseMoveDragDrop(sender, e);
+        private void TbChannelNameMouseMove(object sender, MouseEventArgs e) => ListView.TbChannelNameMouseMove(sender, e);
 
         private void PathDropTbCP(object sender, DragEventArgs e) => ListView.PathDropTbCP(sender, e);
         private void PathDropTbPass(object sender, DragEventArgs e) => ListView.PathDropTbPass(sender, e);
         private void PathDropLv(object sender, DragEventArgs e) => ListView.PathDropLv(sender, e);
 
         private void LvItemHotKeys(object sender, KeyEventArgs e) => ListView.LvItemHotkeys(sender, e);
+
         //Options
         private void OfficialThread_Click(object sender, RoutedEventArgs e) => Process.Start("https://grandtheftarma.com/topic/116196-gta-mission-downloader/");
         private void About_Click(object sender, RoutedEventArgs e) => MessageBox.Show($"Current version {Data.programVersion}. \n" +

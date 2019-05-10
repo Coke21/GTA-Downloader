@@ -129,10 +129,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="FileOperation.cs" />
-    <Compile Include="Join.cs" />
-    <Compile Include="ListView.cs" />
-    <Compile Include="Options.cs" />
+    <Compile Include="MyClass\DataHelper.cs" />
+    <Compile Include="MyClass\FileOperation.cs" />
+    <Compile Include="MyClass\Join.cs" />
+    <Compile Include="MyClass\ListView.cs" />
+    <Compile Include="MyClass\Options.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -146,9 +147,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CheckForUpdate.cs" />
-    <Compile Include="Download.cs" />
-    <Compile Include="Data.cs" />
+    <Compile Include="MyClass\CheckForUpdate.cs" />
+    <Compile Include="MyClass\Download.cs" />
+    <Compile Include="MyClass\Data.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -174,6 +175,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\imageDocs.png" />
     <Resource Include="Images\windowBack.png" />
     <Resource Include="Images\pauseIcon.png" />
     <None Include=".dll files\Google.Apis.Core.dll" />

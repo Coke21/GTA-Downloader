@@ -11,7 +11,6 @@ namespace GTADownloader
     {
         public static void Server(string server, bool showNotificationMsg = true)
         {
-            MainWindow win = (MainWindow)Application.Current.MainWindow;
             switch (server)
             {
                 case "joinS1":
@@ -28,7 +27,7 @@ namespace GTADownloader
                     break;
                 case "joinTS":
                     string arg4 = "TS.grandtheftarma.com:9987";
-                    Process.Start("ts3server://" + arg4 + $"?channel={win.insertTSChannelName.Text}" + $"&channelpassword={win.insertTSChannelPasswordName.Text}");
+                    Process.Start("ts3server://" + arg4 + $"?channel={Data.W2.insertTSChannelName.Text}" + $"&channelpassword={Data.W2.insertTSChannelPasswordName.Text}");
                     break;
             }
             if (showNotificationMsg) MessageBox.Show("The application is starting...(this window can be closed)", "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);

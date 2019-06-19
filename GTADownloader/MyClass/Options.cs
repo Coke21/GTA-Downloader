@@ -137,8 +137,8 @@ namespace GTADownloader
 
             try
             {
-                if (data["Default Lv channel"].Length > 0) win.insertTSChannelName.Text = data["Default Lv channel"];
-                if (data["Default Lv password"].Length > 0) win.insertTSChannelPasswordName.Text = data["Default Lv password"];
+                if (data["Default Lv channel"].Length > 0) Data.W2.insertTSChannelName.Text = data["Default Lv channel"];
+                if (data["Default Lv password"].Length > 0) Data.W2.insertTSChannelPasswordName.Text = data["Default Lv password"];
 
                 if (data["Run Hidden"] == "1")
                 {

@@ -1,4 +1,4 @@
-﻿using Google.Apis.Drive.v3;
+using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Microsoft.Win32;
 using System;
@@ -23,6 +23,7 @@ namespace GTADownloader
         public static string[] fileNameArray = new string[4];
 
         public const string programID = "1EHQqd72EELxE-GXFCS4urWzn_3fL5wI2";
+        public static TSWindow W2 { get; set; } = new TSWindow();
 
         public static string getArma3FolderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/Arma 3";
         public static string getArma3MissionFolderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/Arma 3/MPMissionsCache/";

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="TSWindow"
+        Title="TeamSpeak"
         Height="340" Width="280"
         Background="#FFBDB5B5" FontSize="15" Closing="Window_Closing"
         WindowStyle="None" ResizeMode="NoResize">

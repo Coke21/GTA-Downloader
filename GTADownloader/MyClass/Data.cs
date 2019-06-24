@@ -1,13 +1,5 @@
-using Google.Apis.Drive.v3;
-using Google.Apis.Services;
-using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
+﻿using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 
 namespace GTADownloader
@@ -23,19 +15,6 @@ namespace GTADownloader
         public static string[] fileNameArray = new string[4];
 
         public const string programID = "1EHQqd72EELxE-GXFCS4urWzn_3fL5wI2";
-        public static TSWindow W2 { get; set; } = new TSWindow();
-
-        public static string getArma3FolderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/Arma 3";
-        public static string getArma3MissionFolderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/Arma 3/MPMissionsCache/";
-
-        public static string getProgramDataFolderPath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader";
-        public static string getConfigFilePath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader/GTAData.txt";
-        public static string getListViewFilePath = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader/GTALvData.txt";
-
-        public static string getRegistryArma3EXEPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\bohemia interactive\arma 3", "main", string.Empty).ToString() + @"\arma3battleye";
-
-        public static string getProgramFolderPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
-        public static string getProgramName = AppDomain.CurrentDomain.FriendlyName;
 
         public static List<string> missionFileListID = new List<string>();
         public static NotifyIcon notifyIcon = new NotifyIcon();

@@ -15,19 +15,19 @@ namespace GTADownloader
             {
                 case "joinS1":
                     string arg1 = "-connect=164.132.201.9:2302";
-                    Process.Start(Data.getRegistryArma3EXEPath, arg1);
+                    Process.Start(DataProperties.GetRegistryArma3EXEPath, arg1);
                     break;
                 case "joinS2":
                     string arg2 = "-connect=164.132.201.12:2302";
-                    Process.Start(Data.getRegistryArma3EXEPath, arg2);
+                    Process.Start(DataProperties.GetRegistryArma3EXEPath, arg2);
                     break;
                 case "joinS3(Conflict)":
                     string arg3 = "-connect=164.132.202.63:2302";
-                    Process.Start(Data.getRegistryArma3EXEPath, arg3);
+                    Process.Start(DataProperties.GetRegistryArma3EXEPath, arg3);
                     break;
                 case "joinTS":
                     string arg4 = "TS.grandtheftarma.com:9987";
-                    Process.Start("ts3server://" + arg4 + $"?channel={Data.W2.insertTSChannelName.Text}" + $"&channelpassword={Data.W2.insertTSChannelPasswordName.Text}");
+                    Process.Start("ts3server://" + arg4 + $"?channel={DataProperties.W2.insertTSChannelName.Text}" + $"&channelpassword={DataProperties.W2.insertTSChannelPasswordName.Text}");
                     break;
             }
             if (showNotificationMsg) MessageBox.Show("The application is starting...(this window can be closed)", "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -39,7 +39,7 @@ namespace GTADownloader
             {
                 while (true)
                 {
-                    Server gta1 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.201.9", 2303, false, 1000, 1000, 0, true);
+                    Server gta1 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.201.9", 2303, false, 1000, 1000, 0, false);
                     ServerInfo info1 = gta1.GetInfo();
                     win.Dispatcher.BeginInvoke((Action)(() => GetServerInfo(info1, win.textBlockServer1, win.JoinServer1Button)));
 

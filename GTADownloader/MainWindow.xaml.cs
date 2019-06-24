@@ -1,10 +1,9 @@
 ﻿using System.Windows;
 using System.Diagnostics;
-using System.IO;
 using System.Windows.Input;
 using System.Threading;
-using System.Linq;
 using System.ComponentModel;
+
 
 namespace GTADownloader
 {
@@ -16,22 +15,15 @@ namespace GTADownloader
         }
         private void Window_LocationChanged(object sender, System.EventArgs e)
         {
-            Data.W2.Left = Left + ActualWidth - 7;
-            Data.W2.Top = Top + 52;
+            DataProperties.W2.Left = Left + ActualWidth - 7;
+            DataProperties.W2.Top = Top + 52;
         }
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e) => Window_LocationChanged(sender, e);
         private async void WindowLoad(object sender, RoutedEventArgs e)
         {
             Title = $"GTA Mission Downloader | {Data.programVersion} by Coke";
-            Data.W2.Owner = this;
-
-            FileOperation.IsFilePresent("config");
-            ListView.PopulateLvOnStart();
-            _ = Join.UpdateServerAsync();
-            DataHelper.TaskBar();
-            Options.UpdateCheckBoxes();
-            await DataHelper.PopulateFileNameArray();
-            _ = CheckForUpdate.UpdateAsync(Data.ctsOnStart.Token);
+            DataProperties.W2.Owner = this;
+            await Consistency.Load();
         }
         // Mfs
         private async void S1Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
@@ -86,32 +78,19 @@ namespace GTADownloader
 
         private void Expander_Expanded(object sender, RoutedEventArgs e)
         {
-            Data.W2.WindowStartupLocation = WindowStartupLocation.Manual;
-            Data.W2.Left = Left + ActualWidth - 7;
-            Data.W2.Top = Top + 52;
-            Data.W2.Show();
+            DataProperties.W2.WindowStartupLocation = WindowStartupLocation.Manual;
+            DataProperties.W2.Left = Left + ActualWidth - 7;
+            DataProperties.W2.Top = Top + 52;
+            DataProperties.W2.Show();
         }
 
-        private void Expander_Collapsed(object sender, RoutedEventArgs e)
-        {
-            Data.W2.Hide();
-        }
+        private void Expander_Collapsed(object sender, RoutedEventArgs e) => DataProperties.W2.Hide();
         //Options
-        private void OfficialThread_Click(object sender, RoutedEventArgs e) => Process.Start("https://grandtheftarma.com/topic/116196-gta-mission-downloader/");
-        private void About_Click(object sender, RoutedEventArgs e) => MessageBox.Show($"Current version {Data.programVersion}. \n" +
-                                                                    $"Do you want to help develop this application? " +
-                                                                    $"If so, head to official thread on GTA's forum and post your suggestion. \n" +
-                                                                    $"Thank you for using this application! - Coke",
-                                                                    "Information", MessageBoxButton.OK, MessageBoxImage.Warning);
-
         private async void StartUpCheckBox_Checked(object sender, RoutedEventArgs e) => await Options.Choose("startUp");
         private async void StartUpCheckBox_Unchecked(object sender, RoutedEventArgs e) => await Options.Choose("startUpUnCheck");
 
         private async void RunHiddenCheckBox_Checked(object sender, RoutedEventArgs e) => await Options.Choose("runHidden");
         private async void RunHiddenCheckBox_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("runHiddenUnCheck");
-
-        private async void RunTSAutoCheckBox_Checked(object sender, RoutedEventArgs e) => await Options.Choose("runTSAuto");
-        private async void RunTSAutoCheckBox_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("runTSAutoUnCheck");
 
         private async void S1AltisChecked(object sender, RoutedEventArgs e) => await Options.Choose("S1Altis");
         private async void S1Altis_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("S1AltisUnCheck");
@@ -134,16 +113,17 @@ namespace GTADownloader
         private async void MaxSpeed_Checked(object sender, RoutedEventArgs e) => await Options.Choose("maxSpeed");
         private async void NormalSpeed_Checked(object sender, RoutedEventArgs e) => await Options.Choose("normalSpeed");
 
-        private void OpenConfigFolder(object sender, RoutedEventArgs e) => Process.Start(Data.getProgramDataFolderPath);
-        private async void DeleteChangesToRegistry(object sender, RoutedEventArgs e) => await Options.Choose("removeRegistry");
+        private void OpenConfigFolder(object sender, RoutedEventArgs e) => Process.Start(DataProperties.GetProgramDataFolderPath);
 
+        private void OfficialThread_Click(object sender, RoutedEventArgs e) => Process.Start("https://grandtheftarma.com/topic/116196-gta-mission-downloader/");
+        private void About_Click(object sender, RoutedEventArgs e) => MessageBox.Show($"Current version {Data.programVersion}. \n" +
+                                                                    $"Do you want to help develop this application? " +
+                                                                    $"If so, head to official thread on GTA's forum and post your suggestion. \n" +
+                                                                    $"Thank you for using this application! - Coke",
+                                                                    "Information", MessageBoxButton.OK, MessageBoxImage.Warning);
         private void WindowClosing(object sender, CancelEventArgs e)
         {
-            var readingCP = File.ReadLines(Data.getConfigFilePath).Skip(4).Take(1).First();
-            FileOperation.EditFileLine(readingCP, $"Default Lv channel={Data.W2.insertTSChannelName.Text}");
-
-            var readingPass = File.ReadLines(Data.getConfigFilePath).Skip(5).Take(1).First();
-            FileOperation.EditFileLine(readingPass, $"Default Lv password={ Data.W2.insertTSChannelPasswordName.Text}");
+            Consistency.Save();
 
             Data.notifyIcon.Icon.Dispose();
             Data.notifyIcon.Dispose();

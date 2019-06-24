@@ -11,7 +11,7 @@ namespace GTADownloader
         {
             ApiKey = "AIzaSyB8KixGHl2SPwQ5HJixKGm7IGbOYbpuc1w"
         });
-        public static void TaskBar()
+        public static void EnableTaskBar()
         {
             Data.notifyIcon.Visible = true;
             Data.notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath);
@@ -35,15 +35,12 @@ namespace GTADownloader
         }
         public static async Task PopulateFileNameArray()
         {
-            await Task.Run(() =>
+            int i = 0;
+            foreach (var item in Data.fileIDArray)
             {
-                int i = 0;
-                foreach (var item in Data.fileIDArray)
-                {
-                    var request = GetFileRequest(item, "name");
-                    Data.fileNameArray[i++] = request.Execute().Name;
-                }
-            });
+                var request = await GetFileRequest(item, "name").ExecuteAsync();
+                Data.fileNameArray[i++] = request.Name;
+            }
         }
         public static void ButtonsOption(string whichOption)
         {
@@ -93,7 +90,7 @@ namespace GTADownloader
                 case "deleteChangesToRegistry":
                     win.StartUpCheckBox.IsChecked = false;
                     win.HiddenCheckBox.IsChecked = false;
-                    win.RunTSAuto.IsChecked = false;
+                    win.RunTSAutoCheckBox.IsChecked = false;
                     win.NotificationCheckBox.IsChecked = false;
                     win.AutomaticUpdateCheckBox.IsChecked = false;
                     break;

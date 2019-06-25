@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +13,9 @@ namespace GTADownloader
         private static MainWindow Win = (MainWindow)Application.Current.MainWindow;
         public static async Task Load()
         {
+            Directory.CreateDirectory(DataProperties.GetArma3FolderPath);
+            Directory.CreateDirectory(DataProperties.GetArma3MissionFolderPath);
+
             DataHelper.EnableTaskBar();
 
             DataProperties.W2.insertTSChannelName.Text = Properties.Settings.Default.DefaultLvChannel;
@@ -68,7 +72,7 @@ namespace GTADownloader
 
             _ = Join.UpdateServerAsync();
             await DataHelper.PopulateFileNameArray();
-            _ = CheckForUpdate.UpdateAsync(Data.ctsOnStart.Token);
+            await CheckForUpdate.UpdateAsync(Data.ctsOnStart.Token);
         }
         public static void Save()
         {
@@ -107,6 +111,9 @@ namespace GTADownloader
             Properties.Settings.Default.ListViewItems = collection;
 
             Properties.Settings.Default.Save();
+
+            Data.notifyIcon.Icon.Dispose();
+            Data.notifyIcon.Dispose();
         }
     }
 }

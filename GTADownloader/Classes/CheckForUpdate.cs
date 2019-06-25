@@ -29,13 +29,13 @@ namespace GTADownloader
                 }
                 catch (FileNotFoundException)
                 {
-                    updateNotiMf(fileName, "missing", Brushes.Black);
+                    UpdateNotiMf(fileName, "missing", Brushes.Black);
                 }
                 if (File.Exists(fileLoc))
                     if (requestedFile.Size == fileSizeOnComputer)
-                        updateNotiMf(fileName, "updated", Brushes.ForestGreen);
+                        UpdateNotiMf(fileName, "updated", Brushes.ForestGreen);
                     else
-                        updateNotiMf(fileName, "outdated", Brushes.Red);
+                        UpdateNotiMf(fileName, "outdated", Brushes.Red);
             }
 
             var requestedProgram = await DataHelper.GetFileRequest(Data.programID, "size").ExecuteAsync();
@@ -50,7 +50,7 @@ namespace GTADownloader
                 Win.ReadChangelogName.Visibility = Visibility.Visible;
             }
         }
-        private static void updateNotiMf(string fileName, string status, SolidColorBrush colour) => Win.TextTopOperationNotice.Inlines.Add(new Run($"{fileName} is {status}!\n") { Foreground = colour });
+        private static void UpdateNotiMf(string fileName, string status, SolidColorBrush colour) => Win.TextTopOperationNotice.Inlines.Add(new Run($"{fileName} is {status}!\n") { Foreground = colour });
         private static void UpdateNotiProgram(string status, SolidColorBrush colour) => Win.TextTopOperationProgramNotice.Inlines.Add(new Run($"The GTA program is {status}!") { Foreground = colour });
 
         public static async Task TypeOfNotificationAsync(string whichOption, CancellationToken cancellationToken)

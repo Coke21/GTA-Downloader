@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -100,6 +100,9 @@
     <Reference Include="Google.Apis.PlatformServices, Version=1.38.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.1.38.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.dll files\Newtonsoft.Json.dll</HintPath>
@@ -129,13 +132,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MyClass\Consistency.cs" />
-    <Compile Include="MyClass\DataProperties.cs" />
-    <Compile Include="MyClass\ListViewClassProperties.cs" />
-    <Compile Include="MyClass\DataHelper.cs" />
-    <Compile Include="MyClass\Join.cs" />
-    <Compile Include="MyClass\ListViewClass.cs" />
-    <Compile Include="MyClass\Options.cs" />
+    <Compile Include="Classes\Consistency.cs" />
+    <Compile Include="Classes\DataProperties.cs" />
+    <Compile Include="Classes\ListViewClassProperties.cs" />
+    <Compile Include="Classes\DataHelper.cs" />
+    <Compile Include="Classes\Join.cs" />
+    <Compile Include="Classes\ListViewClass.cs" />
+    <Compile Include="Classes\Options.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -157,9 +160,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MyClass\CheckForUpdate.cs" />
-    <Compile Include="MyClass\Download.cs" />
-    <Compile Include="MyClass\Data.cs" />
+    <Compile Include="Classes\CheckForUpdate.cs" />
+    <Compile Include="Classes\Download.cs" />
+    <Compile Include="Classes\Data.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -190,7 +193,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\bin.png" />
     <Resource Include="Images\gtaIcon.ico" />
     <Resource Include="Images\imageDocs.png" />
     <Resource Include="Images\windowBack.png" />

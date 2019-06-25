@@ -18,16 +18,17 @@ namespace GTADownloader
                 case "addPathClick":
                     if (Clipboard.GetText() == "") return;
 
-                    if (!Items.Any(item => item.ChannelPath == Clipboard.GetText()))
-                    {
-                        if (Clipboard.GetText().Length > 0)
+                    if (Clipboard.GetText().Count() > 0)
+                        if (!Items.Any(item => item.ChannelPath == Clipboard.GetText()))
                         {
-                            Items.Add(new ListViewClassProperties.LvItem() { ChannelPath = $"{Clipboard.GetText()}" });
-                            DataProperties.W2.LvName.ItemsSource = Items;
+                            if (Clipboard.GetText().Length > 0)
+                            {
+                                Items.Add(new ListViewClassProperties.LvItem() { ChannelPath = $"{Clipboard.GetText()}" });
+                                DataProperties.W2.LvName.ItemsSource = Items;
+                            }
                         }
-                    }
-                    else
-                        MessageBox.Show($"The '{Clipboard.GetText()}' path is already in the list!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        else
+                            MessageBox.Show($"The '{Clipboard.GetText()}' path is already in the list!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     break;
                 case "copyPathClick":
                     if (selectedItem != null)

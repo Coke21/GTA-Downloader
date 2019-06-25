@@ -35,33 +35,34 @@ namespace GTADownloader
         public static async Task UpdateServerAsync()
         {
             MainWindow win = (MainWindow)Application.Current.MainWindow;
+
             await Task.Run(() =>
             {
                 while (true)
                 {
                     Server gta1 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.201.9", 2303, false, 1000, 1000, 0, false);
                     ServerInfo info1 = gta1.GetInfo();
-                    win.Dispatcher.BeginInvoke((Action)(() => GetServerInfo(info1, win.textBlockServer1, win.JoinServer1Button)));
+                    win.Dispatcher.BeginInvoke((Action)(() => ShowServerInfo(info1, win.textBlockServer1, win.JoinServer1Button)));
 
                     Server gta2 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.201.12", 2303, false, 1000, 1000, 0, false);
                     ServerInfo info2 = gta2.GetInfo();
-                    win.Dispatcher.BeginInvoke((Action)(() => GetServerInfo(info2, win.textBlockServer2, win.JoinServer2Button)));
+                    win.Dispatcher.BeginInvoke((Action)(() => ShowServerInfo(info2, win.textBlockServer2, win.JoinServer2Button)));
 
                     Server gta3 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.202.63", 2303, false, 1000, 1000, 0, false);
                     ServerInfo info3 = gta3.GetInfo();
-                    win.Dispatcher.BeginInvoke((Action)(() => GetServerInfo(info3, win.textBlockServer3, win.JoinServer3Button)));
+                    win.Dispatcher.BeginInvoke((Action)(() => ShowServerInfo(info3, win.textBlockServer3, win.JoinServer3Button)));
 
                     Task.Delay(2000);
                 }
             });
         }
-        private static void GetServerInfo(ServerInfo info, System.Windows.Controls.TextBlock textBlock, System.Windows.Controls.Button button)
+        private static void ShowServerInfo(ServerInfo info, System.Windows.Controls.TextBlock textBlock, System.Windows.Controls.Button button)
         {
             if (info != null)
             {
                 if (info.Players + 1 != info.MaxPlayers)
                 {
-                    textBlock.Text = $"{info.Name} Players: {info.Players + 1}/{info.MaxPlayers}";
+                    textBlock.Text = $"{info.Name} | Players: {info.Players + 1}/{info.MaxPlayers}";
                     button.IsEnabled = true;
                 }
                 else

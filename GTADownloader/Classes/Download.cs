@@ -49,17 +49,17 @@ namespace GTADownloader
                             double truncated = Math.Truncate(bytesIn / 1000000);
                             double truncated2 = Math.Truncate((double)checkedValue.Size / 1000000);
 
-                            Win.Dispatcher.Invoke(() => Win.textblockDownload.Text = $"Downloading {requestedFile.Name} - " + truncated + "MB/" + truncated2 + "MB");
+                            Win.Dispatcher.Invoke(() => Win.textblockDownload.Text = $"Downloading '{requestedFile.Name}' - " + truncated + "MB/" + truncated2 + "MB");
                             Win.Dispatcher.Invoke(() => Win.progressBarDownload.Value = percentage);
                             break;
                         case DownloadStatus.Completed:
                             stream.WriteTo(file);
                             Win.Dispatcher.Invoke(() => DataHelper.ButtonsOption("afterDownload"));
-                            Win.Dispatcher.Invoke(() => Notify(option == "missionFile" ? $"{requestedFile.Name} has been downloaded!" : "The updated version of GTA program has been downloaded!", Brushes.ForestGreen));
+                            Win.Dispatcher.Invoke(() => Notify(option == "missionFile" ? $"'{requestedFile.Name}' has been downloaded!" : "The updated version of GTA program has been downloaded!", Brushes.ForestGreen));
                             break;
                         case DownloadStatus.Failed:
                             Win.Dispatcher.Invoke(() => DataHelper.ButtonsOption("afterDownload"));
-                            Win.Dispatcher.Invoke(() => Notify($"An error appeared with {requestedFile.Name} file!", Brushes.Red, 5));
+                            Win.Dispatcher.Invoke(() => Notify($"An error appeared with '{requestedFile.Name}' file!", Brushes.Red, 5));
                             Data.missionFileListID.Remove(fileID);
                             break;
                     }
@@ -98,13 +98,12 @@ namespace GTADownloader
             myDispatcherTimer.Interval = new TimeSpan(0, 0, 0, timeDisplaySec, 0);
             myDispatcherTimer.Tick += new EventHandler(HideNotificationText);
             myDispatcherTimer.Start();
-
-            void HideNotificationText(object sender, EventArgs e)
-            {
-                Win.TextTopOperationNotice.Text = "";
-                DispatcherTimer timer = (DispatcherTimer)sender;
-                timer.Stop();
-            }
+        }
+        private static void HideNotificationText(object sender, EventArgs e)
+        {
+            Win.TextTopOperationNotice.Text = "";
+            DispatcherTimer timer = (DispatcherTimer)sender;
+            timer.Stop();
         }
     }
 }

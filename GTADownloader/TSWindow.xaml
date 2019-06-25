@@ -60,7 +60,6 @@
         </ListView>
 
         <StackPanel Orientation="Vertical" Grid.Row="2" HorizontalAlignment="Center">
-            
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                 <TextBlock Height="30" TextWrapping="Wrap" Text="Channel path:"
                            Margin="5,7,5,0"/>
@@ -82,7 +81,6 @@
                              BorderBrush="Black"/>
                 </ScrollViewer>   
             </StackPanel>  
-            
         </StackPanel>
 
         <Border Grid.Row="0" Grid.RowSpan="5" BorderBrush="Black" BorderThickness="1" />

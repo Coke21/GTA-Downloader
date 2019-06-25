@@ -258,7 +258,7 @@
                                     Margin="0,5,0,0"/>
 
                             <Button Style="{StaticResource JoinTabButton}"
-                                    Content="Join Server 3 (Conflict Server)" x:Name="JoinServer3Button" Click="JoinS3" 
+                                    Content="Join Server 3 (Conflict)" x:Name="JoinServer3Button" Click="JoinS3" 
                                     Margin="0,5,0,0"/>
 
                             <Button Style="{StaticResource JoinTabButton}"

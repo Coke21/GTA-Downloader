@@ -4,7 +4,6 @@ using System.Windows.Input;
 using System.Threading;
 using System.ComponentModel;
 
-
 namespace GTADownloader
 {
     public partial class MainWindow : Window
@@ -23,6 +22,7 @@ namespace GTADownloader
         {
             Title = $"GTA Mission Downloader | {Data.programVersion} by Coke";
             DataProperties.W2.Owner = this;
+
             await Consistency.Load();
         }
         // Mfs
@@ -83,7 +83,6 @@ namespace GTADownloader
             DataProperties.W2.Top = Top + 52;
             DataProperties.W2.Show();
         }
-
         private void Expander_Collapsed(object sender, RoutedEventArgs e) => DataProperties.W2.Hide();
         //Options
         private async void StartUpCheckBox_Checked(object sender, RoutedEventArgs e) => await Options.Choose("startUp");
@@ -116,17 +115,13 @@ namespace GTADownloader
         private void OpenConfigFolder(object sender, RoutedEventArgs e) => Process.Start(DataProperties.GetProgramDataFolderPath);
 
         private void OfficialThread_Click(object sender, RoutedEventArgs e) => Process.Start("https://grandtheftarma.com/topic/116196-gta-mission-downloader/");
-        private void About_Click(object sender, RoutedEventArgs e) => MessageBox.Show($"Current version {Data.programVersion}. \n" +
-                                                                    $"Do you want to help develop this application? " +
+        private void About_Click(object sender, RoutedEventArgs e) => MessageBox.Show($"Do you want to help develop this application? " +
                                                                     $"If so, head to official thread on GTA's forum and post your suggestion. \n" +
                                                                     $"Thank you for using this application! - Coke",
                                                                     "Information", MessageBoxButton.OK, MessageBoxImage.Warning);
         private void WindowClosing(object sender, CancelEventArgs e)
         {
             Consistency.Save();
-
-            Data.notifyIcon.Icon.Dispose();
-            Data.notifyIcon.Dispose();
 
             base.OnClosed(e);
             Application.Current.Shutdown();

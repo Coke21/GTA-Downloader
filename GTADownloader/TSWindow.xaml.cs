@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 
-
 namespace GTADownloader
 {
     public partial class TSWindow : Window
@@ -24,7 +23,6 @@ namespace GTADownloader
         private void PathDropLv(object sender, DragEventArgs e) => ListViewClass.PathDropLv(sender, e);
 
         private void LvItemHotKeys(object sender, KeyEventArgs e) => ListViewClass.LvItemHotkeys(sender, e);
-
         //End
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) => e.Cancel = true;
     }

@@ -1,7 +1,7 @@
 # GTA-Downloader
 
 <p align="center">
-  <img width="722" height="389" src="https://user-images.githubusercontent.com/44268275/57186423-3d7ee700-6edf-11e9-814e-33ebb3afca89.png">
+  <img width="722" height="389" src="https://user-images.githubusercontent.com/44268275/60161047-00f0ad00-97f7-11e9-9673-a983fc9e70d2.png">
 </p>
 
 ## Main features:
@@ -14,10 +14,10 @@
   * Server 1
   * Server 2
   * Event server
-  * TS server
+  * TS server -> Ability to join to specific channel
 * Different configuration options for a user
 * Modern design and simplicity
-* Everything saves on the user's computer in two seperate .txt files and reloads upon the program restarts
+* Everything saves on the user's computer in one user.config file
 
 Changelog: https://docs.google.com/document/d/1HzbVqK26YLsJtSBC2XJ7s_VcQ9IWH9ZWy3LEGEDwrJk/edit
 

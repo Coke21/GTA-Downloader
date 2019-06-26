@@ -14,7 +14,7 @@
   * Server 1
   * Server 2
   * Event server
-  * TS server -> Ability to join to specific channel
+  * TS server -> Ability to join to the specific channel
 * Different configuration options for a user
 * Modern design and simplicity
 * Everything saves on the user's computer in one user.config file

@@ -10,7 +10,7 @@
   * Automatically
   * Manually
 * The program pulls the updated information about the GTA servers and displays it
-* Option to join the specific server:
+* Option to join to the specific server:
   * Server 1
   * Server 2
   * Event server

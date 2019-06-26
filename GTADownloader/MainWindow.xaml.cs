@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Diagnostics;
-using System.Windows.Input;
 using System.Threading;
 using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace GTADownloader
 {
@@ -24,6 +24,27 @@ namespace GTADownloader
             DataProperties.W2.Owner = this;
 
             await Consistency.Load();
+        }
+        private void Tab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is TabControl)
+            {
+                switch (TabControl.SelectedIndex)
+                {
+                    case 0:
+                        Expander1.IsExpanded = false;
+                        Expander_Collapsed(null, null);
+                        break;
+                    case 1:
+                        DataHelper.StopNotification();
+                        break;
+                    case 2:
+                        DataHelper.StopNotification();
+                        Expander1.IsExpanded = false;
+                        Expander_Collapsed(null, null);
+                        break;
+                }
+            }
         }
         // Mfs
         private async void S1Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
@@ -54,21 +75,6 @@ namespace GTADownloader
             Data.ctsStopDownloading.Cancel();
             Data.ctsStopDownloading.Dispose();
             Data.ctsStopDownloading = new CancellationTokenSource();
-        }
-        // Stop Notification
-        private void JoinServerTabItemClicked(object sender, MouseButtonEventArgs e) => StopOnStart();
-        private void OptionsTabItemClicked(object sender, MouseButtonEventArgs e) => StopOnStart();
-        public void StopOnStart()
-        {
-            Data.ctsOnStart.Cancel();
-            Data.ctsOnStart.Dispose();
-            Data.ctsOnStart = new CancellationTokenSource();
-
-            TextTopOperationNotice.Text = "";
-            TextTopOperationProgramNotice.Text = "";
-
-            ProgramUpdateName.Visibility = Visibility.Hidden;
-            ReadChangelogName.Visibility = Visibility.Hidden;
         }
         // Join server
         private void JoinS1(object sender, RoutedEventArgs e) => Join.Server("joinS1");

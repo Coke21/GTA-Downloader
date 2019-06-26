@@ -1,5 +1,6 @@
 ﻿using Google.Apis.Drive.v3;
 using Google.Apis.Services;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -22,7 +23,7 @@ namespace GTADownloader
         }
         public static async void NotifyIconBalloonTipClicked(bool stopOnStart = true, bool updateFiles = true)
         {
-            if (stopOnStart) Win.StopOnStart();
+            if (stopOnStart) StopNotification();
             Win.WindowState = WindowState.Normal;
             Win.Show();
             if (updateFiles) await CheckForUpdate.UpdateAsync(Data.ctsOnStart.Token);
@@ -42,6 +43,18 @@ namespace GTADownloader
                 var request = await GetFileRequest(item, "name").ExecuteAsync();
                 Data.fileNameArray[i++] = request.Name;
             }
+        }
+        public static void StopNotification()
+        {
+            Data.ctsOnStart.Cancel();
+            Data.ctsOnStart.Dispose();
+            Data.ctsOnStart = new CancellationTokenSource();
+
+            Win.TextTopOperationNotice.Text = "";
+            Win.TextTopOperationProgramNotice.Text = "";
+
+            Win.ProgramUpdateName.Visibility = Visibility.Hidden;
+            Win.ReadChangelogName.Visibility = Visibility.Hidden;
         }
         public static void ButtonsOption(string whichOption)
         {

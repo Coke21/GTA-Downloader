@@ -106,7 +106,7 @@
         </Style>
     </Window.Resources>
 
-    <TabControl Background="#FFBDB5B5">
+    <TabControl Background="#FFBDB5B5" x:Name="TabControl" SelectionChanged="Tab_SelectionChanged">
         <TabItem Header="Mission File">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -232,7 +232,7 @@
             </Grid>
         </TabItem>
 
-        <TabItem Header="Join" PreviewMouseUp="JoinServerTabItemClicked">
+        <TabItem Header="Join">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5" />
@@ -286,7 +286,7 @@
 
                 <Expander Grid.Column="2" Grid.Row="1" Width="25" 
                           Height="25" ToolTip="Show/Hide TeamSpeak options" RenderTransformOrigin="0.5,0.5"
-                          Expanded="Expander_Expanded" Collapsed="Expander_Collapsed">
+                          Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" x:Name="Expander1">
                     <Expander.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -300,7 +300,7 @@
             </Grid>
         </TabItem>
 
-        <TabItem Header="Options" PreviewMouseUp="OptionsTabItemClicked">
+        <TabItem Header="Options">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5" />

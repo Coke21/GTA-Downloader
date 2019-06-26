@@ -9,7 +9,7 @@
 * Multiple options to download a mission file:
   * Automatically
   * Manually
-* The program pulls the updated information about the GTA servers and displays it
+* The program pulls the information about the GTA servers and displays it
 * Option to join to the specific server:
   * Server 1
   * Server 2

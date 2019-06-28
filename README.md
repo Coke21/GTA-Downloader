@@ -20,6 +20,7 @@
 * Everything saves on the user's computer in one user.config file
 
 Changelog: https://docs.google.com/document/d/1HzbVqK26YLsJtSBC2XJ7s_VcQ9IWH9ZWy3LEGEDwrJk/edit
+
 .Exe file: https://drive.google.com/drive/u/2/folders/1i8rxUqM7NRaO8hnexDDrQm5zYlWffbXy
 
 ----------------------------------------

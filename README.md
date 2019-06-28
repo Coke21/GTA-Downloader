@@ -20,14 +20,22 @@
 * Everything saves on the user's computer in one user.config file
 
 Changelog: https://docs.google.com/document/d/1HzbVqK26YLsJtSBC2XJ7s_VcQ9IWH9ZWy3LEGEDwrJk/edit
+.Exe file: https://drive.google.com/drive/u/2/folders/1i8rxUqM7NRaO8hnexDDrQm5zYlWffbXy
 
 ----------------------------------------
-ONLY IF YOU WANT TO SET UP YOUR OWN KEY:
+#### Instaling Guide (If you just want a working .exe file, go here: https://drive.google.com/drive/u/2/folders/1i8rxUqM7NRaO8hnexDDrQm5zYlWffbXy):
 
-To acquire such key follow the steps below.
+0. Make sure that you have installed https://visualstudio.microsoft.com/vs/.
+1. On main page of this repository click "Clone or download" -> Download ZIP -> Place the ZIP file on the desktop -> Place the folder on the desktop again.
+2. Double click the .sln file.
+3. On top of the Visual Studio, choose Debug or Release and then on the right click "Start". I would recommend to choose Release, if you want to place .exe file on your desktop.
+4. The location of the .exe file is in \GTA-Downloader-master\GTADownloader\bin\Release.
+
+----------------------------------------
+#### YOUR OWN KEY:
 
 Steps to get API key:
 1. General info: https://www.daimto.com/google-drive-authentication-c/ -> the part that interests you is: https://gyazo.com/722acbd29ff1adcc6f9956f666486d9d
 2. visit  https://console.developers.google.com
-3. Create new project, name it w/e you want, go to "Credentials" -> "Create Credentials" -> choose API key -> you will get a key, copy and paste it into Data -> service in "ApiKey".
+3. Create new project, name it w/e you want, go to "Credentials" -> "Create Credentials" -> choose API key -> you will get a key, copy and paste it into DataHelper -> service in "ApiKey".
 4. Start debugging, everything should be working.

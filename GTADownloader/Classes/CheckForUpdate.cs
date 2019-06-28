@@ -55,7 +55,7 @@ namespace GTADownloader
 
         public static async Task TypeOfNotificationAsync(string whichOption, CancellationToken cancellationToken)
         {
-            Data.notifyIcon.BalloonTipClicked += (sender, e) => DataHelper.NotifyIconBalloonTipClicked();
+            Data.notifyIcon.BalloonTipClicked += (sender, e) => Notification.NotifyIconBalloonTipClicked();
 
             while (!cancellationToken.IsCancellationRequested)
             {

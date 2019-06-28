@@ -139,6 +139,7 @@
     <Compile Include="Classes\Join.cs" />
     <Compile Include="Classes\ListViewClass.cs" />
     <Compile Include="Classes\Options.cs" />
+    <Compile Include="Classes\Notification.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

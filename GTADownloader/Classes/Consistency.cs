@@ -16,7 +16,7 @@ namespace GTADownloader
             Directory.CreateDirectory(DataProperties.GetArma3FolderPath);
             Directory.CreateDirectory(DataProperties.GetArma3MissionFolderPath);
 
-            DataHelper.EnableTaskBar();
+            Notification.EnableTaskBar();
 
             DataProperties.W2.insertTSChannelName.Text = Properties.Settings.Default.DefaultLvChannel;
             DataProperties.W2.insertTSChannelPasswordName.Text = Properties.Settings.Default.DefaultLvPassword;
@@ -28,7 +28,7 @@ namespace GTADownloader
                 Win.ShowInTaskbar = false;
                 Win.Hide();
                 Data.notifyIcon.ShowBalloonTip(4000, "Reminder!", $"The program is running in the background!", System.Windows.Forms.ToolTipIcon.None);
-                Data.notifyIcon.BalloonTipClicked += (a, b) => DataHelper.NotifyIconBalloonTipClicked(false, false);
+                Data.notifyIcon.BalloonTipClicked += (a, b) => Notification.NotifyIconBalloonTipClicked(false, false);
             }
             if (Properties.Settings.Default.RunTsAuto)
             {

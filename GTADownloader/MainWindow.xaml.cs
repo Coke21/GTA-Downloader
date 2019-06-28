@@ -36,10 +36,10 @@ namespace GTADownloader
                         Expander_Collapsed(null, null);
                         break;
                     case 1:
-                        DataHelper.StopNotification();
+                        Notification.StopNotification();
                         break;
                     case 2:
-                        DataHelper.StopNotification();
+                        Notification.StopNotification();
                         Expander1.IsExpanded = false;
                         Expander_Collapsed(null, null);
                         break;

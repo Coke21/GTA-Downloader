@@ -97,13 +97,8 @@ namespace GTADownloader
                 MenuItemClick("addPathClick");
 
             if (e.Key == Key.Delete)
-            {
                 if (CurrentItem != null)
-                {
                     Items.Remove(CurrentItem);
-                    DataProperties.W2.LvName.Items.Refresh();
-                }
-            }
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Google.Apis.Drive.v3;
 using Google.Apis.Services;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -14,20 +13,6 @@ namespace GTADownloader
         {
             ApiKey = "AIzaSyB8KixGHl2SPwQ5HJixKGm7IGbOYbpuc1w"
         });
-        public static void EnableTaskBar()
-        {
-            Data.notifyIcon.Visible = true;
-            Data.notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath);
-            Data.notifyIcon.Text = "GTA Mission Downloader";
-            Data.notifyIcon.Click += (sender, e) => NotifyIconBalloonTipClicked();
-        }
-        public static async void NotifyIconBalloonTipClicked(bool stopOnStart = true, bool updateFiles = true)
-        {
-            if (stopOnStart) StopNotification();
-            Win.WindowState = WindowState.Normal;
-            Win.Show();
-            if (updateFiles) await CheckForUpdate.UpdateAsync(Data.ctsOnStart.Token);
-        }
         public static FilesResource.GetRequest GetFileRequest(string fileID, string field)
         {
             var request = service.Files.Get(fileID);
@@ -43,18 +28,6 @@ namespace GTADownloader
                 var request = await GetFileRequest(item, "name").ExecuteAsync();
                 Data.fileNameArray[i++] = request.Name;
             }
-        }
-        public static void StopNotification()
-        {
-            Data.ctsOnStart.Cancel();
-            Data.ctsOnStart.Dispose();
-            Data.ctsOnStart = new CancellationTokenSource();
-
-            Win.TextTopOperationNotice.Text = "";
-            Win.TextTopOperationProgramNotice.Text = "";
-
-            Win.ProgramUpdateName.Visibility = Visibility.Hidden;
-            Win.ReadChangelogName.Visibility = Visibility.Hidden;
         }
         public static void ButtonsOption(string whichOption)
         {
@@ -99,13 +72,6 @@ namespace GTADownloader
                     Win.S2AltisCheckBox.IsChecked = false;
                     Win.S3MaldenCheckBox.IsChecked = false;
                     Win.S3TanoaCheckBox.IsChecked = false;
-                    break;
-                case "deleteChangesToRegistry":
-                    Win.StartUpCheckBox.IsChecked = false;
-                    Win.HiddenCheckBox.IsChecked = false;
-                    Win.RunTSAutoCheckBox.IsChecked = false;
-                    Win.NotificationCheckBox.IsChecked = false;
-                    Win.AutomaticUpdateCheckBox.IsChecked = false;
                     break;
             }
         }

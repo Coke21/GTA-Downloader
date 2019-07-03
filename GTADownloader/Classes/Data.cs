@@ -6,7 +6,7 @@ namespace GTADownloader
 {
     class Data
     {
-        public const string programVersion = "1.0d";
+        public const string programVersion = "1.0e";
 
         public static readonly string[] fileIDArray = {"1KIzqR9NMBZoxcdibMZPxr13__azGdGye",
                                                         "15Or16ZcPqSzGF6b41p7_IDGzI3SDGCnJ",

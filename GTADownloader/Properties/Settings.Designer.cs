@@ -177,5 +177,17 @@ namespace GTADownloader.Properties {
                 this["ListViewItems"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GTAUpdate {
+            get {
+                return ((bool)(this["GTAUpdate"]));
+            }
+            set {
+                this["GTAUpdate"] = value;
+            }
+        }
     }
 }

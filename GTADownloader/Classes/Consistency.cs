@@ -22,6 +22,7 @@ namespace GTADownloader
             DataProperties.W2.insertTSChannelPasswordName.Text = Properties.Settings.Default.DefaultLvPassword;
 
             if (Properties.Settings.Default.RunAtStartUp) Win.StartUpCheckBox.IsChecked = true;
+            if (Properties.Settings.Default.GTAUpdate) Win.GTAUpdateCheckBox.IsChecked = true;
             if (Properties.Settings.Default.RunHidden)
             {
                 Win.HiddenCheckBox.IsChecked = true;
@@ -80,6 +81,7 @@ namespace GTADownloader
             Properties.Settings.Default.DefaultLvPassword = DataProperties.W2.insertTSChannelPasswordName.Text;
 
             Properties.Settings.Default.RunAtStartUp = Win.StartUpCheckBox.IsChecked.Value;
+            Properties.Settings.Default.GTAUpdate = Win.GTAUpdateCheckBox.IsChecked.Value;
             Properties.Settings.Default.RunHidden = Win.HiddenCheckBox.IsChecked.Value;
             Properties.Settings.Default.RunTsAuto = Win.RunTSAutoCheckBox.IsChecked.Value;
 

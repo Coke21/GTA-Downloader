@@ -330,17 +330,23 @@
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
 
-                        <GroupBox Header="Run stuff" Grid.Column="1" Grid.Row="0"
+                        <GroupBox Header="Interesting stuff" Grid.Column="1" Grid.Row="0"
                                   Style="{StaticResource GroupBoxBorder}" Margin="0,0,0,5" FontSize="12">
                             <StackPanel>
-                                <CheckBox Content="Run at startup" x:Name="StartUpCheckBox" ToolTip="Run the program automatically upon PC restart" 
-                                          FontWeight="Bold" HorizontalAlignment="Center" Checked="StartUpCheckBox_Checked"
-                                          Unchecked="StartUpCheckBox_Unchecked"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <CheckBox Content="Startup" x:Name="StartUpCheckBox" ToolTip="Run the program automatically upon PC restart" 
+                                              FontWeight="Bold" HorizontalAlignment="Center" Checked="StartUpCheckBox_Checked"
+                                              Unchecked="StartUpCheckBox_Unchecked"/>
+
+                                    <CheckBox Content="GTA update" Margin="5,0,0,0" ToolTip="Show notification if there is an update for GTA program"
+                                              x:Name="GTAUpdateCheckBox"/>                                    
+                                </StackPanel>
+
 
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <CheckBox Content="Run hidden" x:Name="HiddenCheckBox" ToolTip="Hide the program upon run"  
+                                    <CheckBox Content="Hidden" x:Name="HiddenCheckBox" ToolTip="Hide the program upon run"  
                                               FontWeight="Bold" Checked="RunHiddenCheckBox_Checked" Unchecked="RunHiddenCheckBox_UnChecked"/>
-                                    <CheckBox Content="Run TS" x:Name="RunTSAutoCheckBox" ToolTip="Run TS automatically upon program start" 
+                                    <CheckBox Content="TS" x:Name="RunTSAutoCheckBox" ToolTip="Run TS automatically upon program start" 
                                               FontWeight="Bold" Margin="5,0,0,0"/>
                                 </StackPanel>                                
                             </StackPanel>

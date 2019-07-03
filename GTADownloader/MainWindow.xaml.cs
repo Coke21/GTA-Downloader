@@ -122,7 +122,7 @@ namespace GTADownloader
 
         private void OfficialThread_Click(object sender, RoutedEventArgs e) => Process.Start("https://grandtheftarma.com/topic/116196-gta-mission-downloader/");
         private void About_Click(object sender, RoutedEventArgs e) => MessageBox.Show($"Do you want to help develop this application? " +
-                                                                    $"If so, head to official thread on GTA's forum and post your suggestion. \n" +
+                                                                    $"If so, head to official thread on GTA's forum and post your suggestion.\n" +
                                                                     $"Thank you for using this application! - Coke",
                                                                     "Information", MessageBoxButton.OK, MessageBoxImage.Warning);
         private void WindowClosing(object sender, CancelEventArgs e)

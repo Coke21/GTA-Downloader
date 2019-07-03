@@ -48,6 +48,14 @@ namespace GTADownloader
                 UpdateNotiProgram("outdated", Brushes.Red);
                 Win.ProgramUpdateName.Visibility = Visibility.Visible;
                 Win.ReadChangelogName.Visibility = Visibility.Visible;
+
+                if (Win.GTAUpdateCheckBox.IsChecked.Value)
+                {
+                    System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("A new update for GTA program has been detected. Download it?", "Update", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Information);
+
+                    if (result == System.Windows.Forms.DialogResult.Yes)
+                        await Download.FileAsync(Data.programID, Data.ctsStopDownloading.Token, "programUpdate");
+                }
             }
         }
         private static void UpdateNotiMf(string fileName, string status, SolidColorBrush colour) => Win.TextTopOperationNotice.Inlines.Add(new Run($"{fileName} is {status}!\n") { Foreground = colour });

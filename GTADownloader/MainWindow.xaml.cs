@@ -50,13 +50,13 @@ namespace GTADownloader
         private async void S1Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
         private async void S2Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[1], Data.ctsStopDownloading.Token);
         private async void S3Tanoa(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token);
-        private async void S3Malden(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token);
+        private async void S2Livonia(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token);
         private async void S1S2Altis(object sender, RoutedEventArgs e)
         {
             await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
             await Download.FileAsync(Data.fileIDArray[1], Data.ctsStopDownloading.Token);
         }
-        private async void S3MaldenS3Tanoa(object sender, RoutedEventArgs e)
+        private async void S3MaldenS2Livonia(object sender, RoutedEventArgs e)
         {
             await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token);
             await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token);
@@ -97,17 +97,17 @@ namespace GTADownloader
         private async void RunHiddenCheckBox_Checked(object sender, RoutedEventArgs e) => await Options.Choose("runHidden");
         private async void RunHiddenCheckBox_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("runHiddenUnCheck");
 
-        private async void S1AltisChecked(object sender, RoutedEventArgs e) => await Options.Choose("S1Altis");
+        private async void S1Altis_Checked(object sender, RoutedEventArgs e) => await Options.Choose("S1Altis");
         private async void S1Altis_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("S1AltisUnCheck");
 
-        private async void S2AltisChecked(object sender, RoutedEventArgs e) => await Options.Choose("S2Altis");
+        private async void S2Altis_Checked(object sender, RoutedEventArgs e) => await Options.Choose("S2Altis");
         private async void S2Altis_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("S2AltisUnCheck");
 
-        private async void S3TanoaChecked(object sender, RoutedEventArgs e) => await Options.Choose("S3Tanoa");
+        private async void S3Tanoa_Checked(object sender, RoutedEventArgs e) => await Options.Choose("S3Tanoa");
         private async void S3Tanoa_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("S3TanoaUnCheck");
 
-        private async void S3MaldenChecked(object sender, RoutedEventArgs e) => await Options.Choose("S3Malden");
-        private async void S3Malden_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("S3MaldenUnCheck");
+        private async void S2Livonia_Checked(object sender, RoutedEventArgs e) => await Options.Choose("S2Livonia");
+        private async void S2Livonia_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("S2LivoniaUnCheck");
 
         private async void NotificationCheckBox_Checked(object sender, RoutedEventArgs e) => await Options.Choose("notification");
         private async void NotificationCheckBox_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("notificationUnCheck");

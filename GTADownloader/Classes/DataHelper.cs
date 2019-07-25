@@ -40,12 +40,12 @@ namespace GTADownloader
                     Win.S1AltisButton.IsEnabled = false;
                     Win.S2AltisButton.IsEnabled = false;
 
-                    Win.S3MaldenButton.IsEnabled = false;
                     Win.S3TanoaButton.IsEnabled = false;
+                    Win.S2LivoniaButton.IsEnabled = false;
 
                     Win.S1S2AltisButton.IsEnabled = false;
-                    Win.S3MaldenS3TanoaButton.IsEnabled = false;
-                    Win.AllFiles.IsEnabled = false;
+                    Win.S3MaldenS2LivoniaButton.IsEnabled = false;
+                    Win.AllFilesButton.IsEnabled = false;
 
                     Win.StopDownloadName.Visibility = Visibility.Visible;
                     break;
@@ -56,22 +56,23 @@ namespace GTADownloader
                     Win.S1AltisButton.IsEnabled = true;
                     Win.S2AltisButton.IsEnabled = true;
 
-                    Win.S3MaldenButton.IsEnabled = true;
                     Win.S3TanoaButton.IsEnabled = true;
+                    Win.S2LivoniaButton.IsEnabled = true;
 
                     Win.S1S2AltisButton.IsEnabled = true;
-                    Win.S3MaldenS3TanoaButton.IsEnabled = true;
-                    Win.AllFiles.IsEnabled = true;
+                    Win.S3MaldenS2LivoniaButton.IsEnabled = true;
+                    Win.AllFilesButton.IsEnabled = true;
+
+                    Win.StopDownloadName.Visibility = Visibility.Hidden;
 
                     Win.textblockDownload.Text = "";
                     Win.progressBarDownload.Value = 0;
-                    Win.StopDownloadName.Visibility = Visibility.Hidden;
                     break;
                 case "optionsCheckBoxOff":
                     Win.S1AltisCheckBox.IsChecked = false;
                     Win.S2AltisCheckBox.IsChecked = false;
-                    Win.S3MaldenCheckBox.IsChecked = false;
                     Win.S3TanoaCheckBox.IsChecked = false;
+                    Win.S2LivoniaCheckBox.IsChecked = false;
                     break;
             }
         }

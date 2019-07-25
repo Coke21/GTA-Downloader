@@ -46,10 +46,10 @@ namespace GTADownloader
                 case "S3TanoaUnCheck":
                     Data.missionFileListID.Remove(Data.fileIDArray[2]);
                     break;
-                case "S3Malden":
+                case "S2Livonia":
                     Data.missionFileListID.Add(Data.fileIDArray[3]);
                     break;
-                case "S3MaldenUnCheck":
+                case "S2LivoniaUnCheck":
                     Data.missionFileListID.Remove(Data.fileIDArray[3]);
                     break;
                 case "notification":

@@ -122,12 +122,12 @@ namespace GTADownloader.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool S3Malden {
+        public bool S3Livonia {
             get {
-                return ((bool)(this["S3Malden"]));
+                return ((bool)(this["S3Livonia"]));
             }
             set {
-                this["S3Malden"] = value;
+                this["S3Livonia"] = value;
             }
         }
         

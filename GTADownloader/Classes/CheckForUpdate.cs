@@ -103,7 +103,7 @@ namespace GTADownloader
                                         case "s3.grandtheftarma.Conflict.Tanoa.pbo":
                                             await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token);
                                             break;
-                                        case "s3.grandtheftarma.BattleRoyale.Malden.pbo":
+                                        case "s2.grandtheftarma.Life.Enoch.pbo":
                                             await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token);
                                             break;
                                     }

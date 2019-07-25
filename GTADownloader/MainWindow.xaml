@@ -138,8 +138,8 @@
                                 <Button Content="S3 - Tanoa" Style="{StaticResource NormalButton}" x:Name="S3TanoaButton"
                                         Click="S3Tanoa"/>
 
-                                <Button Content="S3 - Malden" Style="{StaticResource NormalButton}" x:Name="S3MaldenButton"
-                                        Click="S3Malden" Margin="5,0,0,0"/>
+                                <Button Content="S2 - Livonia" Style="{StaticResource NormalButton}" x:Name="S2LivoniaButton"
+                                        Click="S2Livonia" Margin="5,0,0,0"/>
                             </StackPanel>                            
                         </StackPanel>
                     </GroupBox>
@@ -222,10 +222,10 @@
                                     x:Name="S1S2AltisButton" Click="S1S2Altis"/>
 
                             <Button Content="All Special" Style="{StaticResource MassButton}"
-                                    x:Name="S3MaldenS3TanoaButton" Click="S3MaldenS3Tanoa" Margin="0,5,0,5"/>
+                                    x:Name="S3MaldenS2LivoniaButton" Click="S3MaldenS2Livonia" Margin="0,5,0,5"/>
 
                             <Button Content="All Active Mission Files" Style="{StaticResource MassButton}"
-                                    x:Name="AllFiles" Click="AllFilesClick"/>                            
+                                    x:Name="AllFilesButton" Click="AllFilesClick"/>                            
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
@@ -286,7 +286,8 @@
 
                 <Expander Grid.Column="2" Grid.Row="1" Width="25" 
                           Height="25" ToolTip="Show/Hide TeamSpeak options" RenderTransformOrigin="0.5,0.5"
-                          Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" x:Name="Expander1">
+                          Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" x:Name="Expander1"
+                          VerticalAlignment="Bottom" Margin="0,0,0,45">
                     <Expander.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -361,17 +362,17 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox Content="S1 - Altis" x:Name="S1AltisCheckBox" FontWeight="Bold" 
-                                                Checked="S1AltisChecked" Unchecked="S1Altis_UnChecked" FontSize="11"/>
+                                                Checked="S1Altis_Checked" Unchecked="S1Altis_UnChecked" FontSize="11"/>
                                     <CheckBox Content="S2 - Altis" x:Name="S2AltisCheckBox" FontWeight="Bold" 
-                                                Checked="S2AltisChecked" Unchecked="S2Altis_UnChecked" FontSize="11"
+                                                Checked="S2Altis_Checked" Unchecked="S2Altis_UnChecked" FontSize="11"
                                                 Margin="8,0,0,0"/>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox Content="S3 - Tanoa" x:Name="S3TanoaCheckBox" FontWeight="Bold" 
-                                                Checked="S3TanoaChecked" Unchecked="S3Tanoa_UnChecked" FontSize="11"/>
-                                    <CheckBox Content="S3 - Malden" x:Name="S3MaldenCheckBox"  FontWeight="Bold" 
-                                              Checked="S3MaldenChecked" Unchecked="S3Malden_UnChecked" FontSize="11"/>
+                                                Checked="S3Tanoa_Checked" Unchecked="S3Tanoa_UnChecked" FontSize="11"/>
+                                    <CheckBox Content="S2 - Livonia" x:Name="S2LivoniaCheckBox"  FontWeight="Bold" 
+                                              Checked="S2Livonia_Checked" Unchecked="S2Livonia_UnChecked" FontSize="11"/>
                                 </StackPanel>                                 
                                 
                                 <CheckBox Content="Notification" ToolTip="Sends the Windows notification if the chosen mission file(s) are outdated" x:Name="NotificationCheckBox" 

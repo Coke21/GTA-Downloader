@@ -15,19 +15,19 @@ namespace GTADownloader
             {
                 case "joinS1":
                     string arg1 = "-connect=164.132.201.9:2302";
-                    Process.Start(DataProperties.GetRegistryArma3EXEPath, arg1);
+                    Process.Start(DataProperties.GetRegistryArma3ExePath, arg1);
                     break;
                 case "joinS2":
                     string arg2 = "-connect=164.132.201.12:2302";
-                    Process.Start(DataProperties.GetRegistryArma3EXEPath, arg2);
+                    Process.Start(DataProperties.GetRegistryArma3ExePath, arg2);
                     break;
                 case "joinS3(Conflict)":
                     string arg3 = "-connect=164.132.202.63:2302";
-                    Process.Start(DataProperties.GetRegistryArma3EXEPath, arg3);
+                    Process.Start(DataProperties.GetRegistryArma3ExePath, arg3);
                     break;
                 case "joinTS":
                     string arg4 = "TS.grandtheftarma.com:9987";
-                    Process.Start("ts3server://" + arg4 + $"?channel={DataProperties.W2.insertTSChannelName.Text}" + $"&channelpassword={DataProperties.W2.insertTSChannelPasswordName.Text}");
+                    Process.Start("ts3server://" + arg4 + $"?channel={DataProperties.W2.InsertTsChannelName.Text}" + $"&channelpassword={DataProperties.W2.InsertTsChannelPasswordName.Text}");
                     break;
             }
             if (showNotificationMsg) MessageBox.Show("The application is starting...(this window can be closed)", "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -42,15 +42,15 @@ namespace GTADownloader
                 {
                     Server gta1 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.201.9", 2303, false, 1000, 1000, 0, false);
                     ServerInfo info1 = gta1.GetInfo();
-                    win.Dispatcher.BeginInvoke((Action)(() => ShowServerInfo(info1, win.textBlockServer1, win.JoinServer1Button)));
+                    win.Dispatcher.BeginInvoke((Action)(() => ShowServerInfo(info1, win.TextBlockServer1, win.JoinServer1Button)));
 
                     Server gta2 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.201.12", 2303, false, 1000, 1000, 0, false);
                     ServerInfo info2 = gta2.GetInfo();
-                    win.Dispatcher.BeginInvoke((Action)(() => ShowServerInfo(info2, win.textBlockServer2, win.JoinServer2Button)));
+                    win.Dispatcher.BeginInvoke((Action)(() => ShowServerInfo(info2, win.TextBlockServer2, win.JoinServer2Button)));
 
                     Server gta3 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.202.63", 2303, false, 1000, 1000, 0, false);
                     ServerInfo info3 = gta3.GetInfo();
-                    win.Dispatcher.BeginInvoke((Action)(() => ShowServerInfo(info3, win.textBlockServer3, win.JoinServer3Button)));
+                    win.Dispatcher.BeginInvoke((Action)(() => ShowServerInfo(info3, win.TextBlockServer3, win.JoinServer3Button)));
 
                     Task.Delay(2000);
                 }

@@ -18,22 +18,22 @@ namespace GTADownloader
 
             Notification.EnableTaskBar();
 
-            DataProperties.W2.insertTSChannelName.Text = Properties.Settings.Default.DefaultLvChannel;
-            DataProperties.W2.insertTSChannelPasswordName.Text = Properties.Settings.Default.DefaultLvPassword;
+            DataProperties.W2.InsertTsChannelName.Text = Properties.Settings.Default.DefaultLvChannel;
+            DataProperties.W2.InsertTsChannelPasswordName.Text = Properties.Settings.Default.DefaultLvPassword;
 
             if (Properties.Settings.Default.RunAtStartUp) Win.StartUpCheckBox.IsChecked = true;
-            if (Properties.Settings.Default.GTAUpdate) Win.GTAUpdateCheckBox.IsChecked = true;
+            if (Properties.Settings.Default.GTAUpdate) Win.GtaUpdateCheckBox.IsChecked = true;
             if (Properties.Settings.Default.RunHidden)
             {
                 Win.HiddenCheckBox.IsChecked = true;
                 Win.ShowInTaskbar = false;
                 Win.Hide();
-                Data.notifyIcon.ShowBalloonTip(4000, "Reminder!", $"The program is running in the background!", System.Windows.Forms.ToolTipIcon.None);
-                Data.notifyIcon.BalloonTipClicked += (a, b) => Notification.NotifyIconBalloonTipClicked(false, false);
+                Data.NotifyIcon.ShowBalloonTip(4000, "Reminder!", $"The program is running in the background!", System.Windows.Forms.ToolTipIcon.None);
+                Data.NotifyIcon.BalloonTipClicked += (a, b) => Notification.NotifyIconBalloonTipClicked(false, false);
             }
             if (Properties.Settings.Default.RunTsAuto)
             {
-                Win.RunTSAutoCheckBox.IsChecked = true;
+                Win.RunTsAutoCheckBox.IsChecked = true;
                 Process[] process = Process.GetProcessesByName("ts3client_win64");
                 if (process.Length == 0) Join.Server("joinTS", false);
             }
@@ -73,17 +73,17 @@ namespace GTADownloader
 
             _ = Join.UpdateServerAsync();
             await DataHelper.PopulateFileNameArray();
-            await CheckForUpdate.UpdateAsync(Data.ctsOnStart.Token);
+            await CheckForUpdate.UpdateAsync(Data.CtsOnStart.Token);
         }
         public static void Save()
         {
-            Properties.Settings.Default.DefaultLvChannel = DataProperties.W2.insertTSChannelName.Text;
-            Properties.Settings.Default.DefaultLvPassword = DataProperties.W2.insertTSChannelPasswordName.Text;
+            Properties.Settings.Default.DefaultLvChannel = DataProperties.W2.InsertTsChannelName.Text;
+            Properties.Settings.Default.DefaultLvPassword = DataProperties.W2.InsertTsChannelPasswordName.Text;
 
             Properties.Settings.Default.RunAtStartUp = Win.StartUpCheckBox.IsChecked.Value;
-            Properties.Settings.Default.GTAUpdate = Win.GTAUpdateCheckBox.IsChecked.Value;
+            Properties.Settings.Default.GTAUpdate = Win.GtaUpdateCheckBox.IsChecked.Value;
             Properties.Settings.Default.RunHidden = Win.HiddenCheckBox.IsChecked.Value;
-            Properties.Settings.Default.RunTsAuto = Win.RunTSAutoCheckBox.IsChecked.Value;
+            Properties.Settings.Default.RunTsAuto = Win.RunTsAutoCheckBox.IsChecked.Value;
 
             Properties.Settings.Default.S1Altis = Win.S1AltisCheckBox.IsChecked.Value;
             Properties.Settings.Default.S2Altis = Win.S2AltisCheckBox.IsChecked.Value;
@@ -106,16 +106,16 @@ namespace GTADownloader
             Properties.Settings.Default.DownloadSpeed = value;
 
             StringCollection collection = new StringCollection();
-            foreach (var Item in ListViewClass.Items)
+            foreach (var item in ListViewClass.Items)
             {
-                collection.Add(Item.ChannelPath);
+                collection.Add(item.ChannelPath);
             }
             Properties.Settings.Default.ListViewItems = collection;
 
             Properties.Settings.Default.Save();
 
-            Data.notifyIcon.Icon.Dispose();
-            Data.notifyIcon.Dispose();
+            Data.NotifyIcon.Icon.Dispose();
+            Data.NotifyIcon.Dispose();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace GTADownloader
         private static MainWindow Win = (MainWindow)Application.Current.MainWindow;
         public static async Task UpdateAsync(CancellationToken cancellationToken)
         {
-            foreach (var file in Data.fileIDArray.Zip(Data.fileNameArray, Tuple.Create))
+            foreach (var file in Data.FileIdArray.Zip(Data.FileNameArray, Tuple.Create))
             {
                 var requestedFile = await DataHelper.GetFileRequest(file.Item1, "size").ExecuteAsync();
                 string fileName = file.Item2;
@@ -38,7 +38,7 @@ namespace GTADownloader
                         UpdateNotiMf(fileName, "outdated", Brushes.Red);
             }
 
-            var requestedProgram = await DataHelper.GetFileRequest(Data.programID, "size").ExecuteAsync();
+            var requestedProgram = await DataHelper.GetFileRequest(Data.ProgramId, "size").ExecuteAsync();
             long gtaSizeProgramOnComputer = new FileInfo(DataProperties.GetProgramFolderPath + DataProperties.GetProgramName).Length;
 
             if (requestedProgram.Size == gtaSizeProgramOnComputer)
@@ -49,12 +49,12 @@ namespace GTADownloader
                 Win.ProgramUpdateName.Visibility = Visibility.Visible;
                 Win.ReadChangelogName.Visibility = Visibility.Visible;
 
-                if (Win.GTAUpdateCheckBox.IsChecked.Value)
+                if (Win.GtaUpdateCheckBox.IsChecked.Value)
                 {
                     System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("A new update for GTA program has been detected. Download it?", "Update", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Information);
 
                     if (result == System.Windows.Forms.DialogResult.Yes)
-                        await Download.FileAsync(Data.programID, Data.ctsStopDownloading.Token, "programUpdate");
+                        await Download.FileAsync(Data.ProgramId, Data.CtsStopDownloading.Token, "programUpdate");
                 }
             }
         }
@@ -63,15 +63,15 @@ namespace GTADownloader
 
         public static async Task TypeOfNotificationAsync(string whichOption, CancellationToken cancellationToken)
         {
-            Data.notifyIcon.BalloonTipClicked += (sender, e) => Notification.NotifyIconBalloonTipClicked();
+            Data.NotifyIcon.BalloonTipClicked += (sender, e) => Notification.NotifyIconBalloonTipClicked();
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                if (Data.missionFileListID.Count > 0)
+                if (Data.MissionFileListId.Count > 0)
                 {
-                    foreach (var fileID in Data.missionFileListID.ToList())
+                    foreach (var fileId in Data.MissionFileListId.ToList())
                     {
-                        var requestedFile = await DataHelper.GetFileRequest(fileID, "size, name").ExecuteAsync();
+                        var requestedFile = await DataHelper.GetFileRequest(fileId, "size, name").ExecuteAsync();
 
                         string fileLoc = Path.Combine(DataProperties.GetArma3MissionFolderPath, requestedFile.Name);
 
@@ -88,23 +88,23 @@ namespace GTADownloader
                             switch (whichOption)
                             {
                                 case "notification":
-                                    Data.notifyIcon.ShowBalloonTip(4000, "Download now!", $"Update Available for {requestedFile.Name}", System.Windows.Forms.ToolTipIcon.None);
+                                    Data.NotifyIcon.ShowBalloonTip(4000, "Download now!", $"Update Available for {requestedFile.Name}", System.Windows.Forms.ToolTipIcon.None);
                                     await Task.Delay(6000);
                                     break;
                                 case "automaticUpdate":
                                     switch (requestedFile.Name)
                                     {
                                         case "s1.grandtheftarma.Life.Altis.pbo":
-                                            await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
+                                            await Download.FileAsync(Data.FileIdArray[0], Data.CtsStopDownloading.Token);
                                             break;
                                         case "s2.grandtheftarma.Life.Altis.pbo":
-                                            await Download.FileAsync(Data.fileIDArray[1], Data.ctsStopDownloading.Token);
+                                            await Download.FileAsync(Data.FileIdArray[1], Data.CtsStopDownloading.Token);
                                             break;
                                         case "s3.grandtheftarma.Conflict.Tanoa.pbo":
-                                            await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token);
+                                            await Download.FileAsync(Data.FileIdArray[2], Data.CtsStopDownloading.Token);
                                             break;
                                         case "s2.grandtheftarma.Life.Enoch.pbo":
-                                            await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token);
+                                            await Download.FileAsync(Data.FileIdArray[3], Data.CtsStopDownloading.Token);
                                             break;
                                     }
                                     break;

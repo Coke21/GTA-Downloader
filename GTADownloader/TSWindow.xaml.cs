@@ -18,7 +18,7 @@ namespace GTADownloader
         private void LvMouseMoveDragDrop(object sender, MouseEventArgs e) => ListViewClass.LvMouseMoveDragDrop(sender, e);
         private void TbChannelNameMouseMove(object sender, MouseEventArgs e) => ListViewClass.TbChannelNameMouseMove(sender, e);
 
-        private void PathDropTbCP(object sender, DragEventArgs e) => ListViewClass.PathDropTbCP(sender, e);
+        private void PathDropTbCP(object sender, DragEventArgs e) => ListViewClass.PathDropTbCp(sender, e);
         private void PathDropTbPass(object sender, DragEventArgs e) => ListViewClass.PathDropTbPass(sender, e);
         private void PathDropLv(object sender, DragEventArgs e) => ListViewClass.PathDropLv(sender, e);
 

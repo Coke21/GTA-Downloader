@@ -13,11 +13,11 @@ namespace GTADownloader
     class Download
     {
         private static MainWindow Win = (MainWindow)Application.Current.MainWindow;
-        public static async Task FileAsync(string fileID, CancellationToken cancellationToken, string option = "missionFile")
+        public static async Task FileAsync(string fileId, CancellationToken cancellationToken, string option = "missionFile")
         {
             DataHelper.ButtonsOption("beforeDownload");
 
-            var request = DataHelper.GetFileRequest(fileID, "size, name");
+            var request = DataHelper.GetFileRequest(fileId, "size, name");
             var requestedFile = await request.ExecuteAsync();
 
             string mFPath = Path.Combine(DataProperties.GetArma3MissionFolderPath, requestedFile.Name);
@@ -36,7 +36,7 @@ namespace GTADownloader
                         break;
                 }
 
-                request.MediaDownloader.ProgressChanged += async (IDownloadProgress progress) =>
+                request.MediaDownloader.ProgressChanged += async progress =>
                 {
                     switch (progress.Status)
                     {
@@ -49,8 +49,8 @@ namespace GTADownloader
                             double truncated = Math.Truncate(bytesIn / 1000000);
                             double truncated2 = Math.Truncate((double)checkedValue.Size / 1000000);
 
-                            Win.Dispatcher.Invoke(() => Win.textblockDownload.Text = $"Downloading '{requestedFile.Name}' - " + truncated + "MB/" + truncated2 + "MB");
-                            Win.Dispatcher.Invoke(() => Win.progressBarDownload.Value = percentage);
+                            Win.Dispatcher.Invoke(() => Win.TextblockDownload.Text = $"Downloading '{requestedFile.Name}' - " + truncated + "MB/" + truncated2 + "MB");
+                            Win.Dispatcher.Invoke(() => Win.ProgressBarDownload.Value = percentage);
                             break;
                         case DownloadStatus.Completed:
                             stream.WriteTo(file);
@@ -60,7 +60,7 @@ namespace GTADownloader
                         case DownloadStatus.Failed:
                             Win.Dispatcher.Invoke(() => DataHelper.ButtonsOption("afterDownload"));
                             Win.Dispatcher.Invoke(() => Notify($"An error appeared with '{requestedFile.Name}' file!", Brushes.Red, 5));
-                            Data.missionFileListID.Remove(fileID);
+                            Data.MissionFileListId.Remove(fileId);
                             break;
                     }
                 };
@@ -96,7 +96,7 @@ namespace GTADownloader
 
             DispatcherTimer myDispatcherTimer = new DispatcherTimer();
             myDispatcherTimer.Interval = new TimeSpan(0, 0, 0, timeDisplaySec, 0);
-            myDispatcherTimer.Tick += new EventHandler(HideNotificationText);
+            myDispatcherTimer.Tick += HideNotificationText;
             myDispatcherTimer.Start();
         }
         private static void HideNotificationText(object sender, EventArgs e)

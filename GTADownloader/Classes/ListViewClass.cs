@@ -62,21 +62,21 @@ namespace GTADownloader
         public static void TbChannelNameMouseMove(object sender, MouseEventArgs e)
         {
             if(Mouse.LeftButton == MouseButtonState.Pressed)
-                if(!DataProperties.W2.insertTSChannelName.IsMouseOver)
-                    DragDrop.DoDragDrop(DataProperties.W2.insertTSChannelName, DataProperties.W2.insertTSChannelName.Text, DragDropEffects.Copy);
+                if(!DataProperties.W2.InsertTsChannelName.IsMouseOver)
+                    DragDrop.DoDragDrop(DataProperties.W2.InsertTsChannelName, DataProperties.W2.InsertTsChannelName.Text, DragDropEffects.Copy);
         }
         // Channel path land
-        public static void PathDropTbCP(object sender, DragEventArgs e)
+        public static void PathDropTbCp(object sender, DragEventArgs e)
         {
-            DataProperties.W2.insertTSChannelName.Clear();
+            DataProperties.W2.InsertTsChannelName.Clear();
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                DataProperties.W2.insertTSChannelName.Text = (string)e.Data.GetData(DataFormats.FileDrop);
+                DataProperties.W2.InsertTsChannelName.Text = (string)e.Data.GetData(DataFormats.FileDrop);
         }
         public static void PathDropTbPass(object sender, DragEventArgs e)
         {
-            DataProperties.W2.insertTSChannelPasswordName.Clear();
+            DataProperties.W2.InsertTsChannelPasswordName.Clear();
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                DataProperties.W2.insertTSChannelPasswordName.Text = (string)e.Data.GetData(DataFormats.FileDrop);
+                DataProperties.W2.InsertTsChannelPasswordName.Text = (string)e.Data.GetData(DataFormats.FileDrop);
         }
         //On drop on listview
         public static void PathDropLv(object sender, DragEventArgs e)

@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace GTADownloader
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         public MainWindow()
         {
@@ -20,7 +20,7 @@ namespace GTADownloader
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e) => Window_LocationChanged(sender, e);
         private async void WindowLoad(object sender, RoutedEventArgs e)
         {
-            Title = $"GTA Mission Downloader | {Data.programVersion} by Coke";
+            Title = $"GTA Mission Downloader | {Data.ProgramVersion} by Coke";
             DataProperties.W2.Owner = this;
 
             await Consistency.Load();
@@ -47,40 +47,40 @@ namespace GTADownloader
             }
         }
         // Mfs
-        private async void S1Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
-        private async void S2Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[1], Data.ctsStopDownloading.Token);
-        private async void S3Tanoa(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token);
-        private async void S2Livonia(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token);
+        private async void S1Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[0], Data.CtsStopDownloading.Token);
+        private async void S2Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[1], Data.CtsStopDownloading.Token);
+        private async void S3Tanoa(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[2], Data.CtsStopDownloading.Token);
+        private async void S2Livonia(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[3], Data.CtsStopDownloading.Token);
         private async void S1S2Altis(object sender, RoutedEventArgs e)
         {
-            await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
-            await Download.FileAsync(Data.fileIDArray[1], Data.ctsStopDownloading.Token);
+            await Download.FileAsync(Data.FileIdArray[0], Data.CtsStopDownloading.Token);
+            await Download.FileAsync(Data.FileIdArray[1], Data.CtsStopDownloading.Token);
         }
         private async void S3MaldenS2Livonia(object sender, RoutedEventArgs e)
         {
-            await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token);
-            await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token);
+            await Download.FileAsync(Data.FileIdArray[2], Data.CtsStopDownloading.Token);
+            await Download.FileAsync(Data.FileIdArray[3], Data.CtsStopDownloading.Token);
         }
         private async void AllFilesClick(object sender, RoutedEventArgs e)
         {
-            await Download.FileAsync(Data.fileIDArray[0], Data.ctsStopDownloading.Token);
-            await Download.FileAsync(Data.fileIDArray[1], Data.ctsStopDownloading.Token);
-            await Download.FileAsync(Data.fileIDArray[2], Data.ctsStopDownloading.Token);
-            await Download.FileAsync(Data.fileIDArray[3], Data.ctsStopDownloading.Token);
+            await Download.FileAsync(Data.FileIdArray[0], Data.CtsStopDownloading.Token);
+            await Download.FileAsync(Data.FileIdArray[1], Data.CtsStopDownloading.Token);
+            await Download.FileAsync(Data.FileIdArray[2], Data.CtsStopDownloading.Token);
+            await Download.FileAsync(Data.FileIdArray[3], Data.CtsStopDownloading.Token);
         }
-        private async void ProgramUpdateClick(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.programID, Data.ctsStopDownloading.Token, "programUpdate");
+        private async void ProgramUpdateClick(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.ProgramId, Data.CtsStopDownloading.Token, "programUpdate");
         private void ReadChangelogClick(object sender, RoutedEventArgs e) => Process.Start("https://docs.google.com/document/d/1HzbVqK26YLsJtSBC2XJ7s_VcQ9IWH9ZWy3LEGEDwrJk/edit");
         private void StopDownloadClick(object sender, RoutedEventArgs e)
         {
-            Data.ctsStopDownloading.Cancel();
-            Data.ctsStopDownloading.Dispose();
-            Data.ctsStopDownloading = new CancellationTokenSource();
+            Data.CtsStopDownloading.Cancel();
+            Data.CtsStopDownloading.Dispose();
+            Data.CtsStopDownloading = new CancellationTokenSource();
         }
         // Join server
         private void JoinS1(object sender, RoutedEventArgs e) => Join.Server("joinS1");
         private void JoinS2(object sender, RoutedEventArgs e) => Join.Server("joinS2");
         private void JoinS3(object sender, RoutedEventArgs e) => Join.Server("joinS3(Conflict)");
-        private void JoinTS(object sender, RoutedEventArgs e) => Join.Server("joinTS", false);
+        private void JoinTs(object sender, RoutedEventArgs e) => Join.Server("joinTS", false);
 
         private void Expander_Expanded(object sender, RoutedEventArgs e)
         {

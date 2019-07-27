@@ -29,46 +29,46 @@ namespace GTADownloader
                     Win.ShowInTaskbar = true;
                     break;
                 case "S1Altis":
-                    Data.missionFileListID.Add(Data.fileIDArray[0]);
+                    Data.MissionFileListId.Add(Data.FileIdArray[0]);
                     break;
                 case "S1AltisUnCheck":
-                    Data.missionFileListID.Remove(Data.fileIDArray[0]);
+                    Data.MissionFileListId.Remove(Data.FileIdArray[0]);
                     break;
                 case "S2Altis":
-                    Data.missionFileListID.Add(Data.fileIDArray[1]);
+                    Data.MissionFileListId.Add(Data.FileIdArray[1]);
                     break;
                 case "S2AltisUnCheck":
-                    Data.missionFileListID.Remove(Data.fileIDArray[1]);
+                    Data.MissionFileListId.Remove(Data.FileIdArray[1]);
                     break;
                 case "S3Tanoa":
-                    Data.missionFileListID.Add(Data.fileIDArray[2]);
+                    Data.MissionFileListId.Add(Data.FileIdArray[2]);
                     break;
                 case "S3TanoaUnCheck":
-                    Data.missionFileListID.Remove(Data.fileIDArray[2]);
+                    Data.MissionFileListId.Remove(Data.FileIdArray[2]);
                     break;
                 case "S2Livonia":
-                    Data.missionFileListID.Add(Data.fileIDArray[3]);
+                    Data.MissionFileListId.Add(Data.FileIdArray[3]);
                     break;
                 case "S2LivoniaUnCheck":
-                    Data.missionFileListID.Remove(Data.fileIDArray[3]);
+                    Data.MissionFileListId.Remove(Data.FileIdArray[3]);
                     break;
                 case "notification":
-                    await CheckForUpdate.TypeOfNotificationAsync("notification", Data.ctsNotification.Token);
+                    await CheckForUpdate.TypeOfNotificationAsync("notification", Data.CtsNotification.Token);
                     break;
                 case "notificationUnCheck":
-                    Data.ctsNotification.Cancel();
-                    Data.ctsNotification.Dispose();
-                    Data.ctsNotification = new CancellationTokenSource();
+                    Data.CtsNotification.Cancel();
+                    Data.CtsNotification.Dispose();
+                    Data.CtsNotification = new CancellationTokenSource();
 
                     DataHelper.ButtonsOption("optionsCheckBoxOff");
                     break;
                 case "automaticUpdate":
-                    await CheckForUpdate.TypeOfNotificationAsync("automaticUpdate", Data.ctsAutomaticUpdate.Token);
+                    await CheckForUpdate.TypeOfNotificationAsync("automaticUpdate", Data.CtsAutomaticUpdate.Token);
                     break;
                 case "automaticUpdateUnCheck":
-                    Data.ctsAutomaticUpdate.Cancel();
-                    Data.ctsAutomaticUpdate.Dispose();
-                    Data.ctsAutomaticUpdate = new CancellationTokenSource();
+                    Data.CtsAutomaticUpdate.Cancel();
+                    Data.CtsAutomaticUpdate.Dispose();
+                    Data.CtsAutomaticUpdate = new CancellationTokenSource();
 
                     DataHelper.ButtonsOption("optionsCheckBoxOff");
                     break;

@@ -14,7 +14,7 @@ namespace GTADownloader
 
         public static string GetProgramDataFolderPath { get; } = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/../Local/GTADownloader";
 
-        public static string GetRegistryArma3EXEPath { get; } = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\bohemia interactive\arma 3", "main", string.Empty).ToString() + @"\arma3battleye";
+        public static string GetRegistryArma3ExePath { get; } = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\bohemia interactive\arma 3", "main", string.Empty) + @"\arma3battleye";
 
         public static string GetProgramFolderPath { get; } = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
         public static string GetProgramName { get; } = AppDomain.CurrentDomain.FriendlyName;

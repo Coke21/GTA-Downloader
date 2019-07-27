@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Linq;
-using System.Windows;
 
 namespace GTADownloader
 {
-    public partial class App : Application
+    public partial class App
     {
         public App()
         {
-            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
         System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
@@ -21,6 +20,14 @@ namespace GTADownloader
             System.Resources.ResourceManager rm = new System.Resources.ResourceManager(GetType().Namespace + ".Properties.Resources", System.Reflection.Assembly.GetExecutingAssembly());
 
             byte[] bytes = (byte[])rm.GetObject(dllName);
+
+            //For non-standard windows 10 theme
+            if (dllName.ToLower().Contains("presentationframework"))
+                return null;
+
+            //Stops the exception at the start
+            if (bytes == null)
+                return null;
 
             return System.Reflection.Assembly.Load(bytes);
         }

@@ -9,23 +9,23 @@ namespace GTADownloader
 
         public static void EnableTaskBar()
         {
-            Data.notifyIcon.Visible = true;
-            Data.notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath);
-            Data.notifyIcon.Text = "GTA Mission Downloader";
-            Data.notifyIcon.Click += (sender, e) => NotifyIconBalloonTipClicked();
+            Data.NotifyIcon.Visible = true;
+            Data.NotifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath);
+            Data.NotifyIcon.Text = "GTA Mission Downloader";
+            Data.NotifyIcon.Click += (sender, e) => NotifyIconBalloonTipClicked();
         }
         public static async void NotifyIconBalloonTipClicked(bool stopOnStart = true, bool updateFiles = true)
         {
             if (stopOnStart) StopNotification();
             Win.WindowState = WindowState.Normal;
             Win.Show();
-            if (updateFiles) await CheckForUpdate.UpdateAsync(Data.ctsOnStart.Token);
+            if (updateFiles) await CheckForUpdate.UpdateAsync(Data.CtsOnStart.Token);
         }
         public static void StopNotification()
         {
-            Data.ctsOnStart.Cancel();
-            Data.ctsOnStart.Dispose();
-            Data.ctsOnStart = new CancellationTokenSource();
+            Data.CtsOnStart.Cancel();
+            Data.CtsOnStart.Dispose();
+            Data.CtsOnStart = new CancellationTokenSource();
 
             Win.TextTopOperationNotice.Text = "";
             Win.TextTopOperationProgramNotice.Text = "";

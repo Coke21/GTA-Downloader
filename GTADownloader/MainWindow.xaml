@@ -8,7 +8,9 @@
         Height="400" Width="740"
         WindowStartupLocation ="CenterScreen" ResizeMode="CanMinimize" 
         LocationChanged="Window_LocationChanged" SizeChanged="Window_SizeChanged">
+
     <Window.Resources>
+
         <Style x:Key="ImageButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderBrush" Value="{x:Null}" />
@@ -53,7 +55,9 @@
                                 <ContentPresenter ContentSource="Header" RecognizesAccessKey="true" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Border>
                             <ContentPresenter Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            <Border Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="4"  BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="3">
+                            <Border Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="4"  
+                                    BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" 
+                                    CornerRadius="3">
                                 <Border.OpacityMask>
                                     <MultiBinding Converter="{StaticResource BorderGapMaskConverter}" ConverterParameter="7">
                                         <Binding ElementName="Header" Path="ActualWidth" />
@@ -104,6 +108,7 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+
     </Window.Resources>
 
     <TabControl Background="#FFBDB5B5" x:Name="TabControl" SelectionChanged="Tab_SelectionChanged">
@@ -190,7 +195,7 @@
                     </StackPanel>
 
                     <Grid HorizontalAlignment="Center">
-                        <ProgressBar Height="140" x:Name="progressBarDownload" Width="133"
+                        <ProgressBar Height="140" x:Name="ProgressBarDownload" Width="133"
                                      Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"
                                      RenderTransformOrigin="0.53,0.492">
                             <ProgressBar.RenderTransform>
@@ -206,7 +211,7 @@
                         <Image Height="210" Width="210" Source="Images/gtaIcon.ico"/>
                     </Grid>
                     
-                    <TextBlock x:Name="textblockDownload" FontSize="11" FontWeight="Bold"
+                    <TextBlock x:Name="TextblockDownload" FontSize="11" FontWeight="Bold"
                                TextAlignment="Center" HorizontalAlignment="Center" Margin="0,2,0,0"/>
                 </StackPanel>
 
@@ -262,7 +267,7 @@
                                     Margin="0,5,0,0"/>
 
                             <Button Style="{StaticResource JoinTabButton}"
-                                    Content="Join TS" Click="JoinTS" Margin="0,5,0,0"/>
+                                    Content="Join TS" Click="JoinTs" Margin="0,5,0,0"/>
                     </StackPanel>                           
                     </GroupBox>
 
@@ -270,15 +275,15 @@
                               Width="420">
                         <StackPanel Height="235">
                             <Border Style="{StaticResource JoinTabBorder}">
-                                <TextBlock x:Name="textBlockServer1" Style="{StaticResource JoinTabTextBlock}"/>
+                                <TextBlock x:Name="TextBlockServer1" Style="{StaticResource JoinTabTextBlock}"/>
                             </Border>
 
                             <Border Style="{StaticResource JoinTabBorder}" Margin="0,5,0,0">
-                                <TextBlock x:Name="textBlockServer2" Style="{StaticResource JoinTabTextBlock}"/>
+                                <TextBlock x:Name="TextBlockServer2" Style="{StaticResource JoinTabTextBlock}"/>
                             </Border>
 
                             <Border Style="{StaticResource JoinTabBorder}" Margin="0,5,0,0">
-                                <TextBlock x:Name="textBlockServer3" Style="{StaticResource JoinTabTextBlock}"/>
+                                <TextBlock x:Name="TextBlockServer3" Style="{StaticResource JoinTabTextBlock}"/>
                             </Border>
                         </StackPanel>                        
                     </GroupBox>
@@ -340,14 +345,14 @@
                                               Unchecked="StartUpCheckBox_Unchecked"/>
 
                                     <CheckBox Content="GTA update" Margin="5,0,0,0" ToolTip="Show notification if there is an update for GTA program"
-                                              x:Name="GTAUpdateCheckBox"/>                                    
+                                              x:Name="GtaUpdateCheckBox"/>                                    
                                 </StackPanel>
 
 
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <CheckBox Content="Hidden" x:Name="HiddenCheckBox" ToolTip="Hide the program upon run"  
                                               FontWeight="Bold" Checked="RunHiddenCheckBox_Checked" Unchecked="RunHiddenCheckBox_UnChecked"/>
-                                    <CheckBox Content="TS" x:Name="RunTSAutoCheckBox" ToolTip="Run TS automatically upon program start" 
+                                    <CheckBox Content="TS" x:Name="RunTsAutoCheckBox" ToolTip="Run TS automatically upon program start" 
                                               FontWeight="Bold" Margin="5,0,0,0"/>
                                 </StackPanel>                                
                             </StackPanel>

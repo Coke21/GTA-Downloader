@@ -65,7 +65,7 @@
                            Margin="5,7,5,0"/>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Height="42" Width="152"
                               BorderBrush="Black">
-                    <TextBox TextWrapping="Wrap" Name="insertTSChannelName" ToolTip="Insert the FULL path to the TS channel (It's case-sensitive!) e.g. Staff Lounges/Waiting for Support" 
+                    <TextBox TextWrapping="Wrap" Name="InsertTsChannelName" ToolTip="Insert the FULL path to the TS channel (It's case-sensitive!) e.g. Staff Lounges/Waiting for Support" 
                              AllowDrop="True" PreviewDrop="PathDropTbCP" PreviewMouseMove="TbChannelNameMouseMove" 
                              Background="{x:Null}" BorderBrush="Black"/>
                 </ScrollViewer>
@@ -76,7 +76,7 @@
                            Text="Password:" Margin="5,0,3,2"/>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Height="35" Width="180"
                               BorderBrush="Black">
-                    <TextBox TextWrapping="Wrap" x:Name="insertTSChannelPasswordName" PreviewDrop="PathDropTbPass"
+                    <TextBox TextWrapping="Wrap" x:Name="InsertTsChannelPasswordName" PreviewDrop="PathDropTbPass"
                              ToolTip="Insert the password to the channel or leave it empty" Background="{x:Null}" 
                              BorderBrush="Black"/>
                 </ScrollViewer>   

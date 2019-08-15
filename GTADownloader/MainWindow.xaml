@@ -9,108 +9,6 @@
         WindowStartupLocation ="CenterScreen" ResizeMode="CanMinimize" 
         LocationChanged="Window_LocationChanged" SizeChanged="Window_SizeChanged">
 
-    <Window.Resources>
-
-        <Style x:Key="ImageButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="{x:Null}" />
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Grid Background="{TemplateBinding Background}">
-                            <ContentPresenter />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
-        <Style x:Key="GroupBoxBorder" TargetType="{x:Type GroupBox}">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type GroupBox}">
-                        <Grid SnapsToDevicePixels="true">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="6" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="6" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="6" />
-                            </Grid.RowDefinitions>
-                            <Border CornerRadius="4" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="Transparent" Background="{TemplateBinding Background}" />
-                            <Border Name="Header" Padding="3,1,3,0" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1">
-                                <ContentPresenter ContentSource="Header" RecognizesAccessKey="true" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            </Border>
-                            <ContentPresenter Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            <Border Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="4"  
-                                    BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" 
-                                    CornerRadius="3">
-                                <Border.OpacityMask>
-                                    <MultiBinding Converter="{StaticResource BorderGapMaskConverter}" ConverterParameter="7">
-                                        <Binding ElementName="Header" Path="ActualWidth" />
-                                        <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
-                                        <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
-                                    </MultiBinding>
-                                </Border.OpacityMask>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="NormalButton" TargetType="Button">
-            <Setter Property="Background" Value="{x:Null}"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Height" Value="42"/>
-            <Setter Property="Width" Value="95"/>
-        </Style>
-
-        <Style x:Key="MassButton" TargetType="Button">
-            <Setter Property="Background" Value="{x:Null}"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Height" Value="42"/>
-            <Setter Property="Width" Value="178"/>
-        </Style>
-
-        <Style x:Key="JoinTabButton" TargetType="Button">
-            <Setter Property="Background" Value="{x:Null}"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Height" Value="55"/>
-            <Setter Property="Width" Value="230"/>
-        </Style>
-        
-        <Style x:Key="JoinTabBorder" TargetType="Border">
-            <Setter Property="Height" Value="55"/>
-        </Style>
-        
-        <Style x:Key="JoinTabTextBlock" TargetType="TextBlock">
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-
-    </Window.Resources>
-
     <TabControl Background="#FFBDB5B5" x:Name="TabControl" SelectionChanged="Tab_SelectionChanged">
         <TabItem Header="Mission File">
             <Grid>
@@ -143,8 +41,8 @@
                                 <Button Content="S3 - Tanoa" Style="{StaticResource NormalButton}" x:Name="S3TanoaButton"
                                         Click="S3Tanoa"/>
 
-                                <Button Content="S2 - Livonia" Style="{StaticResource NormalButton}" x:Name="S2LivoniaButton"
-                                        Click="S2Livonia" Margin="5,0,0,0"/>
+                                <Button Content="S3 - Enoch" Style="{StaticResource NormalButton}" x:Name="S3EnochButton"
+                                        Click="S3Enoch" Margin="5,0,0,0"/>
                             </StackPanel>                            
                         </StackPanel>
                     </GroupBox>
@@ -211,7 +109,7 @@
                         <Image Height="210" Width="210" Source="Images/gtaIcon.ico"/>
                     </Grid>
                     
-                    <TextBlock x:Name="TextblockDownload" FontSize="11" FontWeight="Bold"
+                    <TextBlock x:Name="TextBlockDownload" FontSize="11" FontWeight="Bold"
                                TextAlignment="Center" HorizontalAlignment="Center" Margin="0,2,0,0"/>
                 </StackPanel>
 
@@ -227,7 +125,7 @@
                                     x:Name="S1S2AltisButton" Click="S1S2Altis"/>
 
                             <Button Content="All Special" Style="{StaticResource MassButton}"
-                                    x:Name="S3MaldenS2LivoniaButton" Click="S3MaldenS2Livonia" Margin="0,5,0,5"/>
+                                    x:Name="S3MaldenS2LivoniaButton" Click="S3TanoaS3Enoch" Margin="0,5,0,5"/>
 
                             <Button Content="All Active Mission Files" Style="{StaticResource MassButton}"
                                     x:Name="AllFilesButton" Click="AllFilesClick"/>                            
@@ -342,18 +240,19 @@
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <CheckBox Content="Startup" x:Name="StartUpCheckBox" ToolTip="Run the program automatically upon PC restart" 
                                               FontWeight="Bold" HorizontalAlignment="Center" Checked="StartUpCheckBox_Checked"
-                                              Unchecked="StartUpCheckBox_Unchecked"/>
+                                              Unchecked="StartUpCheckBox_Unchecked" Foreground="Black"/>
 
                                     <CheckBox Content="GTA update" Margin="5,0,0,0" ToolTip="Show notification if there is an update for GTA program"
-                                              x:Name="GtaUpdateCheckBox"/>                                    
+                                              x:Name="GtaUpdateCheckBox" Foreground="Black"/>                                    
                                 </StackPanel>
 
 
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <CheckBox Content="Hidden" x:Name="HiddenCheckBox" ToolTip="Hide the program upon run"  
-                                              FontWeight="Bold" Checked="RunHiddenCheckBox_Checked" Unchecked="RunHiddenCheckBox_UnChecked"/>
+                                              FontWeight="Bold" Checked="RunHiddenCheckBox_Checked" Unchecked="RunHiddenCheckBox_UnChecked"
+                                              Foreground="Black"/>
                                     <CheckBox Content="TS" x:Name="RunTsAutoCheckBox" ToolTip="Run TS automatically upon program start" 
-                                              FontWeight="Bold" Margin="5,0,0,0"/>
+                                              FontWeight="Bold" Margin="5,0,0,0" Foreground="Black"/>
                                 </StackPanel>                                
                             </StackPanel>
                         </GroupBox>
@@ -367,26 +266,29 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox Content="S1 - Altis" x:Name="S1AltisCheckBox" FontWeight="Bold" 
-                                                Checked="S1Altis_Checked" Unchecked="S1Altis_UnChecked" FontSize="11"/>
+                                                Checked="S1Altis_Checked" Unchecked="S1Altis_UnChecked" FontSize="11"
+                                                Foreground="Black"/>
                                     <CheckBox Content="S2 - Altis" x:Name="S2AltisCheckBox" FontWeight="Bold" 
                                                 Checked="S2Altis_Checked" Unchecked="S2Altis_UnChecked" FontSize="11"
-                                                Margin="8,0,0,0"/>
+                                                Margin="8,0,0,0" Foreground="Black"/>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox Content="S3 - Tanoa" x:Name="S3TanoaCheckBox" FontWeight="Bold" 
-                                                Checked="S3Tanoa_Checked" Unchecked="S3Tanoa_UnChecked" FontSize="11"/>
-                                    <CheckBox Content="S2 - Livonia" x:Name="S2LivoniaCheckBox"  FontWeight="Bold" 
-                                              Checked="S2Livonia_Checked" Unchecked="S2Livonia_UnChecked" FontSize="11"/>
+                                                Checked="S3Tanoa_Checked" Unchecked="S3Tanoa_UnChecked" FontSize="11"
+                                                Foreground="Black"/>
+                                    <CheckBox Content="S3 - Enoch" x:Name="S3EnochCheckBox"  FontWeight="Bold" 
+                                              Checked="S3Enoch_Checked" Unchecked="S3Enoch_UnChecked" FontSize="11"
+                                              Foreground="Black"/>
                                 </StackPanel>                                 
                                 
                                 <CheckBox Content="Notification" ToolTip="Sends the Windows notification if the chosen mission file(s) are outdated" x:Name="NotificationCheckBox" 
                                           FontWeight="Bold" HorizontalAlignment="Center" FontSize="14" 
-                                          Checked="NotificationCheckBox_Checked" Unchecked="NotificationCheckBox_UnChecked"/>
+                                          Checked="NotificationCheckBox_Checked" Unchecked="NotificationCheckBox_UnChecked" Foreground="Black"/>
 
                                 <CheckBox Content="Automatic update" ToolTip="Turns on the automatic update and automatically downloads the chosen mission file(s)" x:Name="AutomaticUpdateCheckBox" 
                                           FontWeight="Bold" FontSize="14" Checked="AutomaticUpdate_Checked" 
-                                          Unchecked="AutomaticUpdateCheckBox_UnChecked" HorizontalAlignment="Center"/>                                
+                                          Unchecked="AutomaticUpdateCheckBox_UnChecked" HorizontalAlignment="Center" Foreground="Black"/>                                
                             </StackPanel>
                         </GroupBox>
 
@@ -398,11 +300,12 @@
                             <GroupBox Header="Download speed" Style="{StaticResource GroupBoxBorder}" FontSize="12">
                                 <StackPanel>
                                     <RadioButton Content="Max Speed" x:Name="MaxSpeedButton" GroupName="Download" 
-                                                 FontWeight="Bold" Checked="MaxSpeed_Checked"/>
+                                                 FontWeight="Bold" Checked="MaxSpeed_Checked" Foreground="Black"/>
                                     <RadioButton Content="Normal Speed" x:Name="NormalSpeedButton" GroupName="Download" 
-                                                 FontWeight="Bold" Checked="NormalSpeed_Checked"/>                                      
+                                                 FontWeight="Bold" Checked="NormalSpeed_Checked" Foreground="Black"/>                                      
                                 </StackPanel>
                             </GroupBox>
+
                             <Button Style="{StaticResource ImageButtonStyle}" ToolTip="Open config folder" Click="OpenConfigFolder"
                                     Margin="10,0,0,0">
                                 <StackPanel>
@@ -417,7 +320,7 @@
                             HorizontalAlignment="Center" Margin="0,15,0,0">
                      <Button Content="Official Thread"  Width="180" Height="50" 
                             Background="{x:Null}" BorderBrush="Black" FontWeight="Bold"
-                            FontSize="16" Click="OfficialThread_Click"/>
+                            FontSize="16" Click="OfficialThread_Click" Foreground="Black"/>
                 
                     <Button Content="About" Width="180" Height="50" 
                             Background="{x:Null}" BorderBrush="Black" Foreground="Black" 

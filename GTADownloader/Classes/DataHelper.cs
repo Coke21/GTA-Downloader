@@ -35,13 +35,13 @@ namespace GTADownloader
             {
                 case "beforeDownload":
                     Win.ProgressBarDownload.Visibility = Visibility.Visible;
-                    Win.TextblockDownload.Visibility = Visibility.Visible;
+                    Win.TextBlockDownload.Visibility = Visibility.Visible;
 
                     Win.S1AltisButton.IsEnabled = false;
                     Win.S2AltisButton.IsEnabled = false;
 
                     Win.S3TanoaButton.IsEnabled = false;
-                    Win.S2LivoniaButton.IsEnabled = false;
+                    Win.S3EnochButton.IsEnabled = false;
 
                     Win.S1S2AltisButton.IsEnabled = false;
                     Win.S3MaldenS2LivoniaButton.IsEnabled = false;
@@ -51,13 +51,13 @@ namespace GTADownloader
                     break;
                 case "afterDownload":
                     Win.ProgressBarDownload.Visibility = Visibility.Hidden;
-                    Win.TextblockDownload.Visibility = Visibility.Hidden;
+                    Win.TextBlockDownload.Visibility = Visibility.Hidden;
 
                     Win.S1AltisButton.IsEnabled = true;
                     Win.S2AltisButton.IsEnabled = true;
 
                     Win.S3TanoaButton.IsEnabled = true;
-                    Win.S2LivoniaButton.IsEnabled = true;
+                    Win.S3EnochButton.IsEnabled = true;
 
                     Win.S1S2AltisButton.IsEnabled = true;
                     Win.S3MaldenS2LivoniaButton.IsEnabled = true;
@@ -65,14 +65,14 @@ namespace GTADownloader
 
                     Win.StopDownloadName.Visibility = Visibility.Hidden;
 
-                    Win.TextblockDownload.Text = "";
+                    Win.TextBlockDownload.Text = "";
                     Win.ProgressBarDownload.Value = 0;
                     break;
                 case "optionsCheckBoxOff":
                     Win.S1AltisCheckBox.IsChecked = false;
                     Win.S2AltisCheckBox.IsChecked = false;
                     Win.S3TanoaCheckBox.IsChecked = false;
-                    Win.S2LivoniaCheckBox.IsChecked = false;
+                    Win.S3EnochCheckBox.IsChecked = false;
                     break;
             }
         }

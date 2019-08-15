@@ -49,7 +49,7 @@ namespace GTADownloader
                             double truncated = Math.Truncate(bytesIn / 1000000);
                             double truncated2 = Math.Truncate((double)checkedValue.Size / 1000000);
 
-                            Win.Dispatcher.Invoke(() => Win.TextblockDownload.Text = $"Downloading '{requestedFile.Name}' - " + truncated + "MB/" + truncated2 + "MB");
+                            Win.Dispatcher.Invoke(() => Win.TextBlockDownload.Text = $"Downloading '{requestedFile.Name}' - " + truncated + "MB/" + truncated2 + "MB");
                             Win.Dispatcher.Invoke(() => Win.ProgressBarDownload.Value = percentage);
                             break;
                         case DownloadStatus.Completed:

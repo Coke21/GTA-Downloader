@@ -41,7 +41,7 @@ namespace GTADownloader
             if (Properties.Settings.Default.S1Altis) Win.S1AltisCheckBox.IsChecked = true;
             if (Properties.Settings.Default.S2Altis) Win.S2AltisCheckBox.IsChecked = true;
             if (Properties.Settings.Default.S3Tanoa) Win.S3TanoaCheckBox.IsChecked = true;
-            if (Properties.Settings.Default.S3Livonia) Win.S2LivoniaCheckBox.IsChecked = true;
+            if (Properties.Settings.Default.S3Livonia) Win.S3EnochCheckBox.IsChecked = true;
 
             if (Properties.Settings.Default.Notification) Win.NotificationCheckBox.IsChecked = true;
             if (Properties.Settings.Default.AutomaticUpdate) Win.AutomaticUpdateCheckBox.IsChecked = true;
@@ -88,7 +88,7 @@ namespace GTADownloader
             Properties.Settings.Default.S1Altis = Win.S1AltisCheckBox.IsChecked.Value;
             Properties.Settings.Default.S2Altis = Win.S2AltisCheckBox.IsChecked.Value;
             Properties.Settings.Default.S3Tanoa = Win.S3TanoaCheckBox.IsChecked.Value;
-            Properties.Settings.Default.S3Livonia = Win.S2LivoniaCheckBox.IsChecked.Value;
+            Properties.Settings.Default.S3Livonia = Win.S3EnochCheckBox.IsChecked.Value;
 
             Properties.Settings.Default.Notification = Win.NotificationCheckBox.IsChecked.Value;
             Properties.Settings.Default.AutomaticUpdate = Win.AutomaticUpdateCheckBox.IsChecked.Value;

@@ -50,13 +50,13 @@ namespace GTADownloader
         private async void S1Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[0], Data.CtsStopDownloading.Token);
         private async void S2Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[1], Data.CtsStopDownloading.Token);
         private async void S3Tanoa(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[2], Data.CtsStopDownloading.Token);
-        private async void S2Livonia(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[3], Data.CtsStopDownloading.Token);
+        private async void S3Enoch(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[3], Data.CtsStopDownloading.Token);
         private async void S1S2Altis(object sender, RoutedEventArgs e)
         {
             await Download.FileAsync(Data.FileIdArray[0], Data.CtsStopDownloading.Token);
             await Download.FileAsync(Data.FileIdArray[1], Data.CtsStopDownloading.Token);
         }
-        private async void S3MaldenS2Livonia(object sender, RoutedEventArgs e)
+        private async void S3TanoaS3Enoch(object sender, RoutedEventArgs e)
         {
             await Download.FileAsync(Data.FileIdArray[2], Data.CtsStopDownloading.Token);
             await Download.FileAsync(Data.FileIdArray[3], Data.CtsStopDownloading.Token);
@@ -106,8 +106,8 @@ namespace GTADownloader
         private async void S3Tanoa_Checked(object sender, RoutedEventArgs e) => await Options.Choose("S3Tanoa");
         private async void S3Tanoa_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("S3TanoaUnCheck");
 
-        private async void S2Livonia_Checked(object sender, RoutedEventArgs e) => await Options.Choose("S2Livonia");
-        private async void S2Livonia_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("S2LivoniaUnCheck");
+        private async void S3Enoch_Checked(object sender, RoutedEventArgs e) => await Options.Choose("S3Enoch");
+        private async void S3Enoch_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("S3EnochUnCheck");
 
         private async void NotificationCheckBox_Checked(object sender, RoutedEventArgs e) => await Options.Choose("notification");
         private async void NotificationCheckBox_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("notificationUnCheck");

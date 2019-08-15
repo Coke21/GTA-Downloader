@@ -31,18 +31,18 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="S1 - Altis" Style="{StaticResource NormalButton}" x:Name="S1AltisButton"
-                                        Click="S1Altis"/>
+                                        Click="S1Altis_Click"/>
 
                                 <Button Content="S2 - Altis" Style="{StaticResource NormalButton}" x:Name="S2AltisButton"
-                                        Click="S2Altis" Margin="5,0,0,0"/>                        
+                                        Click="S2Altis_Click" Margin="5,0,0,0"/>                        
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                                 <Button Content="S3 - Tanoa" Style="{StaticResource NormalButton}" x:Name="S3TanoaButton"
-                                        Click="S3Tanoa"/>
+                                        Click="S3Tanoa_Click"/>
 
-                                <Button Content="S3 - Enoch" Style="{StaticResource NormalButton}" x:Name="S3EnochButton"
-                                        Click="S3Enoch" Margin="5,0,0,0"/>
+                                <Button Content="S2 - Enoch" Style="{StaticResource NormalButton}" x:Name="S2EnochButton"
+                                        Click="S2Enoch_Click" Margin="5,0,0,0"/>
                             </StackPanel>                            
                         </StackPanel>
                     </GroupBox>
@@ -122,13 +122,13 @@
                     <GroupBox Header="Mass Download" Style="{StaticResource GroupBoxBorder}">
                         <StackPanel>
                             <Button Content="All Altis" Style="{StaticResource MassButton}"
-                                    x:Name="S1S2AltisButton" Click="S1S2Altis"/>
+                                    x:Name="S1S2AltisButton" Click="S1S2Altis_Click"/>
 
                             <Button Content="All Special" Style="{StaticResource MassButton}"
-                                    x:Name="S3MaldenS2LivoniaButton" Click="S3TanoaS3Enoch" Margin="0,5,0,5"/>
+                                    x:Name="S3MaldenS2LivoniaButton" Click="S3TanoaS2Enoch_Click" Margin="0,5,0,5"/>
 
-                            <Button Content="All Active Mission Files" Style="{StaticResource MassButton}"
-                                    x:Name="AllFilesButton" Click="AllFilesClick"/>                            
+                            <Button Content="All Mission Files" Style="{StaticResource MassButton}"
+                                    x:Name="AllFilesButton" Click="AllFiles_Click"/>                            
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
@@ -277,8 +277,8 @@
                                     <CheckBox Content="S3 - Tanoa" x:Name="S3TanoaCheckBox" FontWeight="Bold" 
                                                 Checked="S3Tanoa_Checked" Unchecked="S3Tanoa_UnChecked" FontSize="11"
                                                 Foreground="Black"/>
-                                    <CheckBox Content="S3 - Enoch" x:Name="S3EnochCheckBox"  FontWeight="Bold" 
-                                              Checked="S3Enoch_Checked" Unchecked="S3Enoch_UnChecked" FontSize="11"
+                                    <CheckBox Content="S2 - Enoch" x:Name="S2EnochCheckBox"  FontWeight="Bold" 
+                                              Checked="S2Enoch_Checked" Unchecked="S2Enoch_UnChecked" FontSize="11"
                                               Foreground="Black"/>
                                 </StackPanel>                                 
                                 

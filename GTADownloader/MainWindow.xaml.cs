@@ -47,21 +47,21 @@ namespace GTADownloader
             }
         }
         // Mfs
-        private async void S1Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[0], Data.CtsStopDownloading.Token);
-        private async void S2Altis(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[1], Data.CtsStopDownloading.Token);
-        private async void S3Tanoa(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[2], Data.CtsStopDownloading.Token);
-        private async void S3Enoch(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[3], Data.CtsStopDownloading.Token);
-        private async void S1S2Altis(object sender, RoutedEventArgs e)
+        private async void S1Altis_Click(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[0], Data.CtsStopDownloading.Token);
+        private async void S2Altis_Click(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[1], Data.CtsStopDownloading.Token);
+        private async void S3Tanoa_Click(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[2], Data.CtsStopDownloading.Token);
+        private async void S2Enoch_Click(object sender, RoutedEventArgs e) => await Download.FileAsync(Data.FileIdArray[3], Data.CtsStopDownloading.Token);
+        private async void S1S2Altis_Click(object sender, RoutedEventArgs e)
         {
             await Download.FileAsync(Data.FileIdArray[0], Data.CtsStopDownloading.Token);
             await Download.FileAsync(Data.FileIdArray[1], Data.CtsStopDownloading.Token);
         }
-        private async void S3TanoaS3Enoch(object sender, RoutedEventArgs e)
+        private async void S3TanoaS2Enoch_Click(object sender, RoutedEventArgs e)
         {
             await Download.FileAsync(Data.FileIdArray[2], Data.CtsStopDownloading.Token);
             await Download.FileAsync(Data.FileIdArray[3], Data.CtsStopDownloading.Token);
         }
-        private async void AllFilesClick(object sender, RoutedEventArgs e)
+        private async void AllFiles_Click(object sender, RoutedEventArgs e)
         {
             await Download.FileAsync(Data.FileIdArray[0], Data.CtsStopDownloading.Token);
             await Download.FileAsync(Data.FileIdArray[1], Data.CtsStopDownloading.Token);
@@ -106,8 +106,8 @@ namespace GTADownloader
         private async void S3Tanoa_Checked(object sender, RoutedEventArgs e) => await Options.Choose("S3Tanoa");
         private async void S3Tanoa_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("S3TanoaUnCheck");
 
-        private async void S3Enoch_Checked(object sender, RoutedEventArgs e) => await Options.Choose("S3Enoch");
-        private async void S3Enoch_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("S3EnochUnCheck");
+        private async void S2Enoch_Checked(object sender, RoutedEventArgs e) => await Options.Choose("S2Enoch");
+        private async void S2Enoch_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("S2EnochUnCheck");
 
         private async void NotificationCheckBox_Checked(object sender, RoutedEventArgs e) => await Options.Choose("notification");
         private async void NotificationCheckBox_UnChecked(object sender, RoutedEventArgs e) => await Options.Choose("notificationUnCheck");

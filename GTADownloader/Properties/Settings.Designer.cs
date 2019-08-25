@@ -122,18 +122,6 @@ namespace GTADownloader.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool S2Enoch {
-            get {
-                return ((bool)(this["S2Enoch"]));
-            }
-            set {
-                this["S2Enoch"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool Notification {
             get {
                 return ((bool)(this["Notification"]));

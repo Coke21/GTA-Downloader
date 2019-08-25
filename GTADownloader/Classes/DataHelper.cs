@@ -39,12 +39,9 @@ namespace GTADownloader
 
                     Win.S1AltisButton.IsEnabled = false;
                     Win.S2AltisButton.IsEnabled = false;
-
                     Win.S3TanoaButton.IsEnabled = false;
-                    Win.S2EnochButton.IsEnabled = false;
 
                     Win.S1S2AltisButton.IsEnabled = false;
-                    Win.S3MaldenS2LivoniaButton.IsEnabled = false;
                     Win.AllFilesButton.IsEnabled = false;
 
                     Win.StopDownloadName.Visibility = Visibility.Visible;
@@ -55,12 +52,9 @@ namespace GTADownloader
 
                     Win.S1AltisButton.IsEnabled = true;
                     Win.S2AltisButton.IsEnabled = true;
-
                     Win.S3TanoaButton.IsEnabled = true;
-                    Win.S2EnochButton.IsEnabled = true;
 
                     Win.S1S2AltisButton.IsEnabled = true;
-                    Win.S3MaldenS2LivoniaButton.IsEnabled = true;
                     Win.AllFilesButton.IsEnabled = true;
 
                     Win.StopDownloadName.Visibility = Visibility.Hidden;
@@ -72,7 +66,6 @@ namespace GTADownloader
                     Win.S1AltisCheckBox.IsChecked = false;
                     Win.S2AltisCheckBox.IsChecked = false;
                     Win.S3TanoaCheckBox.IsChecked = false;
-                    Win.S2EnochCheckBox.IsChecked = false;
                     break;
             }
         }

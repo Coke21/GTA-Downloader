@@ -8,11 +8,10 @@ namespace GTADownloader
     {
         public const string ProgramVersion = "1.0f";
 
-        public static readonly string[] FileIdArray = {"1KIzqR9NMBZoxcdibMZPxr13__azGdGye",
+        public static readonly string[] FileIdArray = {"1Z7gMtm-KSL4wmoEcP3CaZKVLtjIKiv-8",
                                                        "1FDn0n5NVsHuiuIRysK96393OH_nUhU46",
-                                                       "1ZJQBHLuMK3-OT-BRglVg83wE2jEMrZgD",
-                                                       "1_Z3hcoEMbJuXbVeVGFib5xblY18vDQ7o"};
-        public static string[] FileNameArray = new string[4];
+                                                       "1ZJQBHLuMK3-OT-BRglVg83wE2jEMrZgD"};
+        public static string[] FileNameArray = new string[3];
 
         public const string ProgramId = "1EHQqd72EELxE-GXFCS4urWzn_3fL5wI2";
 

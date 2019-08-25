@@ -21,8 +21,9 @@ namespace GTADownloader
             DataProperties.W2.InsertTsChannelName.Text = Properties.Settings.Default.DefaultLvChannel;
             DataProperties.W2.InsertTsChannelPasswordName.Text = Properties.Settings.Default.DefaultLvPassword;
 
-            if (Properties.Settings.Default.RunAtStartUp) Win.StartUpCheckBox.IsChecked = true;
-            if (Properties.Settings.Default.GTAUpdate) Win.GtaUpdateCheckBox.IsChecked = true;
+            Win.StartUpCheckBox.IsChecked = Properties.Settings.Default.RunAtStartUp;
+            Win.GtaUpdateCheckBox.IsChecked = Properties.Settings.Default.GTAUpdate;
+
             if (Properties.Settings.Default.RunHidden)
             {
                 Win.HiddenCheckBox.IsChecked = true;
@@ -38,13 +39,12 @@ namespace GTADownloader
                 if (process.Length == 0) Join.Server("joinTS", false);
             }
 
-            if (Properties.Settings.Default.S1Altis) Win.S1AltisCheckBox.IsChecked = true;
-            if (Properties.Settings.Default.S2Altis) Win.S2AltisCheckBox.IsChecked = true;
-            if (Properties.Settings.Default.S3Tanoa) Win.S3TanoaCheckBox.IsChecked = true;
-            if (Properties.Settings.Default.S2Enoch) Win.S2EnochCheckBox.IsChecked = true;
+            Win.S1AltisCheckBox.IsChecked = Properties.Settings.Default.S1Altis;
+            Win.S2AltisCheckBox.IsChecked = Properties.Settings.Default.S2Altis;
+            Win.S3TanoaCheckBox.IsChecked = Properties.Settings.Default.S3Tanoa;
 
-            if (Properties.Settings.Default.Notification) Win.NotificationCheckBox.IsChecked = true;
-            if (Properties.Settings.Default.AutomaticUpdate) Win.AutomaticUpdateCheckBox.IsChecked = true;
+            Win.NotificationCheckBox.IsChecked = Properties.Settings.Default.Notification;
+            Win.AutomaticUpdateCheckBox.IsChecked = Properties.Settings.Default.AutomaticUpdate;
 
             switch (Properties.Settings.Default.DownloadSpeed)
             {
@@ -65,10 +65,9 @@ namespace GTADownloader
                 List<string> followedList = collection.Cast<string>().ToList();
 
                 foreach (var item in followedList)
-                {
                     ListViewClass.Items.Add(new ListViewClassProperties.LvItem() { ChannelPath = item });
-                    DataProperties.W2.LvName.ItemsSource = ListViewClass.Items;
-                }
+
+                DataProperties.W2.LvName.ItemsSource = ListViewClass.Items;
             }
 
             _ = Join.UpdateServerAsync();
@@ -88,7 +87,6 @@ namespace GTADownloader
             Properties.Settings.Default.S1Altis = Win.S1AltisCheckBox.IsChecked.Value;
             Properties.Settings.Default.S2Altis = Win.S2AltisCheckBox.IsChecked.Value;
             Properties.Settings.Default.S3Tanoa = Win.S3TanoaCheckBox.IsChecked.Value;
-            Properties.Settings.Default.S2Enoch = Win.S2EnochCheckBox.IsChecked.Value;
 
             Properties.Settings.Default.Notification = Win.NotificationCheckBox.IsChecked.Value;
             Properties.Settings.Default.AutomaticUpdate = Win.AutomaticUpdateCheckBox.IsChecked.Value;
@@ -107,9 +105,8 @@ namespace GTADownloader
 
             StringCollection collection = new StringCollection();
             foreach (var item in ListViewClass.Items)
-            {
                 collection.Add(item.ChannelPath);
-            }
+
             Properties.Settings.Default.ListViewItems = collection;
 
             Properties.Settings.Default.Save();

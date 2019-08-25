@@ -25,28 +25,26 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"
-                            VerticalAlignment="Center" Margin="20,0,0,0">
-                    <GroupBox Header="Active Mission Files" Style="{StaticResource GroupBoxBorder}">
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="S1 - Altis" Style="{StaticResource NormalButton}" x:Name="S1AltisButton"
-                                        Click="S1Altis_Click"/>
 
-                                <Button Content="S2 - Altis" Style="{StaticResource NormalButton}" x:Name="S2AltisButton"
-                                        Click="S2Altis_Click" Margin="5,0,0,0"/>                        
-                            </StackPanel>
+                <GroupBox Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" 
+                          Header="Active Mission Files" Style="{StaticResource GroupBoxBorder}"
+                          Margin="20,0,0,0">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="S1 - Altis" Style="{StaticResource NormalButton}" x:Name="S1AltisButton"
+                                    Click="S1Altis_Click"/>
 
-                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                <Button Content="S3 - Tanoa" Style="{StaticResource NormalButton}" x:Name="S3TanoaButton"
-                                        Click="S3Tanoa_Click"/>
-
-                                <Button Content="S2 - Enoch" Style="{StaticResource NormalButton}" x:Name="S2EnochButton"
-                                        Click="S2Enoch_Click" Margin="5,0,0,0"/>
-                            </StackPanel>                            
+                            <Button Content="S2 - Altis" Style="{StaticResource NormalButton}" x:Name="S2AltisButton"
+                                    Click="S2Altis_Click" Margin="5,0,0,0"/>                        
                         </StackPanel>
-                    </GroupBox>
-                </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                            <Button Content="S3 - Tanoa" Style="{StaticResource NormalButton}" x:Name="S3TanoaButton"
+                                    Click="S3Tanoa_Click"/>
+
+                        </StackPanel>                            
+                    </StackPanel>
+                </GroupBox>
 
                 <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -117,21 +115,18 @@
                            x:Name="TextTopOperationNotice" TextWrapping="Wrap" TextAlignment="Right"
                            Foreground="{x:Null}" FontWeight="Bold" FontSize="11"/>
                 
-                <StackPanel Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" 
-                            VerticalAlignment="Center" HorizontalAlignment="Center" Margin="45,45,0,0">
-                    <GroupBox Header="Mass Download" Style="{StaticResource GroupBoxBorder}">
-                        <StackPanel>
-                            <Button Content="All Altis" Style="{StaticResource MassButton}"
-                                    x:Name="S1S2AltisButton" Click="S1S2Altis_Click"/>
 
-                            <Button Content="All Special" Style="{StaticResource MassButton}"
-                                    x:Name="S3MaldenS2LivoniaButton" Click="S3TanoaS2Enoch_Click" Margin="0,5,0,5"/>
+                <GroupBox Grid.Column="3" Grid.Row="0" Grid.RowSpan="3"
+                          Header="Mass Download" Style="{StaticResource GroupBoxBorder}"
+                          HorizontalAlignment="Center" Margin="45,0,0,0">
+                    <StackPanel>
+                        <Button Content="All Altis" Style="{StaticResource MassButton}"
+                                x:Name="S1S2AltisButton" Click="S1S2Altis_Click"/>
 
-                            <Button Content="All Mission Files" Style="{StaticResource MassButton}"
-                                    x:Name="AllFilesButton" Click="AllFiles_Click"/>                            
-                        </StackPanel>
-                    </GroupBox>
-                </StackPanel>
+                        <Button Content="All Mission Files" Style="{StaticResource MassButton}"
+                                x:Name="AllFilesButton" Margin="0 5 0 0" Click="AllFiles_Click"/>                            
+                    </StackPanel>
+                </GroupBox>
             </Grid>
         </TabItem>
 
@@ -166,7 +161,7 @@
 
                             <Button Style="{StaticResource JoinTabButton}"
                                     Content="Join TS" Click="JoinTs" Margin="0,5,0,0"/>
-                    </StackPanel>                           
+                        </StackPanel>                           
                     </GroupBox>
 
                     <GroupBox Header="Status" Style="{StaticResource GroupBoxBorder}" Margin="10,0,0,0" 
@@ -273,22 +268,22 @@
                                                 Margin="8,0,0,0" Foreground="Black"/>
                                 </StackPanel>
 
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <CheckBox Content="S3 - Tanoa" x:Name="S3TanoaCheckBox" FontWeight="Bold" 
-                                                Checked="S3Tanoa_Checked" Unchecked="S3Tanoa_UnChecked" FontSize="11"
-                                                Foreground="Black"/>
-                                    <CheckBox Content="S2 - Enoch" x:Name="S2EnochCheckBox"  FontWeight="Bold" 
-                                              Checked="S2Enoch_Checked" Unchecked="S2Enoch_UnChecked" FontSize="11"
+                                              Checked="S3Tanoa_Checked" Unchecked="S3Tanoa_UnChecked" FontSize="11"
                                               Foreground="Black"/>
-                                </StackPanel>                                 
-                                
-                                <CheckBox Content="Notification" ToolTip="Sends the Windows notification if the chosen mission file(s) are outdated" x:Name="NotificationCheckBox" 
-                                          FontWeight="Bold" HorizontalAlignment="Center" FontSize="14" 
-                                          Checked="NotificationCheckBox_Checked" Unchecked="NotificationCheckBox_UnChecked" Foreground="Black"/>
+                                </StackPanel>
 
-                                <CheckBox Content="Automatic update" ToolTip="Turns on the automatic update and automatically downloads the chosen mission file(s)" x:Name="AutomaticUpdateCheckBox" 
-                                          FontWeight="Bold" FontSize="14" Checked="AutomaticUpdate_Checked" 
-                                          Unchecked="AutomaticUpdateCheckBox_UnChecked" HorizontalAlignment="Center" Foreground="Black"/>                                
+                                <StackPanel HorizontalAlignment="Center">
+                                    <CheckBox Content="Notification" ToolTip="Sends the Windows notification if the chosen mission file(s) are outdated" x:Name="NotificationCheckBox" 
+                                              FontWeight="Bold" FontSize="14" Checked="NotificationCheckBox_Checked"
+                                              Unchecked="NotificationCheckBox_UnChecked" Foreground="Black" HorizontalAlignment="Center"/>
+
+                                    <CheckBox Content="Automatic update" ToolTip="Turns on the automatic update and automatically downloads the chosen mission file(s)" x:Name="AutomaticUpdateCheckBox" 
+                                              FontWeight="Bold" FontSize="14" Checked="AutomaticUpdate_Checked" 
+                                              Unchecked="AutomaticUpdateCheckBox_UnChecked" Foreground="Black"/>   
+                                </StackPanel>
+                             
                             </StackPanel>
                         </GroupBox>
 
@@ -318,7 +313,7 @@
 
                 <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" 
                             HorizontalAlignment="Center" Margin="0,15,0,0">
-                     <Button Content="Official Thread"  Width="180" Height="50" 
+                    <Button Content="Official Thread"  Width="180" Height="50" 
                             Background="{x:Null}" BorderBrush="Black" FontWeight="Bold"
                             FontSize="16" Click="OfficialThread_Click" Foreground="Black"/>
                 

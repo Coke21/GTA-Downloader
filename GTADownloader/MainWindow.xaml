@@ -4,53 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Loaded="WindowLoad" Closing="WindowClosing"
+        Loaded="WindowLoad" Closing="Window_Closing"
         Height="400" Width="740"
         WindowStartupLocation ="CenterScreen" ResizeMode="CanMinimize" 
-        LocationChanged="Window_LocationChanged" SizeChanged="Window_SizeChanged">
+        LocationChanged="Window_LocationChanged" SizeChanged="Window_SizeChanged" x:Name="PrimaryWindow">
 
     <TabControl Background="#FFBDB5B5" x:Name="TabControl" SelectionChanged="Tab_SelectionChanged">
         <TabItem Header="Mission File">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5" />
-                    <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="290" />
                     <ColumnDefinition Width="5" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="60" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="50" />
                     <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
                 </Grid.RowDefinitions>
 
-
-                <GroupBox Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" 
-                          Header="Active Mission Files" Style="{StaticResource GroupBoxBorder}"
-                          Margin="20,0,0,0">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Button Content="S1 - Altis" Style="{StaticResource NormalButton}" x:Name="S1AltisButton"
-                                    Click="S1Altis_Click"/>
-
-                            <Button Content="S2 - Altis" Style="{StaticResource NormalButton}" x:Name="S2AltisButton"
-                                    Click="S2Altis_Click" Margin="5,0,0,0"/>                        
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
-                            <Button Content="S3 - Tanoa" Style="{StaticResource NormalButton}" x:Name="S3TanoaButton"
-                                    Click="S3Tanoa_Click"/>
-
-                        </StackPanel>                            
-                    </StackPanel>
-                </GroupBox>
-
-                <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1">
+                <StackPanel Grid.Column="1" Grid.Row="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock FontSize="20" TextAlignment="Center" HorizontalAlignment="Center"
-                                   x:Name="TextTopTitle" Text="GTA Mission Downloader" FontWeight="Bold"
-                                   Margin="40,0,0,0"/>
+                        <TextBlock x:Name="TextTopTitle" FontSize="20" TextAlignment="Center"
+                                   Text="GTA Mission Downloader" FontWeight="Bold" Margin="30 0 0 0"/>
                         
                         <Button Style="{StaticResource ImageButtonStyle}" ToolTip="Download and run the updated GTA program"
                                 x:Name="ProgramUpdateName" Visibility="Hidden" Click="ProgramUpdateClick"
@@ -80,53 +57,153 @@
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock x:Name="TextTopOperationProgramNotice" TextAlignment="Center" FontWeight="Bold"
-                               HorizontalAlignment="Center"/> 
+                               HorizontalAlignment="Center" Margin="10 0 0 0"/> 
                         
-                        <Button Style="{StaticResource ImageButtonStyle}" ToolTip="Stop the current download"
-                                x:Name="StopDownloadName" Visibility="Hidden" Click="StopDownloadClick">
+                        <Button Style="{StaticResource ImageButtonStyle}" x:Name="StopDownloadButton" Click="StopDownloadClick"
+                                 Visibility="Hidden" ToolTip="Stop the current download">
                             <StackPanel>
                                 <Image Source="Images/pauseIcon.png" Height="20" Width="20" />
                             </StackPanel>
                         </Button>                       
                     </StackPanel>
 
-                    <Grid HorizontalAlignment="Center">
-                        <ProgressBar Height="140" x:Name="ProgressBarDownload" Width="133"
-                                     Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"
-                                     RenderTransformOrigin="0.53,0.492">
-                            <ProgressBar.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform ScaleY="0.876" ScaleX="1.14"/>
-                                    <SkewTransform/>
-                                    <RotateTransform Angle="-90"/>
-                                    <TranslateTransform X="-4.245" Y="-3.753"/>
-                                </TransformGroup>
-                            </ProgressBar.RenderTransform>
-                        </ProgressBar>
-
-                        <Image Height="210" Width="210" Source="Images/gtaIcon.ico"/>
-                    </Grid>
-                    
-                    <TextBlock x:Name="TextBlockDownload" FontSize="11" FontWeight="Bold"
-                               TextAlignment="Center" HorizontalAlignment="Center" Margin="0,2,0,0"/>
                 </StackPanel>
 
-                <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0"
-                           x:Name="TextTopOperationNotice" TextWrapping="Wrap" TextAlignment="Right"
-                           Foreground="{x:Null}" FontWeight="Bold" FontSize="11"/>
-                
+                <StackPanel Grid.Column="1" Grid.Row="2">
 
-                <GroupBox Grid.Column="3" Grid.Row="0" Grid.RowSpan="3"
-                          Header="Mass Download" Style="{StaticResource GroupBoxBorder}"
-                          HorizontalAlignment="Center" Margin="45,0,0,0">
-                    <StackPanel>
-                        <Button Content="All Altis" Style="{StaticResource MassButton}"
-                                x:Name="S1S2AltisButton" Click="S1S2Altis_Click"/>
+                    <ListView x:Name="LvName" Height="250" Background="{x:Null}"
+                              BorderThickness="1.000001" BorderBrush="Black" Foreground="Black"
+                              Initialized="ListView_Initialized" SelectionChanged="LvName_OnSelectionChanged" ItemsSource="{Binding}">
 
-                        <Button Content="All Mission Files" Style="{StaticResource MassButton}"
-                                x:Name="AllFilesButton" Margin="0 5 0 0" Click="AllFiles_Click"/>                            
-                    </StackPanel>
-                </GroupBox>
+                        <ListView.Resources>
+                            <ContextMenu x:Key="ItemContextMenu">
+                                <MenuItem Header="Download" Click="MenuItem_OnClick" Background="WhiteSmoke">
+                                    <MenuItem.Icon>
+                                        <Image Source="Images/windowBack.png" RenderTransformOrigin="0.5,0.5">
+                                            <Image.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform Angle="-90"/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </Image.RenderTransform>
+                                        </Image>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+
+                        </ListView.Resources>
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="BorderBrush" Value="Black" />
+
+                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter Property="Background" Value="LightGreen"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="true">
+                                        <Setter Property="Background" Value="Yellow"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Trigger>
+                                </Style.Triggers>
+
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.View>
+                            <GridView>
+                                <GridView.ColumnHeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="Background" Value="{x:Null}" />
+                                        <Setter Property="FontWeight" Value="Bold"/>
+
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter Property="Foreground" Value="Black"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+
+                                    </Style>
+                                </GridView.ColumnHeaderContainerStyle>
+
+                                <GridViewColumn Header="Mission File:">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Mission}">
+                                                <TextBlock.Style>
+                                                    <Style>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsMissionUpdated}" Value="Updated">
+                                                                <Setter Property="TextBlock.Foreground" Value="Green"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsMissionUpdated}" Value="Outdated">
+                                                                <Setter Property="TextBlock.Foreground" Value="Red"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsMissionUpdated}" Value="Missing">
+                                                                <Setter Property="TextBlock.Foreground" Value="Black"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsMissionUpdated}" Value="Error">
+                                                                <Setter Property="TextBlock.Foreground" Value="BlueViolet"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn>
+                                    <GridViewColumnHeader Content="Last modified:" ToolTip="Shows the modified time from GTA's Google Drive"/>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ModifiedTime}">
+                                                <TextBlock.Style>
+                                                    <Style>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsModifiedTimeUpdated}" Value="Updated">
+                                                                <Setter Property="TextBlock.Foreground" Value="Green"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsModifiedTimeUpdated}" Value="Outdated">
+                                                                <Setter Property="TextBlock.Foreground" Value="Red"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsModifiedTimeUpdated}" Value="Missing">
+                                                                <Setter Property="TextBlock.Foreground" Value="Black"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsModifiedTimeUpdated}" Value="Error">
+                                                                <Setter Property="TextBlock.Foreground" Value="BlueViolet"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn >
+                                    <GridViewColumnHeader Content="Subscribe?" ToolTip="Add the selected Mission file(s) to the queue"/>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding IsChecked}" Checked="MissionFileCheckbox_Checked"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <TextBlock x:Name="TextBlockDownload" FontSize="14" FontWeight="Bold"
+                               TextAlignment="Center" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                </StackPanel>
             </Grid>
         </TabItem>
 
@@ -178,14 +255,18 @@
                             <Border Style="{StaticResource JoinTabBorder}" Margin="0,5,0,0">
                                 <TextBlock x:Name="TextBlockServer3" Style="{StaticResource JoinTabTextBlock}"/>
                             </Border>
+
+                            <Border Style="{StaticResource JoinTabBorder}" Margin="0,5,0,0">
+                                <TextBlock x:Name="TextBlockTs" Style="{StaticResource JoinTabTextBlock}"/>
+                            </Border>
+
                         </StackPanel>                        
                     </GroupBox>
                 </StackPanel>
 
-                <Expander Grid.Column="2" Grid.Row="1" Width="25" 
-                          Height="25" ToolTip="Show/Hide TeamSpeak options" RenderTransformOrigin="0.5,0.5"
-                          Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" x:Name="Expander1"
-                          VerticalAlignment="Bottom" Margin="0,0,0,45">
+                <Expander Grid.Column="2" Grid.Row="1" x:Name="Expander1" Height="25" Width="25" 
+                          RenderTransformOrigin="0.5,0.5" Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" 
+                          VerticalAlignment="Bottom" Margin="0,0,0,45" ToolTip="Show/Hide TeamSpeak options">
                     <Expander.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -208,120 +289,66 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
                     <RowDefinition Height="5" />
                 </Grid.RowDefinitions>
 
-                <GroupBox Header="General Options" Grid.Column="1" Grid.Row="1"
-                          Style="{StaticResource GroupBoxBorder}" Width="200" Margin="0,10,0,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="5" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
-                        </Grid.RowDefinitions>
+                <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Top">
+                    <GroupBox Header="General Options" 
+                              Style="{StaticResource GroupBoxBorder}" Width="200" Margin="0,5,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="5" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
 
-                        <GroupBox Header="Interesting stuff" Grid.Column="1" Grid.Row="0"
-                                  Style="{StaticResource GroupBoxBorder}" Margin="0,0,0,5" FontSize="12">
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <CheckBox Content="Startup" x:Name="StartUpCheckBox" ToolTip="Run the program automatically upon PC restart" 
-                                              FontWeight="Bold" HorizontalAlignment="Center" Checked="StartUpCheckBox_Checked"
-                                              Unchecked="StartUpCheckBox_Unchecked" Foreground="Black"/>
-
-                                    <CheckBox Content="GTA update" Margin="5,0,0,0" ToolTip="Show notification if there is an update for GTA program"
-                                              x:Name="GtaUpdateCheckBox" Foreground="Black"/>                                    
-                                </StackPanel>
-
-
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <CheckBox Content="Hidden" x:Name="HiddenCheckBox" ToolTip="Hide the program upon run"  
-                                              FontWeight="Bold" Checked="RunHiddenCheckBox_Checked" Unchecked="RunHiddenCheckBox_UnChecked"
-                                              Foreground="Black"/>
-                                    <CheckBox Content="TS" x:Name="RunTsAutoCheckBox" ToolTip="Run TS automatically upon program start" 
-                                              FontWeight="Bold" Margin="5,0,0,0" Foreground="Black"/>
-                                </StackPanel>                                
-                            </StackPanel>
-                        </GroupBox>
-
-                        <Separator Grid.Column="1" Grid.Row="1" Background="Black" 
-                                   FontWeight="Bold"/>
-
-                        <GroupBox Header="Automatic stuff" Grid.Column="1" Grid.Row="2" 
-                                  Style="{StaticResource GroupBoxBorder}" Margin="0,0,0,5" HorizontalAlignment="Center"
-                                  FontSize="12">
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <CheckBox Content="S1 - Altis" x:Name="S1AltisCheckBox" FontWeight="Bold" 
-                                                Checked="S1Altis_Checked" Unchecked="S1Altis_UnChecked" FontSize="11"
-                                                Foreground="Black"/>
-                                    <CheckBox Content="S2 - Altis" x:Name="S2AltisCheckBox" FontWeight="Bold" 
-                                                Checked="S2Altis_Checked" Unchecked="S2Altis_UnChecked" FontSize="11"
-                                                Margin="8,0,0,0" Foreground="Black"/>
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <CheckBox Content="S3 - Tanoa" x:Name="S3TanoaCheckBox" FontWeight="Bold" 
-                                              Checked="S3Tanoa_Checked" Unchecked="S3Tanoa_UnChecked" FontSize="11"
-                                              Foreground="Black"/>
-                                </StackPanel>
-
+                            <GroupBox Header="Interesting stuff" Grid.Column="1" Grid.Row="0"
+                                      Style="{StaticResource GroupBoxBorder}" Margin="0,0,0,5" FontSize="12">
                                 <StackPanel HorizontalAlignment="Center">
-                                    <CheckBox Content="Notification" ToolTip="Sends the Windows notification if the chosen mission file(s) are outdated" x:Name="NotificationCheckBox" 
-                                              FontWeight="Bold" FontSize="14" Checked="NotificationCheckBox_Checked"
-                                              Unchecked="NotificationCheckBox_UnChecked" Foreground="Black" HorizontalAlignment="Center"/>
+                                    <CheckBox Content="Startup" x:Name="StartUpCheckBox" Checked="StartUpCheckBox_Checked"
+                                              Unchecked="StartUpCheckBox_Unchecked" HorizontalAlignment="Center"  ToolTip="Run the program automatically upon PC restart"/>
 
-                                    <CheckBox Content="Automatic update" ToolTip="Turns on the automatic update and automatically downloads the chosen mission file(s)" x:Name="AutomaticUpdateCheckBox" 
-                                              FontWeight="Bold" FontSize="14" Checked="AutomaticUpdate_Checked" 
-                                              Unchecked="AutomaticUpdateCheckBox_UnChecked" Foreground="Black"/>   
-                                </StackPanel>
-                             
-                            </StackPanel>
-                        </GroupBox>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <CheckBox Content="Hidden" x:Name="HiddenCheckBox" ToolTip="Hide the program upon run"  
+                                                  Checked="RunHiddenCheckBox_Checked" Unchecked="RunHiddenCheckBox_UnChecked"/>
 
-                        <Separator Grid.Column="1" Grid.Row="3" Background="Black" 
-                                   FontWeight="Bold"/>
+                                        <CheckBox Content="TS" x:Name="RunTsAutoCheckBox" ToolTip="Run TeamSpeak automatically upon the program start" 
+                                                  Margin="5,0,0,0"/>
+                                    </StackPanel>   
 
-                        <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal" 
-                                    HorizontalAlignment="Center">
-                            <GroupBox Header="Download speed" Style="{StaticResource GroupBoxBorder}" FontSize="12">
-                                <StackPanel>
-                                    <RadioButton Content="Max Speed" x:Name="MaxSpeedButton" GroupName="Download" 
-                                                 FontWeight="Bold" Checked="MaxSpeed_Checked" Foreground="Black"/>
-                                    <RadioButton Content="Normal Speed" x:Name="NormalSpeedButton" GroupName="Download" 
-                                                 FontWeight="Bold" Checked="NormalSpeed_Checked" Foreground="Black"/>                                      
+                                    <CheckBox Content="Automatic Update" x:Name="AutomaticUpdateCheckBox" Checked="AutomaticUpdateCheckBox_Checked"
+                                              Unchecked="AutomaticUpdateCheckBox_UnChecked" ToolTip="Tick the subscribe checkbox in the first tab then tick this checkbox" HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </GroupBox>
 
-                            <Button Style="{StaticResource ImageButtonStyle}" ToolTip="Open config folder" Click="OpenConfigFolder"
-                                    Margin="10,0,0,0">
+                            <Separator Grid.Column="1" Grid.Row="1" Background="Black" 
+                                       FontWeight="Bold"/>
+
+                            <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource ImageButtonStyle}"
+                                    Click="OpenConfigFolder" ToolTip="Open config folder">
                                 <StackPanel>
-                                    <Image Source="Images/gtaIcon.ico" Height="20" Width="20" RenderTransformOrigin="0.5,0.5" />
+                                    <Image Source="Images/gtaIcon.ico" Height="20" Width="20" 
+                                           RenderTransformOrigin="0.5,0.5" />
                                 </StackPanel>
                             </Button>
-                        </StackPanel>
-                    </Grid>
-                </GroupBox>
+                        </Grid>
+                    </GroupBox>
 
-                <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" 
-                            HorizontalAlignment="Center" Margin="0,15,0,0">
-                    <Button Content="Official Thread"  Width="180" Height="50" 
+                    <Button Content="Official Thread"  Width="180" Height="50" Click="OfficialThread_Click"
                             Background="{x:Null}" BorderBrush="Black" FontWeight="Bold"
-                            FontSize="16" Click="OfficialThread_Click" Foreground="Black"/>
+                            FontSize="16"  Margin="0 5 0 0"/>
                 
-                    <Button Content="About" Width="180" Height="50" 
-                            Background="{x:Null}" BorderBrush="Black" Foreground="Black" 
-                            FontWeight="Bold" FontSize="16"  Click="About_Click"
-                            Margin="5,0,0,0"/>                   
+                    <Button Content="About" Width="180" Height="50" Click="About_Click"
+                            Background="{x:Null}" BorderBrush="Black" FontWeight="Bold"
+                            FontSize="16" Margin="0 5 0 0"/>                   
                 </StackPanel>
+
             </Grid>
         </TabItem>
     </TabControl>

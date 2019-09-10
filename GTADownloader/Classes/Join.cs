@@ -1,14 +1,17 @@
 ﻿using System.Threading.Tasks;
 using QueryMaster;
 using QueryMaster.GameServer;
-using System;
 using System.Windows;
 using System.Diagnostics;
+using System.Linq;
+using AngleSharp;
 
 namespace GTADownloader
 {
     class Join
     {
+        private static MainWindow Win = (MainWindow)Application.Current.MainWindow;
+
         public static void Server(string server, bool showNotificationMsg = true)
         {
             switch (server)
@@ -32,27 +35,33 @@ namespace GTADownloader
             }
             if (showNotificationMsg) MessageBox.Show("The application is starting...(this window can be closed)", "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
-        public static async Task UpdateServerAsync()
+        public static async void UpdateServerAsync()
         {
-            MainWindow win = (MainWindow)Application.Current.MainWindow;
-
             await Task.Run(() =>
             {
                 while (true)
                 {
-                    Server gta1 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.201.9", 2303, false, 1000, 1000, 0, false);
+                    Server gta1 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.201.9", 2303, false, 1000, 1000, 0);
+                    Server gta2 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.201.12", 2303, false, 1000, 1000, 0);
+                    Server gta3 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.202.63", 2303, false, 1000, 1000, 0);
+
                     ServerInfo info1 = gta1.GetInfo();
-                    win.Dispatcher.BeginInvoke((Action)(() => ShowServerInfo(info1, win.TextBlockServer1, win.JoinServer1Button)));
-
-                    Server gta2 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.201.12", 2303, false, 1000, 1000, 0, false);
                     ServerInfo info2 = gta2.GetInfo();
-                    win.Dispatcher.BeginInvoke((Action)(() => ShowServerInfo(info2, win.TextBlockServer2, win.JoinServer2Button)));
-
-                    Server gta3 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.202.63", 2303, false, 1000, 1000, 0, false);
                     ServerInfo info3 = gta3.GetInfo();
-                    win.Dispatcher.BeginInvoke((Action)(() => ShowServerInfo(info3, win.TextBlockServer3, win.JoinServer3Button)));
 
-                    Task.Delay(2000);
+                    if (Application.Current != null)
+                        Application.Current.Dispatcher.Invoke(async () =>
+                        {
+                            ShowServerInfo(info1, Win.TextBlockServer1, Win.JoinServer1Button);
+
+                            ShowServerInfo(info2, Win.TextBlockServer2, Win.JoinServer2Button);
+
+                            ShowServerInfo(info3, Win.TextBlockServer3, Win.JoinServer3Button);
+
+                            await ScrapGTA(Win.TextBlockTs);
+                        });
+
+                    Task.Delay(10_000);
                 }
             });
         }
@@ -62,20 +71,37 @@ namespace GTADownloader
             {
                 if (info.Players + 1 != info.MaxPlayers)
                 {
-                    textBlock.Text = $"{info.Name} | Players: {info.Players + 1}/{info.MaxPlayers}";
-                    button.IsEnabled = true;
+                     textBlock.Text = $"{info.Name} | Players: {info.Players + 1}/{info.MaxPlayers}";
+                     button.IsEnabled = true;
                 }
                 else
                 {
-                    textBlock.Text = "Server full";
-                    button.IsEnabled = false;
+                     textBlock.Text = "Server full";
+                     button.IsEnabled = false;
                 }
             }
             else
             {
-                textBlock.Text = "Server offline";
-                button.IsEnabled = false;
+                 textBlock.Text = "Server offline";
+                 button.IsEnabled = false;
             }
+        }
+        private static async Task ScrapGTA(System.Windows.Controls.TextBlock textBlock)
+        {
+            await Task.Run(async () =>
+            {
+                var config = Configuration.Default.WithDefaultLoader();
+                var address = "https://grandtheftarma.com/";
+                var context = BrowsingContext.New(config);
+                var document = await context.OpenAsync(address);
+                //How to get cellSelector: go to website, f12, elements, right click on smt, copy, copy selector
+                var cellSelector = "#container > div:nth-child(4) > a > span.node.right > b";
+                var cells = document.QuerySelectorAll(cellSelector);
+                var stuff = cells.Select(m => m.TextContent);
+
+                foreach (var number in stuff)
+                    Win.Dispatcher.Invoke(() => textBlock.Text = $"TeamSpeak: {number}");
+            });
         }
     }
 }

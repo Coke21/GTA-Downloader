@@ -1,23 +1,25 @@
 ﻿using Google.Apis.Download;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Threading;
+using GTADownloader.Classes;
 
 namespace GTADownloader
 {
     class Download
     {
         private static MainWindow Win = (MainWindow)Application.Current.MainWindow;
-        public static async Task FileAsync(string fileId, CancellationToken cancellationToken, string option = "missionFile")
+        public static async Task FileAsync(string fileId, ListViewProperties.ListViewItems selectedItem, CancellationToken cancellationToken, string option = "missionFile")
         {
-            DataHelper.ButtonsOption("beforeDownload");
+            Win.StopDownloadButton.Visibility = Visibility.Visible;
 
-            var request = DataHelper.GetFileRequest(fileId, "size, name");
+            var request = Data.GetFileRequest(fileId, "size, name");
+            request.MediaDownloader.ChunkSize = 10000000;
+
             var requestedFile = await request.ExecuteAsync();
 
             string mFPath = Path.Combine(DataProperties.GetArma3MissionFolderPath, requestedFile.Name);
@@ -26,41 +28,37 @@ namespace GTADownloader
             using (MemoryStream stream = new MemoryStream())
             using (FileStream file = new FileStream(option == "missionFile" ? mFPath : programPath, FileMode.Create, FileAccess.Write))
             {
-                switch (DataProperties.DownloadSpeed)
-                {
-                    case "maxSpeed":
-                        request.MediaDownloader.ChunkSize = 10000000;
-                        break;
-                    case "normalSpeed":
-                        request.MediaDownloader.ChunkSize = 1000000;
-                        break;
-                }
-
-                request.MediaDownloader.ProgressChanged += async progress =>
+                request.MediaDownloader.ProgressChanged += progress =>
                 {
                     switch (progress.Status)
                     {
                         case DownloadStatus.Downloading:
                             double bytesIn = progress.BytesDownloaded;
-                            var checkedValue = await request.ExecuteAsync();
 
-                            double percentage = bytesIn / (double)checkedValue.Size * 100;
+                            double currentValue = Math.Truncate(bytesIn / 1000000);
+                            double totalValue = Math.Truncate((double)requestedFile.Size / 1000000);
 
-                            double truncated = Math.Truncate(bytesIn / 1000000);
-                            double truncated2 = Math.Truncate((double)checkedValue.Size / 1000000);
-
-                            Win.Dispatcher.Invoke(() => Win.TextBlockDownload.Text = $"Downloading '{requestedFile.Name}' - " + truncated + "MB/" + truncated2 + "MB");
-                            Win.Dispatcher.Invoke(() => Win.ProgressBarDownload.Value = percentage);
+                            Win.Dispatcher.Invoke(() => Win.TextBlockDownload.Text = $"Downloading '{requestedFile.Name}' - " + currentValue + "MB/" + totalValue + "MB");
                             break;
+
+                        case DownloadStatus.Failed:
+                            if (selectedItem != null)
+                            {
+                                selectedItem.IsMissionUpdated = "Outdated";
+                                selectedItem.IsModifiedTimeUpdated = "Outdated";
+                            }
+                            Win.Dispatcher.Invoke(() => Win.StopDownloadButton.Visibility = Visibility.Hidden);
+                            break;
+
                         case DownloadStatus.Completed:
                             stream.WriteTo(file);
-                            Win.Dispatcher.Invoke(() => DataHelper.ButtonsOption("afterDownload"));
-                            Win.Dispatcher.Invoke(() => Notify(option == "missionFile" ? $"'{requestedFile.Name}' has been downloaded!" : "The updated version of GTA program has been downloaded!", Brushes.ForestGreen));
-                            break;
-                        case DownloadStatus.Failed:
-                            Win.Dispatcher.Invoke(() => DataHelper.ButtonsOption("afterDownload"));
-                            Win.Dispatcher.Invoke(() => Notify($"An error appeared with '{requestedFile.Name}' file!", Brushes.Red, 5));
-                            Data.MissionFileListId.Remove(fileId);
+                            if (selectedItem != null)
+                            {
+                                selectedItem.IsMissionUpdated = "Updated";
+                                selectedItem.IsModifiedTimeUpdated = "Updated";
+                            }
+                            Win.Dispatcher.Invoke(() => Win.TextBlockDownload.Text = string.Empty);
+                            Win.Dispatcher.Invoke(() => Win.StopDownloadButton.Visibility = Visibility.Hidden);
                             break;
                     }
                 };
@@ -76,34 +74,18 @@ namespace GTADownloader
             if (option == "programUpdate")
             {
                 Process.Start(programPath);
+
+                File.Move(DataProperties.GetProgramFolderPath + DataProperties.GetProgramName, DataProperties.GetProgramFolderPath + DataProperties.GetProgramName + "OLD" + ".exe");
+
                 Process.Start(new ProcessStartInfo()
                 {
-                    Arguments = "/C choice /C Y /N /D Y /T 3 & Del \"" + DataProperties.GetProgramFolderPath + DataProperties.GetProgramName + "\"",
+                    Arguments = "/C choice /C Y /N /D Y /T 3 & Del \"" + DataProperties.GetProgramFolderPath + DataProperties.GetProgramName + "OLD" + ".exe",
                     WindowStyle = ProcessWindowStyle.Hidden,
                     CreateNoWindow = true,
                     FileName = "cmd.exe"
                 });
-                Win.Close();
+                Win.Window_Closing(null, new CancelEventArgs());
             }
-        }
-        private static void Notify (string text, SolidColorBrush colour, int timeDisplaySec = 3)
-        {
-            Win.TextTopOperationNotice.Text = "";
-            Win.TextTopOperationProgramNotice.Text = "";
-
-            Win.TextTopOperationNotice.Text = text;
-            Win.TextTopOperationNotice.Foreground = colour;
-
-            DispatcherTimer myDispatcherTimer = new DispatcherTimer();
-            myDispatcherTimer.Interval = new TimeSpan(0, 0, 0, timeDisplaySec, 0);
-            myDispatcherTimer.Tick += HideNotificationText;
-            myDispatcherTimer.Start();
-        }
-        private static void HideNotificationText(object sender, EventArgs e)
-        {
-            Win.TextTopOperationNotice.Text = "";
-            DispatcherTimer timer = (DispatcherTimer)sender;
-            timer.Stop();
         }
     }
 }

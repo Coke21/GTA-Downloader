@@ -7,22 +7,27 @@
         Title="TeamSpeak"
         Height="340" Width="280"
         Background="#FFBDB5B5" FontSize="15" Closing="Window_Closing"
-        WindowStyle="None" ResizeMode="NoResize">
+        WindowStyle="None" ResizeMode="NoResize" x:Name="TeamSpeakWindow">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="5"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
-        <ListView 
-                Height="235" Width="255" Background="{x:Null}"
-                SelectionMode="Single" x:Name="LvName" BorderThickness="1.000001" 
-                BorderBrush="Black" Foreground="Black" ToolTip="Add,copy and remove channel paths, right click to open the menu or hotkeys - ctrl+c, ctrl+v, delete"
-                AllowDrop="True" PreviewKeyDown ="LvItemHotKeys" PreviewDrop="PathDropLv"
-                Grid.Row="1">
+        <ListView Height="235" Grid.Column="1" Grid.Row="1" Background="{x:Null}"
+                  SelectionMode="Single" x:Name="LvName" BorderThickness="1.000001" 
+                  BorderBrush="Black" Foreground="Black" ToolTip="Add,copy and remove channel paths, right click to open the menu or hotkeys - ctrl+c, ctrl+v, delete"
+                  AllowDrop="True" PreviewKeyDown ="LvItemHotKeys" PreviewDrop="PathDropLv">
+
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <EventSetter Event="MouseEnter" Handler="LvItemMouseEnter"/>
@@ -54,19 +59,20 @@
                             <Setter Property="Background" Value="LightGray" />
                         </Style>
                     </GridView.ColumnHeaderContainerStyle>
-                    <GridViewColumn Header="Channel path(s):" Width="244" DisplayMemberBinding="{Binding ChannelPath}" />
+
+                    <GridViewColumn Header="Channel path(s):" Width="259" DisplayMemberBinding="{Binding ChannelPath}" />
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <StackPanel Orientation="Vertical" Grid.Row="2" HorizontalAlignment="Center">
+        <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                 <TextBlock Height="30" TextWrapping="Wrap" Text="Channel path:"
                            Margin="5,7,5,0"/>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Height="42" Width="152"
                               BorderBrush="Black">
                     <TextBox TextWrapping="Wrap" Name="InsertTsChannelName" ToolTip="Insert the FULL path to the TS channel (It's case-sensitive!) e.g. Staff Lounges/Waiting for Support" 
-                             AllowDrop="True" PreviewDrop="PathDropTbCP" PreviewMouseMove="TbChannelNameMouseMove" 
+                             AllowDrop="True" PreviewDrop="PathDropTbCp" PreviewMouseMove="TbChannelNameMouseMove" 
                              Background="{x:Null}" BorderBrush="Black"/>
                 </ScrollViewer>
             </StackPanel>   
@@ -83,6 +89,7 @@
             </StackPanel>  
         </StackPanel>
 
-        <Border Grid.Row="0" Grid.RowSpan="5" BorderBrush="Black" BorderThickness="1" />
+        <Border Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="5" 
+                BorderBrush="Black" BorderThickness="1" />
     </Grid>
 </Window>

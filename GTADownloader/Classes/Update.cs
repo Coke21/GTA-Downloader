@@ -16,12 +16,15 @@ namespace GTADownloader
         private static MainWindow Win = (MainWindow)Application.Current.MainWindow;
         public static async Task FilesCheckAsync(CancellationToken cancellationToken)
         {
-            foreach (var item in Win.Items.ToList())
+            await Task.Run(async () =>
             {
-                string status = await LvItemsCheckAsync(item.Mission, item.FileId);
-                item.IsMissionUpdated = status;
-                item.IsModifiedTimeUpdated = status;
-            }
+                foreach (var item in Win.Items.ToList())
+                {
+                    string status = await LvItemsCheckAsync(item.Mission, item.FileId);
+                    item.IsMissionUpdated = status;
+                    item.IsModifiedTimeUpdated = status;
+                }
+            });
 
             var requestedProgram = await Data.GetFileRequest(Data.ProgramId, "md5Checksum").ExecuteAsync();
             string programMd5Checksum = CalculateMd5(DataProperties.GetProgramFolderPath + DataProperties.GetProgramName);

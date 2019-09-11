@@ -149,7 +149,11 @@ namespace GTADownloader
                     foreach (var item in Items.ToList())
                     {
                         if (files.Files.All(a => a.Name != item.Mission))
+                        {
                             Items.Remove(item);
+                            if (File.Exists(DataProperties.GetArma3MissionFolderPath + item.Mission))
+                                File.Delete(DataProperties.GetArma3MissionFolderPath + item.Mission);
+                        }
                     }
             }
             else

@@ -47,6 +47,7 @@ namespace GTADownloader
                                 selectedItem.IsMissionUpdated = "Outdated";
                                 selectedItem.IsModifiedTimeUpdated = "Outdated";
                             }
+                            Win.Dispatcher.Invoke(() => Win.TextBlockDownload.Text = string.Empty);
                             Win.Dispatcher.Invoke(() => Win.StopDownloadButton.Visibility = Visibility.Hidden);
                             break;
 

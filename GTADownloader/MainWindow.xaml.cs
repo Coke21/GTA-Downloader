@@ -104,32 +104,53 @@ namespace GTADownloader
             var itemToRemove = files.Files.Single(r => r.Name == "readme.txt");
             files.Files.Remove(itemToRemove);
 
+            MissionFileCheckbox_Checked(null, null);
+
             if (Items.Count > 0)
             {
-                MissionFileCheckbox_Checked(null, null);
-
-                foreach (var item in Items.Zip(files.Files, Tuple.Create).ToList())
-                {
-                    if (item.Item1.FileId == item.Item2.Id) continue;
-
-                    bool isChecked = item.Item1.IsChecked;
-
-                    Items.Remove(item.Item1);
-                    if (File.Exists(DataProperties.GetArma3MissionFolderPath + item.Item1.Mission))
-                        File.Delete(DataProperties.GetArma3MissionFolderPath + item.Item1.Mission);
-
-                    string status = await Update.LvItemsCheckAsync(item.Item2.Name, item.Item2.Id);
-
-                    Items.Add(new ListViewProperties.ListViewItems
+                if (Items.Count == files.Files.Count)
+                    foreach (var item in Items.Zip(files.Files, Tuple.Create).ToList())
                     {
-                        Mission = item.Item2.Name,
-                        IsMissionUpdated = status,
-                        ModifiedTime = item.Item2.ModifiedTime.Value.ToString("dd.MM.yyyy HH:mm"),
-                        IsModifiedTimeUpdated = status,
-                        FileId = item.Item2.Id,
-                        IsChecked = isChecked
-                    });
-                }
+                        if (item.Item1.FileId == item.Item2.Id) continue;
+
+                        bool isChecked = item.Item1.IsChecked;
+
+                        Items.Remove(item.Item1);
+                        if (File.Exists(DataProperties.GetArma3MissionFolderPath + item.Item1.Mission))
+                            File.Delete(DataProperties.GetArma3MissionFolderPath + item.Item1.Mission);
+
+                        string status = await Update.LvItemsCheckAsync(item.Item2.Name, item.Item2.Id);
+
+                        Items.Add(new ListViewProperties.ListViewItems
+                        {
+                            Mission = item.Item2.Name,
+                            IsMissionUpdated = status,
+                            ModifiedTime = item.Item2.ModifiedTime.Value.ToString("dd.MM.yyyy HH:mm"),
+                            IsModifiedTimeUpdated = status,
+                            FileId = item.Item2.Id,
+                            IsChecked = isChecked
+                        });
+                    }
+                else if (Items.Count < files.Files.Count)
+                    foreach (var item in files.Files.ToList())
+                    {
+                        if (Items.All(a => a.Mission != item.Name))
+                            Items.Add(new ListViewProperties.ListViewItems()
+                            {
+                                Mission = item.Name,
+                                IsMissionUpdated = "Missing",
+                                ModifiedTime = item.ModifiedTime.Value.ToString("dd.MM.yyyy HH:mm"),
+                                IsModifiedTimeUpdated = "Missing",
+                                FileId = item.Id,
+                                IsChecked = false
+                            });     
+                    }                           
+                else if (Items.Count > files.Files.Count)
+                    foreach (var item in Items.ToList())
+                    {
+                        if (files.Files.All(a => a.Name != item.Mission))
+                            Items.Remove(item);
+                    }
             }
             else
                 foreach (var file in files.Files)
@@ -145,7 +166,7 @@ namespace GTADownloader
                         FileId = file.Id,
                         IsChecked = false
                     });
-                }                
+                }
         }
         private void LvName_OnSelectionChanged(object sender, SelectionChangedEventArgs e) => ListViewProperties.SelectedItems = LvName.SelectedItems.Cast<ListViewProperties.ListViewItems>().ToList();
         private void MissionFileCheckbox_Checked(object sender, RoutedEventArgs e) => ListViewProperties.SelectedCheckboxes = Items.Where(ps => ps.IsChecked);

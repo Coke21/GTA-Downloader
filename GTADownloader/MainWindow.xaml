@@ -19,7 +19,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5" />
-                    <RowDefinition Height="50" />
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="5" />
                 </Grid.RowDefinitions>
@@ -71,7 +71,7 @@
 
                 <StackPanel Grid.Column="1" Grid.Row="2">
 
-                    <ListView x:Name="LvName" Height="250" Background="{x:Null}"
+                    <ListView x:Name="LvName" Height="260" Background="{x:Null}"
                               BorderThickness="1.000001" BorderBrush="Black" Foreground="Black"
                               Initialized="ListView_Initialized" SelectionChanged="LvName_OnSelectionChanged" ItemsSource="{Binding}">
 
@@ -202,7 +202,7 @@
                     </ListView>
 
                     <TextBlock x:Name="TextBlockDownload" FontSize="14" FontWeight="Bold"
-                               TextAlignment="Center" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                               TextAlignment="Center" HorizontalAlignment="Center" Margin="0,1,0,0"/>
                 </StackPanel>
             </Grid>
         </TabItem>

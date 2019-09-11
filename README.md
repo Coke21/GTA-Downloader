@@ -1,7 +1,7 @@
 # GTA-Downloader
 
 <p align="center">
-  <img width="722" height="389" src="https://user-images.githubusercontent.com/44268275/60161047-00f0ad00-97f7-11e9-9673-a983fc9e70d2.png">
+  <img width="722" height="389" src="https://user-images.githubusercontent.com/44268275/64736567-3b5f1180-d4eb-11e9-944d-71dd6bbe2030.png">
 </p>
 
 ## Main features:

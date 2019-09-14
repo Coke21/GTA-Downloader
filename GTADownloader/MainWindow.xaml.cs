@@ -50,6 +50,7 @@ namespace GTADownloader
                 location.Delete(true);
             }
 
+            Join.UpdateServerAsync();
             Notification.EnableTaskBar();
 
             if (HiddenCheckBox.IsChecked.Value)
@@ -64,7 +65,6 @@ namespace GTADownloader
                 if (process.Length == 0) Join.Server("joinTS", false);
             }
 
-            Join.UpdateServerAsync();
             await Update.FilesCheckAsync(Data.CtsOnStart.Token);
         }
         private void Window_LocationChanged(object sender, EventArgs e)
@@ -177,7 +177,11 @@ namespace GTADownloader
 
         private async void MenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            if (AutomaticUpdateCheckBox.IsChecked.Value) return;
+            if (AutomaticUpdateCheckBox.IsChecked.Value)
+            {
+                MessageBox.Show("You cannot have the automatic update checkbox ticked! Untick the checkbox to manually download a file!", "Information", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                return;
+            }
                 
             foreach (var item in ListViewProperties.SelectedItems)
                 await Download.FileAsync(item.FileId, item, Data.CtsStopDownloading.Token);

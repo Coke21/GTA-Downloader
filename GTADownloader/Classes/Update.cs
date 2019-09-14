@@ -75,17 +75,15 @@ namespace GTADownloader
         }
 
         public static async Task UpdateLvItemsCheckAsync(CancellationToken cancellationToken)
-        {            
-            await Task.Delay(100);
-
-            if (ListViewProperties.SelectedCheckboxes == null || !ListViewProperties.SelectedCheckboxes.Any())
-            {
-                Win.AutomaticUpdateCheckBox.IsChecked = false;
-                return;
-            }
-
+        {
             while (!cancellationToken.IsCancellationRequested)
             {
+                if (ListViewProperties.SelectedCheckboxes == null || !ListViewProperties.SelectedCheckboxes.Any())
+                {
+                    await Task.Delay(5_000);
+                    continue;
+                }
+
                 foreach (var selectedCheckbox in ListViewProperties.SelectedCheckboxes)
                 {
                     string status = await LvItemsCheckAsync(selectedCheckbox.Mission, selectedCheckbox.FileId);

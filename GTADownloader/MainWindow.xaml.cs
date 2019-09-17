@@ -111,17 +111,16 @@ namespace GTADownloader
                 if (Items.Count == files.Files.Count)
                     foreach (var item in Items.Zip(files.Files, Tuple.Create).ToList())
                     {
-                        if (item.Item1.FileId == item.Item2.Id) continue;
+                        if (item.Item1.ModifiedTime == item.Item2.ModifiedTime.Value.ToString("dd.MM.yyyy HH:mm")) continue;
 
+                        int currentIndex = Items.IndexOf(item.Item1);
                         bool isChecked = item.Item1.IsChecked;
 
                         Items.Remove(item.Item1);
-                        if (File.Exists(DataProperties.GetArma3MissionFolderPath + item.Item1.Mission))
-                            File.Delete(DataProperties.GetArma3MissionFolderPath + item.Item1.Mission);
 
                         string status = await Update.LvItemsCheckAsync(item.Item2.Name, item.Item2.Id);
 
-                        Items.Add(new ListViewProperties.ListViewItems
+                        Items.Insert(currentIndex, new ListViewProperties.ListViewItems
                         {
                             Mission = item.Item2.Name,
                             IsMissionUpdated = status,
@@ -240,9 +239,9 @@ namespace GTADownloader
 
         private void OfficialThread_Click(object sender, RoutedEventArgs e) => Process.Start("https://grandtheftarma.com/topic/116196-gta-mission-downloader/");
         private void About_Click(object sender, RoutedEventArgs e) => MessageBox.Show("Do you want to help develop this application? " +
-                                                                                                   "If so, head to official thread on GTA's forum and post your suggestion.\n" +
-                                                                                                   "Thank you for using this application! - Coke",
-                                                                                            "Information", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                                                                    "If so, head to official thread on GTA's forum and post your suggestion.\n" +
+                                                                                    "Thank you for using this application! - Coke",
+                                                                                    "Information", MessageBoxButton.OK, MessageBoxImage.Warning);
         public void Window_Closing(object sender, CancelEventArgs e)
         {
             if (Data.NotifyIcon.Icon != null)

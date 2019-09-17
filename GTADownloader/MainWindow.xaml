@@ -133,7 +133,7 @@
                                     </Style>
                                 </GridView.ColumnHeaderContainerStyle>
 
-                                <GridViewColumn Header="Mission File:">
+                                <GridViewColumn Header="Mission File:" Width="250">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Mission}">

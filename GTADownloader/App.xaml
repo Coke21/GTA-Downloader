@@ -55,8 +55,8 @@
                                 </Border>
                                 <ContentPresenter Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 <Border Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="4"  
-                                    BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" 
-                                    CornerRadius="3">
+                                        BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" 
+                                        CornerRadius="3">
                                     <Border.OpacityMask>
                                         <MultiBinding Converter="{StaticResource BorderGapMaskConverter}" ConverterParameter="7">
                                             <Binding ElementName="Header" Path="ActualWidth" />

@@ -1,0 +1,426 @@
+﻿<Controls:MetroWindow x:Class="GTADownloader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        mc:Ignorable="d"
+        Loaded="Window_Load" Closing="Window_Closing"
+        Height="430" Width="740" TitleCharacterCasing="Normal"
+        WindowStartupLocation ="CenterScreen" ResizeMode="CanMinimize" Icon="/Images/gtaIcon.ico"
+        LocationChanged="Window_LocationChanged" x:Name="PrimaryWindow">
+
+    <TabControl x:Name="TabControl" SelectionChanged="Tab_SelectionChanged" Controls:TabControlHelper.Underlined="TabItems">
+        <TabControl.Resources>
+            <Style BasedOn="{StaticResource MetroTabItem}" TargetType="{x:Type TabItem}">
+                <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="20"/>
+            </Style>
+        </TabControl.Resources>
+
+        <TabItem Header="Mission File " Margin="4 0 0 0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="1" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="1" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center">
+                    <TextBlock x:Name="TextTopTitle" Text="GTA Mission Downloader" FontSize="20"
+                               FontWeight="Bold" TextAlignment="Center"/>
+
+                    <TextBlock x:Name="TextTopOperationProgramNotice" TextAlignment="Center" FontWeight="Bold"/> 
+                </StackPanel>
+
+                <Button Grid.Column="1" Grid.Row="1" x:Name="ReadChangelogName"
+                        Click="ReadChangelogClick" ToolTip="Read the changelog" HorizontalAlignment="Center"
+                        VerticalAlignment="Top" Margin="315 0 0 0">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconMaterial Kind="FileDocument"  Height="11" Width="11"
+                                                    VerticalAlignment="Center"/>
+
+                        <TextBlock Text="Changelog" VerticalAlignment="Center" Margin="2 0 0 0"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Grid.Column="1" Grid.Row="1" x:Name="ProgramUpdateName"
+                        Click="ProgramUpdateClick" Visibility="Hidden" ToolTip="Update the program"
+                        HorizontalAlignment="Center" VerticalAlignment="Top" Margin="453 0 0 0">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconMaterial Kind="Download" Height="11" Width="11"
+                                                    VerticalAlignment="Center"/>
+
+                        <TextBlock Text="Update" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                    </StackPanel>
+                </Button>
+
+                <ListView Grid.Column="1" Grid.Row="2" x:Name="LvName" 
+                          BorderThickness="1.000001" SelectionChanged="LvName_OnSelectionChanged" MouseDown="LvName_OnMouseDown" 
+                          ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="0 1 0 0">
+
+                    <ListView.Resources>
+                        <ContextMenu x:Key="ItemContextMenu">
+                            <MenuItem Header="Download" Click="MenuItem_OnClick">
+                                <MenuItem.Icon>
+                                    <iconPacks:PackIconMaterial Kind="Download" HorizontalAlignment="Center"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListView.Resources>
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+
+                            <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                    <Setter Property="Background" Value="#ADFF2F"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="true">
+                                    <Setter Property="Background" Value="#ffff00"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.View>
+                        <GridView>
+                            <GridView.ColumnHeaderContainerStyle>
+                                <Style BasedOn="{StaticResource MetroGridViewColumnHeader}" TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </GridView.ColumnHeaderContainerStyle>
+
+                            <GridViewColumn Header="Mission File:" Width="250">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Mission}">
+                                            <TextBlock.Style>
+                                                <Style>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsMissionUpdated}" Value="Updated">
+                                                            <Setter Property="TextBlock.Foreground" Value="Green"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsMissionUpdated}" Value="Outdated">
+                                                            <Setter Property="TextBlock.Foreground" Value="Red"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsMissionUpdated}" Value="Missing">
+                                                            <Setter Property="TextBlock.Foreground" Value="#e68a00"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsMissionUpdated}" Value="Error">
+                                                            <Setter Property="TextBlock.Foreground" Value="BlueViolet"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn>
+                                <GridViewColumnHeader Content="Last Modified:" ToolTip="Shows the modified time from GTA's Google Drive"/>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ModifiedTime}">
+                                            <TextBlock.Style>
+                                                <Style>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsModifiedTimeUpdated}" Value="Updated">
+                                                            <Setter Property="TextBlock.Foreground" Value="Green"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsModifiedTimeUpdated}" Value="Outdated">
+                                                            <Setter Property="TextBlock.Foreground" Value="Red"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsModifiedTimeUpdated}" Value="Missing">
+                                                            <Setter Property="TextBlock.Foreground" Value="#e68a00"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsModifiedTimeUpdated}" Value="Error">
+                                                            <Setter Property="TextBlock.Foreground" Value="BlueViolet"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn>
+                                <GridViewColumnHeader Content="Subscribe?" ToolTip="Add the selected Mission file(s) to the queue"/>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding IsChecked}" Checked="MissionFileCheckbox_Checked"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Width="325">
+                                <GridViewColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Button Click="LvInfoButton_OnClick">
+                                            <StackPanel Orientation="Horizontal">
+                                                <iconPacks:PackIconMaterial Kind="Information" Height="15" Width="15"/>
+
+                                                <TextBlock Text="Info" VerticalAlignment="Center" Margin="2 0 0 0"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </DataTemplate>
+                                </GridViewColumn.HeaderTemplate>
+
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate />
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="" HeaderContainerStyle="{DynamicResource GridViewGhettoStyle}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate />
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal"
+                            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4 0 0">
+                    <TextBlock x:Name="TextBlockDownload" FontSize="14" FontWeight="Bold"
+                               TextAlignment="Center" VerticalAlignment="Center"/>
+
+                    <Button x:Name="StopDownloadButton" Click="StopDownloadClick" Visibility="Hidden"
+                            ToolTip="Stop the current download" Margin="2 0 0 0">
+
+                        <iconPacks:PackIconMaterial Kind="StopCircleOutline" Height="12" Width="12"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Join">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1"
+                            VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <GroupBox Header="Servers" Controls:GroupBoxHelper.HeaderForeground="Black" Controls:ControlsHelper.ContentCharacterCasing="Normal">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <iconPacks:PackIconMaterial Kind="Server"/>
+
+                                    <TextBlock Margin="2 0 0 0" VerticalAlignment="Center" Text="{Binding}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+
+                        <StackPanel>
+                            <Button x:Name="JoinServer1Button" Click="JoinS1">
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconMaterial Kind="WheelchairAccessibility" VerticalAlignment="Center"/>
+
+                                    <TextBlock Text="Join Server 1" VerticalAlignment="Center" Margin="2 0 0 0"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button x:Name="JoinServer2Button" Click="JoinS2" Margin="0,5,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconMaterial Kind="HumanHandsup" VerticalAlignment="Center"/>
+
+                                    <TextBlock Text="Join Server 2" VerticalAlignment="Center" Margin="2 0 0 0"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button x:Name="JoinServer3Button" Click="JoinS3" Margin="0,5,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconMaterial Kind="SwordCross" VerticalAlignment="Center"/>
+
+                                    <TextBlock Text="Join Server 3" VerticalAlignment="Center" Margin="2 0 0 0"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="JoinTs" Margin="0,5,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconMaterial Kind="Headset" VerticalAlignment="Center"/>
+
+                                    <TextBlock Text="Join TS" VerticalAlignment="Center" Margin="2 0 0 0"/>
+                                </StackPanel>
+                            </Button>
+
+                        </StackPanel>                           
+                    </GroupBox>
+
+                    <GroupBox Header="Status" Controls:GroupBoxHelper.HeaderForeground="Black" Controls:ControlsHelper.ContentCharacterCasing="Normal"
+                              Height="170" Width="550" Margin="5,0,0,0">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <iconPacks:PackIconMaterial Kind="ThumbUp"/>
+
+                                    <TextBlock Margin="2 0 0 0" VerticalAlignment="Center" Text="{Binding}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel>
+                                <TextBlock x:Name="TextBlockServer1" Margin="0 7 0 0"/>
+
+                                <TextBlock x:Name="TextBlockServer2" Margin="0 18 0 0"/>
+
+                                <TextBlock x:Name="TextBlockServer3" Margin="0 20 0 0"/>
+
+                                <TextBlock x:Name="TextBlockTs" Width="513" Margin="0 20 0 0"/>
+                            </StackPanel>
+
+                            <Expander x:Name="TsExpander" Height="26" Width="26"
+                                      RenderTransformOrigin="0.5,0.5" Background="{x:Null}" BorderThickness="0"
+                                      Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" VerticalAlignment="Bottom"
+                                      ToolTip="Show/Hide TeamSpeak window">
+                                <Expander.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="90"/>
+                                    </TransformGroup>
+                                </Expander.RenderTransform>
+                            </Expander>
+                        </StackPanel>     
+                    </GroupBox>
+                </StackPanel>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Options">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <GroupBox Header="Options" Controls:GroupBoxHelper.HeaderForeground="Black" Controls:ControlsHelper.ContentCharacterCasing="Normal">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <iconPacks:PackIconMaterial Kind="Menu" />
+
+                                    <TextBlock Margin="2 0 0 0" VerticalAlignment="Center" Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="1" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+
+                            <GroupBox Grid.Column="1" Grid.Row="0" Header="Theme and Accent"
+                                      Controls:GroupBoxHelper.HeaderForeground="Black" Controls:ControlsHelper.ContentCharacterCasing="Normal">
+                                <GroupBox.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <iconPacks:PackIconMaterial Kind="ThemeLightDark" />
+
+                                            <TextBlock Margin="2 0 0 0" VerticalAlignment="Center" Text="{Binding}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GroupBox.HeaderTemplate>
+
+                                <StackPanel HorizontalAlignment="Center">
+                                    <Controls:ToggleSwitch x:Name="ThemeToggleSwitch" Checked="ThemeToggleSwitch_OnChecked" Unchecked="ThemeToggleSwitch_OnUnchecked"
+                                                           OnLabel="Light" OffLabel="Dark"/>
+
+                                    <ComboBox x:Name="AccentComboBox" DisplayMemberPath="ColorName" SelectionChanged="Accent_OnSelectionChanged"/>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <GroupBox Grid.Column="1" Grid.Row="1" Header="General"
+                                      Controls:GroupBoxHelper.HeaderForeground="Black" Controls:ControlsHelper.ContentCharacterCasing="Normal" Margin="0 5 0 0">
+                                <GroupBox.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <iconPacks:PackIconMaterial Kind="Settings" />
+
+                                            <TextBlock Margin="2 0 0 0" VerticalAlignment="Center" Text="{Binding}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GroupBox.HeaderTemplate>
+
+                                <StackPanel>
+                                    <CheckBox Content="Startup" x:Name="StartUpCheckBox" Checked="StartUpCheckBox_Checked"
+                                              Unchecked="StartUpCheckBox_Unchecked" HorizontalAlignment="Center" ToolTip="Run the program automatically upon PC restart"/>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <CheckBox Content="Hidden" x:Name="HiddenCheckBox" Checked="RunHiddenCheckBox_Checked"
+                                                  Unchecked="RunHiddenCheckBox_UnChecked" ToolTip="Hide the program upon run"/>
+
+                                        <CheckBox Content="TS" x:Name="RunTsAutoCheckBox" ToolTip="Run TeamSpeak automatically upon the program start" 
+                                                  Margin="5,0,0,0"/>
+                                    </StackPanel>   
+
+                                    <CheckBox Content="Automatic Update" x:Name="AutomaticUpdateCheckBox" Checked="AutomaticUpdateCheckBox_Checked"
+                                              Unchecked="AutomaticUpdateCheckBox_UnChecked" ToolTip="Automatically updates the ticked mission files" Margin="0 2 0 0"/>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 3 0 0">
+                                        <Button Click="OpenConfigFolder" ToolTip="Open the Config folder">
+                                                <Image Source="/Images/gtaIcon.ico" Height="20" Width="20" 
+                                                       RenderTransformOrigin="0.5,0.5" />
+                                        </Button>
+
+                                        <Button Click="OpenMissionFileFolder" ToolTip="Open the Mission File folder" Margin="3 0 0 0">
+                                            <iconPacks:PackIconMaterial Kind="FileMultiple"/>
+                                        </Button>
+                                    </StackPanel>
+
+                                    <Button Click="OfficialThread_Click" HorizontalAlignment="Center" ToolTip="Open the Official Thread" Margin="0 3 0 0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconMaterial Kind="FileDocument" VerticalAlignment="Center"/>
+
+                                            <TextBlock Text="Thread" VerticalAlignment="Center" Margin="2 0 0 0"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </GroupBox>
+
+                        </Grid>
+                    </GroupBox>
+                </StackPanel>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Controls:MetroWindow>

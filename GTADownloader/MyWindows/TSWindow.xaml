@@ -1,0 +1,101 @@
+﻿<Controls:MetroWindow x:Class="GTADownloader.TSWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        mc:Ignorable="d"
+        Title="TeamSpeak Channels" TitleCharacterCasing="Normal"
+        Height="340" Width="280"
+        Closing="Window_Closing" SourceInitialized="Window_SourceInitialized" ResizeMode="NoResize"
+        x:Name="TeamSpeakWindow">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+
+        <ListView Grid.Column="1" Grid.Row="1" x:Name="LvName"
+                  SelectionMode="Single" BorderThickness="1.000001" ItemsSource="{Binding}"
+                  AllowDrop="True" PreviewKeyDown ="LvItemHotKeys" PreviewDrop="PathDropLv" MouseDown="LvName_OnMouseDown"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ToolTip="Add,copy and remove channel paths, right click to open the menu or hotkeys - ctrl+c, ctrl+v, delete">
+
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add" Click="AddFileMenuItemClick" InputGestureText="| CTRL + V">
+                        <MenuItem.Icon>
+                            <iconPacks:PackIconMaterial Kind="Plus" HorizontalAlignment="Center"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Header="Copy" Click="CopyPathMenuClick" InputGestureText="| CTRL + C">
+                        <MenuItem.Icon>
+                            <iconPacks:PackIconMaterial Kind="ContentCopy" HorizontalAlignment="Center"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Header="Delete" Click="DeleteMenuClick" InputGestureText="| DEL">
+                        <MenuItem.Icon>
+                            <iconPacks:PackIconMaterial Kind="Delete" HorizontalAlignment="Center"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
+
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="{x:Type ListViewItem}">
+                    <EventSetter Event="MouseEnter" Handler="LvItemMouseEnter"/>
+                    <EventSetter Event="PreviewMouseMove" Handler="LvMouseMoveDragDrop"/>
+
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.View>
+                <GridView>
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style BasedOn="{StaticResource MetroGridViewColumnHeader}" TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+
+                    <GridViewColumn Header="Channel Path(s):" Width="265" DisplayMemberBinding="{Binding ChannelPath}" />
+
+                    <GridViewColumn Header="" HeaderContainerStyle="{DynamicResource GridViewGhettoStyle}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate />
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Column="1" Grid.Row="2">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="35" Margin="0 5 0 0">
+                <TextBox x:Name="InsertTsChannelName" TextWrapping="Wrap" AllowDrop="True"
+                         PreviewDrop="PathDropTbCp" PreviewMouseMove="TbChannelNameMouseMove" 
+                         Controls:TextBoxHelper.Watermark="Your channel path..." Controls:TextBoxHelper.ClearTextButton="True"
+                         ToolTip="Insert the FULL path to the TS channel (It's case-sensitive!) e.g. Staff Lounges/Waiting for Support"/>
+            </ScrollViewer>
+            
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="35" Margin="0 5 0 0">
+                <TextBox x:Name="InsertTsChannelPasswordName" TextWrapping="Wrap" PreviewDrop="PathDropTbPass"
+                         Controls:TextBoxHelper.Watermark="Your channel password..." Controls:TextBoxHelper.ClearTextButton="True"
+                         ToolTip="Insert the password to the channel or leave it empty"/>
+            </ScrollViewer>   
+        </StackPanel>
+    </Grid>
+</Controls:MetroWindow>

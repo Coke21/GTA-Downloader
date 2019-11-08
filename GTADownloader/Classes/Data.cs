@@ -7,7 +7,7 @@ namespace GTADownloader
 {
     class Data
     {
-        public const string ProgramVersion = "1.1";
+        public const string ProgramVersion = "1.2";
 
         public const string FolderId = "0B8j-xMQtDZvwVjN6R25sWF94dG8";
         public const string ProgramId = "1EHQqd72EELxE-GXFCS4urWzn_3fL5wI2";

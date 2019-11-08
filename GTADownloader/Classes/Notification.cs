@@ -39,7 +39,6 @@ namespace GTADownloader
             Win.TextTopOperationProgramNotice.Text = "";
 
             Win.ProgramUpdateName.Visibility = Visibility.Hidden;
-            Win.ReadChangelogName.Visibility = Visibility.Hidden;
         }
     }
 }

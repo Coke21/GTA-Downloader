@@ -4,6 +4,7 @@ using QueryMaster.GameServer;
 using System.Windows;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows.Controls;
 using AngleSharp;
 
 namespace GTADownloader
@@ -12,7 +13,7 @@ namespace GTADownloader
     {
         private static MainWindow Win = (MainWindow)Application.Current.MainWindow;
 
-        public static void Server(string server, bool showNotificationMsg = true)
+        public static void Server(string server)
         {
             switch (server)
             {
@@ -33,7 +34,6 @@ namespace GTADownloader
                     Process.Start("ts3server://" + arg4 + $"?channel={DataProperties.W2.InsertTsChannelName.Text}" + $"&channelpassword={DataProperties.W2.InsertTsChannelPasswordName.Text}");
                     break;
             }
-            if (showNotificationMsg) MessageBox.Show("The application is starting...(this window can be closed)", "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
         public static async void UpdateServerAsync()
         {
@@ -61,11 +61,11 @@ namespace GTADownloader
                             await ScrapGTA(Win.TextBlockTs);
                         });
 
-                    Task.Delay(10_000);
+                    Task.Delay(15_000);
                 }
             });
         }
-        private static void ShowServerInfo(ServerInfo info, System.Windows.Controls.TextBlock textBlock, System.Windows.Controls.Button button)
+        private static void ShowServerInfo(ServerInfo info, TextBlock textBlock, Button button)
         {
             if (info != null)
             {
@@ -86,7 +86,7 @@ namespace GTADownloader
                  button.IsEnabled = false;
             }
         }
-        private static async Task ScrapGTA(System.Windows.Controls.TextBlock textBlock)
+        private static async Task ScrapGTA(TextBlock textBlock)
         {
             await Task.Run(async () =>
             {
@@ -95,7 +95,7 @@ namespace GTADownloader
                 var context = BrowsingContext.New(config);
                 var document = await context.OpenAsync(address);
                 //How to get cellSelector: go to website, f12, elements, right click on smt, copy, copy selector
-                var cellSelector = "#container > div:nth-child(4) > a > span.node.right > b";
+                var cellSelector = "#container > div:nth-child(5) > a > span.node.right > b";
                 var cells = document.QuerySelectorAll(cellSelector);
                 var stuff = cells.Select(m => m.TextContent);
 

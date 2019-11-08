@@ -1,12 +1,22 @@
-# GTA-Downloader
+# GTA Mission Downloader
 
 <p align="center">
-  <img width="722" height="389" src="https://user-images.githubusercontent.com/44268275/64736567-3b5f1180-d4eb-11e9-944d-71dd6bbe2030.png">
+  <b>Dark:</b>
+</p>
+<p align="center">
+  <img width="722" height="389" src="https://user-images.githubusercontent.com/44268275/68515368-fbb16d80-0280-11ea-9fdc-f8a34cccdb87.png">
+</p>
+
+<p align="center">
+  <b>Light:</b>
+</p>
+<p align="center">
+  <img width="722" height="389" src="https://user-images.githubusercontent.com/44268275/68515176-56969500-0280-11ea-9a0a-e219276ce7fc.png">
 </p>
 
 ## Main features:
 
-* Multiple options to download a mission file:
+* Two different options to download a mission file:
   * Automatically
   * Manually
 * The program pulls the information about the GTA servers and displays it
@@ -16,8 +26,7 @@
   * Event server
   * TS server -> Ability to join to the specific channel
 * Different configuration options for a user
-* Modern design and simplicity
-* Everything saves on the user's computer in one user.config file
+* Everything saves in the one folder.
 
 .Exe file: https://drive.google.com/drive/u/2/folders/1i8rxUqM7NRaO8hnexDDrQm5zYlWffbXy <br/>
 Changelog: https://docs.google.com/document/d/1HzbVqK26YLsJtSBC2XJ7s_VcQ9IWH9ZWy3LEGEDwrJk/edit

@@ -4,14 +4,14 @@
   <b>Dark:</b>
 </p>
 <p align="center">
-  <img width="722" height="389" src="https://user-images.githubusercontent.com/44268275/68515368-fbb16d80-0280-11ea-9fdc-f8a34cccdb87.png">
+  <img src="https://user-images.githubusercontent.com/44268275/68515368-fbb16d80-0280-11ea-9fdc-f8a34cccdb87.png">
 </p>
 
 <p align="center">
   <b>Light:</b>
 </p>
 <p align="center">
-  <img width="722" height="389" src="https://user-images.githubusercontent.com/44268275/68515176-56969500-0280-11ea-9a0a-e219276ce7fc.png">
+  <img src="https://user-images.githubusercontent.com/44268275/68515176-56969500-0280-11ea-9a0a-e219276ce7fc.png">
 </p>
 
 ## Main features:

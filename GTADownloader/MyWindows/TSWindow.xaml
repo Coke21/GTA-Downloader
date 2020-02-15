@@ -7,7 +7,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="TeamSpeak Channels" TitleCharacterCasing="Normal"
-        Height="340" Width="280"
+        Height="350" Width="310"
         Closing="Window_Closing" SourceInitialized="Window_SourceInitialized" ResizeMode="NoResize"
         x:Name="TeamSpeakWindow">
 
@@ -71,7 +71,7 @@
                         </Style>
                     </GridView.ColumnHeaderContainerStyle>
 
-                    <GridViewColumn Header="Channel Path(s):" Width="265" DisplayMemberBinding="{Binding ChannelPath}" />
+                    <GridViewColumn Header="Channel Path(s):" Width="290" DisplayMemberBinding="{Binding ChannelPath}" />
 
                     <GridViewColumn Header="" HeaderContainerStyle="{DynamicResource GridViewGhettoStyle}">
                         <GridViewColumn.CellTemplate>
@@ -84,14 +84,14 @@
         </ListView>
 
         <StackPanel Grid.Column="1" Grid.Row="2">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="35" Margin="0 5 0 0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="40" Margin="0 5 0 0">
                 <TextBox x:Name="InsertTsChannelName" TextWrapping="Wrap" AllowDrop="True"
                          PreviewDrop="PathDropTbCp" PreviewMouseMove="TbChannelNameMouseMove" 
                          Controls:TextBoxHelper.Watermark="Your channel path..." Controls:TextBoxHelper.ClearTextButton="True"
                          ToolTip="Insert the FULL path to the TS channel (It's case-sensitive!) e.g. Staff Lounges/Waiting for Support"/>
             </ScrollViewer>
             
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="35" Margin="0 5 0 0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="40" Margin="0 5 0 0">
                 <TextBox x:Name="InsertTsChannelPasswordName" TextWrapping="Wrap" PreviewDrop="PathDropTbPass"
                          Controls:TextBoxHelper.Watermark="Your channel password..." Controls:TextBoxHelper.ClearTextButton="True"
                          ToolTip="Insert the password to the channel or leave it empty"/>

@@ -25,16 +25,12 @@ namespace GTADownloader
                 .Id(p => p.Name)
 
                 .Properties(p => new {p.Items})
-                .PersistOn(nameof(LvName.PreviewDrop), LvName)
-                .PersistOn(nameof(LvName.PreviewKeyDown), LvName)
-                .PersistOn(nameof(LvName.MouseEnter), LvName)
-                .PersistOn(nameof(LvName.MouseLeave), LvName)
 
                 .Property(p => p.InsertTsChannelName.Text, string.Empty, "Default TS channel")
-                .PersistOn(nameof(InsertTsChannelName.TextChanged), InsertTsChannelName)
-
                 .Property(p => p.InsertTsChannelPasswordName.Text, string.Empty, "Default TS password")
-                .PersistOn(nameof(InsertTsChannelPasswordName.TextChanged), InsertTsChannelPasswordName);
+
+                .PersistOn(nameof(TeamSpeakWindow.MouseEnter), TeamSpeakWindow)
+                .PersistOn(nameof(TeamSpeakWindow.MouseLeave), TeamSpeakWindow);
 
             Persistence.Tracker.Track(this);
 

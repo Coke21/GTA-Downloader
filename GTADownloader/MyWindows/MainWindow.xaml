@@ -65,7 +65,7 @@
 
                 <ListView Grid.Column="1" Grid.Row="2" x:Name="LvName" 
                           BorderThickness="1.000001" SelectionChanged="LvName_OnSelectionChanged" MouseDown="LvName_OnMouseDown" 
-                          ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="0 1 0 0">
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="0 1 0 0">
 
                     <ListView.Resources>
                         <ContextMenu x:Key="ItemContextMenu">
@@ -78,20 +78,11 @@
                     </ListView.Resources>
 
                     <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
+                        <Style BasedOn="{StaticResource MetroListViewItem}" TargetType="{x:Type ListViewItem}">
                             <Setter Property="FontWeight" Value="Bold"/>
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
 
                             <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter Property="Background" Value="#ADFF2F"/>
-                                </Trigger>
-                                <Trigger Property="IsSelected" Value="true">
-                                    <Setter Property="Background" Value="#ffff00"/>
-                                </Trigger>
-                            </Style.Triggers>
                         </Style>
                     </ListView.ItemContainerStyle>
 

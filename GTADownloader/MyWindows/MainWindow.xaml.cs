@@ -7,12 +7,18 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using GTADownloader.Classes;
 using GTADownloader.MyProperties;
 using MahApps.Metro;
 using Microsoft.Win32;
+using Application = System.Windows.Application;
+using ComboBox = System.Windows.Controls.ComboBox;
+using ListViewItem = System.Windows.Controls.ListViewItem;
+using MessageBox = System.Windows.MessageBox;
+using TabControl = System.Windows.Controls.TabControl;
 
 namespace GTADownloader
 {
@@ -29,6 +35,7 @@ namespace GTADownloader
                 .Id(p => p.Name)
 
                 .Property(p => p.Items)
+                .Property(p => p.AccentsItems)
 
                 .Property(p => p.ThemeToggleSwitch.IsChecked, false, "Theme")
                 .Property(p => p.AccentComboBox.SelectedIndex, 2, "Accent")
@@ -42,7 +49,8 @@ namespace GTADownloader
 
             Persistence.Tracker.Track(this);
 
-            DataContext = Items;
+            LvName.ItemsSource = Items;
+            AccentComboBox.ItemsSource = AccentsItems;
         }
         private async void Window_Load(object sender, RoutedEventArgs e)
         {
@@ -54,17 +62,18 @@ namespace GTADownloader
             Directory.CreateDirectory(DataProperties.GetArma3FolderPath);
             Directory.CreateDirectory(DataProperties.GetArma3MissionFolderPath);
 
-            foreach (var color in ThemeManager.Accents)
-                AccentsItems.Add(new AccentsProperties.AccentsItems { ColorName = color.Name });
-
-            AccentComboBox.ItemsSource = AccentsItems;
+            if (AccentsItems.Count == 0)
+            {
+                foreach (var color in ThemeManager.Accents)
+                    AccentsItems.Add(new AccentsProperties.AccentsItems { ColorName = color.Name });
+            }
 
             Join.UpdateServerAsync();
             Notification.EnableTaskBar();
 
             if (HiddenCheckBox.IsChecked.Value)
             {
-                Data.NotifyIcon.ShowBalloonTip(4000, "Reminder!", $"The program is running in the background!", System.Windows.Forms.ToolTipIcon.None);
+                Data.NotifyIcon.ShowBalloonTip(4000, "Reminder!", "The program is running in the background!", ToolTipIcon.None);
                 ShowInTaskbar = false;
                 Hide();
             }
@@ -134,10 +143,10 @@ namespace GTADownloader
                 await Download.FileAsync(item.FileId, item, Data.CtsStopDownloading.Token);
         }
         // Join tab
-        private void JoinS1(object sender, RoutedEventArgs e) => Join.Server("joinS1");
-        private void JoinS2(object sender, RoutedEventArgs e) => Join.Server("joinS2");
-        private void JoinS3(object sender, RoutedEventArgs e) => Join.Server("joinS3(Conflict)");
-        private void JoinTs(object sender, RoutedEventArgs e) => Join.Server("joinTS");
+        private void JoinS1(object sender, RoutedEventArgs e) => Join.Server("S1");
+        private void JoinS2(object sender, RoutedEventArgs e) => Join.Server("S2");
+        private void JoinS3(object sender, RoutedEventArgs e) => Join.Server("S3");
+        private void JoinTs(object sender, RoutedEventArgs e) => Join.Server("TS");
 
         private void Expander_Expanded(object sender, RoutedEventArgs e)
         {
@@ -167,14 +176,14 @@ namespace GTADownloader
                     break;
             }
 
-            Tuple<AppTheme, Accent> appStyle = ThemeManager.DetectAppStyle(Application.Current);
+            var appStyle = ThemeManager.DetectAppStyle(Application.Current);
             ThemeManager.ChangeAppStyle(Application.Current, appStyle.Item2, ThemeManager.GetAppTheme(theme));
         }
         private void Accent_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string colorName = ((sender as ComboBox).SelectedItem as AccentsProperties.AccentsItems).ColorName;
 
-            Tuple<AppTheme, Accent> appStyle = ThemeManager.DetectAppStyle(Application.Current);
+            var appStyle = ThemeManager.DetectAppStyle(Application.Current);
             ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent(colorName), appStyle.Item1);
         }
 

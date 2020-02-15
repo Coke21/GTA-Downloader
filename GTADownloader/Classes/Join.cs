@@ -17,34 +17,31 @@ namespace GTADownloader
         {
             switch (server)
             {
-                case "joinS1":
-                    string arg1 = "-connect=164.132.201.9:2302";
-                    Process.Start(DataProperties.GetRegistryArma3ExePath, arg1);
+                case "S1":
+                    Process.Start(DataProperties.GetRegistryArma3ExePath, "-connect=164.132.200.53:2302");
                     break;
-                case "joinS2":
-                    string arg2 = "-connect=164.132.201.12:2302";
-                    Process.Start(DataProperties.GetRegistryArma3ExePath, arg2);
+                case "S2":
+                    Process.Start(DataProperties.GetRegistryArma3ExePath, "-connect=164.132.202.63:2602");
                     break;
-                case "joinS3(Conflict)":
-                    string arg3 = "-connect=164.132.202.63:2302";
-                    Process.Start(DataProperties.GetRegistryArma3ExePath, arg3);
+                case "S3":
+                    Process.Start(DataProperties.GetRegistryArma3ExePath, "-connect=164.132.202.63:2302");
                     break;
-                case "joinTS":
-                    string arg4 = "TS.grandtheftarma.com:9987";
-                    Process.Start("ts3server://" + arg4 + $"?channel={DataProperties.W2.InsertTsChannelName.Text}" + $"&channelpassword={DataProperties.W2.InsertTsChannelPasswordName.Text}");
+                case "TS":
+                    Process.Start("ts3server://" + "TS.grandtheftarma.com:9987" + $"?channel={DataProperties.W2.InsertTsChannelName.Text}" + $"&channelpassword={DataProperties.W2.InsertTsChannelPasswordName.Text}");
                     break;
             }
         }
+
         public static async void UpdateServerAsync()
         {
             await Task.Run(() =>
             {
+                Server gta1 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.200.53", 2303, false, 1000, 1000, 0);
+                Server gta2 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.202.63", 2603, false, 1000, 1000, 0);
+                Server gta3 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.202.63", 2303, false, 1000, 1000, 0);
+
                 while (true)
                 {
-                    Server gta1 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.201.9", 2303, false, 1000, 1000, 0);
-                    Server gta2 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.201.12", 2303, false, 1000, 1000, 0);
-                    Server gta3 = ServerQuery.GetServerInstance(Game.Arma_3, "164.132.202.63", 2303, false, 1000, 1000, 0);
-
                     ServerInfo info1 = gta1.GetInfo();
                     ServerInfo info2 = gta2.GetInfo();
                     ServerInfo info3 = gta3.GetInfo();
@@ -91,11 +88,10 @@ namespace GTADownloader
             await Task.Run(async () =>
             {
                 var config = Configuration.Default.WithDefaultLoader();
-                var address = "https://grandtheftarma.com/";
                 var context = BrowsingContext.New(config);
-                var document = await context.OpenAsync(address);
+                var document = await context.OpenAsync("https://grandtheftarma.com/");
                 //How to get cellSelector: go to website, f12, elements, right click on smt, copy, copy selector
-                var cellSelector = "#container > div:nth-child(5) > a > span.node.right > b";
+                var cellSelector = "#container > div:nth-child(4) > a > span.node.right > b";
                 var cells = document.QuerySelectorAll(cellSelector);
                 var stuff = cells.Select(m => m.TextContent);
 
